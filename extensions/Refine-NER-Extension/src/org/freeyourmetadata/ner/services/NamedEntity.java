@@ -1,9 +1,7 @@
 package org.freeyourmetadata.ner.services;
 
-import java.awt.image.renderable.RenderContext;
 import java.lang.String;
 import java.net.URI;
-import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
