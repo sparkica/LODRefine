@@ -17,6 +17,7 @@ import org.json.JSONTokener;
 
 import org.freeyourmetadata.ner.services.NERServiceBase;
 import org.freeyourmetadata.ner.services.NamedEntity;
+import org.freeyourmetadata.ner.services.NamedEntityMatch;
 
 /**
  * dataTXT service connector
@@ -68,19 +69,24 @@ public class DataTXT extends NERServiceBase {
         final JSONArray annotations = response.getJSONArray("annotations");
         final NamedEntity[] results = new NamedEntity[annotations.length()];
         for (int i = 0; i < results.length; i++) {
+            // as of now, dataTXT returns only *one* match with multiple URIs (from dbpedia
+            // and wikipedia). Since the match is unique, but the URIs are various, we need
+            // to create multiple NamedEntityMatch instances of the same match, with same
+            // label and score but with different URIs.
             final JSONObject annotation = annotations.getJSONObject(i);
             final String label = annotation.getString("title");
+            final double score = annotation.getDouble("rho");
 
             annotation.getJSONArray("ref");
             final JSONArray refList = annotation.getJSONArray("ref");
-            final URI[] uris = new URI[refList.length()];
+            final NamedEntityMatch[] matches = new NamedEntityMatch[refList.length()];
             for (int j=0; j<refList.length(); j++) {
                 final JSONObject ref = refList.getJSONObject(j);
                 for (Iterator<String> key = ref.keys(); key.hasNext(); ) {
-                    uris[j] = createUri(ref.getString(key.next()));
+                    matches[j] = new NamedEntityMatch(label, createUri(ref.getString(key.next())), score);
                 }
             }
-            results[i] = new NamedEntity(label, uris);
+            results[i] = new NamedEntity(annotation.getString("spot"), matches);
         }
         return results;
     }
