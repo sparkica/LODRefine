@@ -26,30 +26,37 @@ import org.freeyourmetadata.ner.services.NamedEntityMatch;
 public class DataTXT extends NERServiceBase {
     private final static URI SERVICEBASEURL = createUri("http://spaziodati.eu/datatxt/v3/");
     private final static URI DOCUMENTATIONURI = createUri("http://spaziodati.3scale.net/");
-    private final static String[] PROPERTYNAMES = { "APP ID", "APP key" };
+    private final static String[] PROPERTYNAMES = { "APP ID", "APP key", "Language", "Confidence", "Epsilon", "Text Chunks" };
 
     /**
      * Creates a new Alchemy service connector
      */
     public DataTXT() {
         super(SERVICEBASEURL, PROPERTYNAMES, DOCUMENTATIONURI);
+        setProperty("Language", "en");
+        setProperty("Confidence", "0.1");
+        setProperty("Epsilon", "0.3");
+        setProperty("Text Chunks", "");
     }
 
     /** {@inheritDoc} */
     public boolean isConfigured() {
-        return getProperty("APP ID").length()>0 && getProperty("APP key").length()> 0;
+        return getProperty("APP ID").length() > 0
+                && getProperty("APP key").length() > 0
+                && getProperty("Language").length() > 0
+                && getProperty("Confidence").length() > 0
+                && getProperty("Epsilon").length() > 0;
     }
 
     /** {@inheritDoc} */
     protected HttpEntity createExtractionRequestBody(final String text) throws UnsupportedEncodingException {
         final ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>(5);
-        // TODO[sp] permettere di impostare tutto a parte service
         parameters.add(new BasicNameValuePair("service", "tag"));
-        parameters.add(new BasicNameValuePair("lang", "it"));
+        parameters.add(new BasicNameValuePair("lang", getProperty("Language")));
         parameters.add(new BasicNameValuePair("text", text));
-        parameters.add(new BasicNameValuePair("rho", "0.1"));
-        parameters.add(new BasicNameValuePair("epsilon", "0.3"));
-        parameters.add(new BasicNameValuePair("long_text", ""));
+        parameters.add(new BasicNameValuePair("rho", getProperty("Confidence")));
+        parameters.add(new BasicNameValuePair("epsilon", getProperty("Epsilon")));
+        parameters.add(new BasicNameValuePair("long_text", getProperty("Text Chunks")));
         parameters.add(new BasicNameValuePair("dbpedia", "true"));
         parameters.add(new BasicNameValuePair("include_abstract", "false"));
         parameters.add(new BasicNameValuePair("app_id", getProperty("APP ID")));
