@@ -77,20 +77,23 @@ public class DataTXT extends NERServiceBase {
         final NamedEntity[] results = new NamedEntity[annotations.length()];
         for (int i = 0; i < results.length; i++) {
             // as of now, dataTXT returns only *one* match with multiple URIs (from dbpedia
-            // and wikipedia). Since the match is unique, but the URIs are various, we need
-            // to create multiple NamedEntityMatch instances of the same match, with same
-            // label and score but with different URIs.
+            // and wikipedia). We drop the wikipedia link and keep the dbpedia one, and
+            // therefore add only one single NamedEntityMatch
             final JSONObject annotation = annotations.getJSONObject(i);
             final String label = annotation.getString("title");
             final double score = annotation.getDouble("rho");
 
             annotation.getJSONArray("ref");
             final JSONArray refList = annotation.getJSONArray("ref");
-            final NamedEntityMatch[] matches = new NamedEntityMatch[refList.length()];
+            final NamedEntityMatch[] matches = new NamedEntityMatch[1];
             for (int j=0; j<refList.length(); j++) {
                 final JSONObject ref = refList.getJSONObject(j);
+                // there should actually be only one key
                 for (Iterator<String> key = ref.keys(); key.hasNext(); ) {
-                    matches[j] = new NamedEntityMatch(label, createUri(ref.getString(key.next())), score);
+                    final String keyValue = key.next();
+                    if (keyValue.equals("dbpedia")) {
+                        matches[0] = new NamedEntityMatch(label, createUri(ref.getString(keyValue)), score);
+                    }
                 }
             }
             results[i] = new NamedEntity(annotation.getString("spot"), matches);
