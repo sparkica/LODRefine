@@ -1,8 +1,7 @@
 package org.freeyourmetadata.ner.services;
 
+import java.lang.String;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,20 +16,21 @@ import com.google.refine.model.Recon.Judgment;
 /**
  * A named entity with a label and URIs
  * @author Ruben Verborgh
+ * @author Stefano Parmesan
  */
 public class NamedEntity {
     private final static URI[] EMPTY_URI_SET = new URI[0];
     private final static String[] EMPTY_TYPE_SET = new String[0];
     
     private final String label;
-    private final URI[] uris;
+    private final NamedEntityMatch[] matches;
     
     /**
      * Creates a new named entity without URIs
      * @param label The label of the entity
      */
     public NamedEntity(final String label) {
-        this(label, EMPTY_URI_SET);
+        this(label, new NamedEntityMatch[] {new NamedEntityMatch(label)});
     }
     
     /**
@@ -39,7 +39,7 @@ public class NamedEntity {
      * @param uri The URI of the entity
      */
     public NamedEntity(final String label, final URI uri) {
-        this(label, new URI[]{ uri });
+        this(label, new NamedEntityMatch[] {new NamedEntityMatch(label, uri)});
     }
     
     /**
@@ -49,7 +49,19 @@ public class NamedEntity {
      */
     public NamedEntity(final String label, final URI[] uris) {
         this.label = label;
-        this.uris = uris;
+        this.matches = new NamedEntityMatch[uris.length];
+        for (int i=0; i<uris.length; i++)
+            matches[i] = new NamedEntityMatch(label, uris[i]);
+    }
+
+    /**
+     * Creates a new named entity
+     * @param label The label matched in the original text
+     * @param matches A list of NamedEntityMatch, each with label, URI and score
+     */
+    public NamedEntity(final String label, final NamedEntityMatch[] matches) {
+        this.label = label;
+        this.matches = matches;
     }
     
     /**
@@ -59,11 +71,10 @@ public class NamedEntity {
      */
     public NamedEntity(final JSONObject json) throws JSONException {
         this.label = json.getString("label");
-        final JSONArray urisJson = json.getJSONArray("uris");
-        this.uris = new URI[urisJson.length()];
-        for (int i = 0; i < uris.length; i++) {
-            try { uris[i] = new URI(urisJson.getString(i)); }
-            catch (URISyntaxException e) {}
+        final JSONArray jsonMatches = json.getJSONArray("matches");
+        this.matches = new NamedEntityMatch[jsonMatches.length()];
+        for (int i = 0; i < matches.length; i++) {
+            matches[i] = new NamedEntityMatch(jsonMatches.getJSONObject(i));
         }
     }
 
@@ -74,13 +85,13 @@ public class NamedEntity {
     public String getLabel() {
         return label;
     }
-    
+
     /**
-     * Gets the entity's URIs
-     * @return The URIs
+     * Gets the entity's matches
+     * @return The matches
      */
-    public URI[] getUris() {
-        return uris;
+    public NamedEntityMatch[] getMatches() {
+        return matches;
     }
     
     /**
@@ -91,10 +102,10 @@ public class NamedEntity {
     public void writeTo(final JSONWriter json) throws JSONException {
         json.object();
         json.key("label"); json.value(getLabel());
-        json.key("uris");
+        json.key("matches");
         json.array();
-        for (final URI uri : getUris())
-            json.value(uri.toString());
+        for (final NamedEntityMatch match : getMatches())
+            match.writeTo(json);
         json.endArray();
         json.endObject();
     }
@@ -104,33 +115,35 @@ public class NamedEntity {
      * @return The cell
      */
     public Cell toCell() {
-        // Find all non-empty URIs
-        final ArrayList<String> nonEmptyUris = new ArrayList<String>(getUris().length);
-        for (final URI uri : getUris()) {
-            final String uriString = uri == null ? "" : uri.toString();
-            if (uriString.length() > 0)
-                nonEmptyUris.add(uriString);
+        Recon recon = new Recon(-1L, "", "");
+        int bestMatchIndex = -1;
+        double bestMatchScore = -1.0;
+
+        // add all the candidates, and find the best one
+        for (int i=0; i<matches.length; i++) {
+            final NamedEntityMatch match = matches[i];
+            final String uriString = match.getUri().toString();
+            if (uriString.length() > 0) {
+                recon.addCandidate(new ReconCandidate(uriString, match.getLabel(), EMPTY_TYPE_SET, match.getScore()));
+                if (match.getScore() > bestMatchScore) {
+                    bestMatchScore = match.getScore();
+                    bestMatchIndex = i;
+                }
+            }
         }
-        
-        // Don't include a reconciliation element if there are no URIs
-        final Recon recon;
-        if (nonEmptyUris.size() == 0) {
+
+        if (bestMatchIndex == -1) {
+            // no matches, or with empty URI
             recon = null;
-        }
-        // Include a reconciliation candidate for each URI
-        else {
-            recon = new Recon(-1L, "", "");
-            // Create the candidates
-            for (final String uri : nonEmptyUris)
-                recon.addCandidate(new ReconCandidate(uri, getLabel(), EMPTY_TYPE_SET, 1.0));
-            // Pick the first one as the best match
-            recon.match = recon.candidates.get(0);
-            recon.matchRank = 0;
+        } else {
+            // set the match and judgment
+            recon.match = recon.candidates.get(bestMatchIndex);
+            recon.matchRank = bestMatchIndex;
             recon.judgment = Judgment.Matched;
             recon.judgmentAction = "auto";
-            // Act as a reconciliation service
             recon.service = "NamedEntity";
         }
+
         return new Cell(getLabel(), recon);
     }
 }
