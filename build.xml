@@ -353,6 +353,8 @@
         <copy file="${basedir}/LICENSE.txt" tofile="${linux.dir}/LICENSE.txt"/>
         <copy file="${basedir}/README.txt" tofile="${linux.dir}/README.txt"/>
         <copy file="${basedir}/refine" tofile="${linux.dir}/refine"/>
+        <copy file="${basedir}/lodrefine" tofile="${linux.dir}/lodrefine"/>
+        <copy file="${basedir}/lodrefine.1" tofile="${linux.dir}/lodrefine.1"/>
         
         <mkdir dir="${dist.dir}"/>
         <tar longfile="gnu" compression="gzip" destfile="${dist.dir}/lodrefine-${version}.tar.gz">

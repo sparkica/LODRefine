@@ -1,0 +1,40 @@
+.\" Manpage for lodrefine
+.\" Contact mateja.verlic@zemanta.com to correct errors or typos
+.TH man 1 "05 Mar 2013" "1.0" "lodrefine man page"
+.SH NAME
+lodrefine \- LOD-enabled OpenRefine
+.SH SYNOPSIS
+lodrefine [options] run
+.SH DESCRIPTION
+LODRefine is a LOD-enabled version of OpenRefine with integrated extensions that make working with Linked Data easier.
+.SH OPTIONS
+lodrefine takes following options: 
+.TP 2
+-p <port>
+the port that LODRefine will listen to, default: 3333
+.TP 2
+-i <interface>
+the host interface OpenRefine should bind to, default: 127.0.0.1
+.TP 2
+-w <path>
+the path to the webapp, default: main/webapp
+.TP 2
+-d <path>
+path to the data directory, default: OS dependent
+.TP 2
+-m <memory>
+max memory heap size to use, default: 1024M
+.TP 2
+-v <level>
+verbosity level (error, warn, info, debug, trace), default: info
+.TP 2
+-x <name=value>
+additional configuration parameters to pass to OpenRefine, default: [none]
+.TP 2
+--debug
+enable JVM debugging (on port 8000)
+.TP 2
+--jmx
+enable JMX monitoring (for jconsole and jvisualvm)
+.SH AUTHOR
+Mateja Verlic <mateja.verlic@zemanta.com>
