@@ -527,7 +527,7 @@ mac_dist() {
     
     echo '
        tell application "Finder"
-         tell disk "'$TITLE'"
+        tell disk "'$TITLE'"
             open
             set current view of container window to icon view
             set toolbar visible of container window to false
@@ -538,13 +538,12 @@ mac_dist() {
             set icon size of theViewOptions to 100
             set background picture of theViewOptions to file ".background:dmg_background.png"
             make new alias file at container window to POSIX file "/Applications" with properties {name:"Applications"}
-            set position of item "LODRefine" of container window to {200, 175}
+            delay 1
+            set position of item "LODRefine.app" of container window to {200, 175}
             set position of item "Applications" of container window to {380, 175}
-            close
-            open               
-            update without registering applications
-            delay 4            
-            eject
+            -- update without registering applications
+            delay 4
+            -- eject
          end tell
        end tell
     ' | osascript || error "Error running applescript"
