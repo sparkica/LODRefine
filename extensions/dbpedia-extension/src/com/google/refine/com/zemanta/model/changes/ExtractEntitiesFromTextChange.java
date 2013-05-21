@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import org.json.JSONWriter;
 
 import com.google.refine.com.zemanta.model.recon.ZemantaDataExtensionReconConfig;
-import com.google.refine.com.zemanta.util.ExtractEntitiesFromTextJob.DataExtension;
+import com.google.refine.com.zemanta.util.ExtractEntitiesJob.DataExtension;
 import com.google.refine.history.Change;
 import com.google.refine.model.Cell;
 import com.google.refine.model.Column;

@@ -16,9 +16,9 @@ import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
 import com.google.refine.com.zemanta.model.changes.ExtractEntitiesFromTextChange;
-import com.google.refine.com.zemanta.util.ExtractEntitiesFromTextJob;
-import com.google.refine.com.zemanta.util.ExtractEntitiesFromTextJob.ColumnInfo;
-import com.google.refine.com.zemanta.util.ExtractEntitiesFromTextJob.DataExtension;
+import com.google.refine.com.zemanta.util.ExtractEntitiesJob;
+import com.google.refine.com.zemanta.util.ExtractEntitiesJob.ColumnInfo;
+import com.google.refine.com.zemanta.util.ExtractEntitiesJob.DataExtension;
 import com.google.refine.history.HistoryEntry;
 import com.google.refine.model.AbstractOperation;
 import com.google.refine.model.Cell;
@@ -102,7 +102,7 @@ public class ExtractEntitiesFromTextOperation extends EngineDependentOperation {
                 final protected JSONObject  _engineConfig;
                 final protected long        _historyEntryID;
                 protected int               _cellIndex;
-                protected ExtractEntitiesFromTextJob _job;
+                protected ExtractEntitiesJob _job;
 
                 public ExtractEntitiesProcess(
                                 Project project, 
@@ -114,7 +114,7 @@ public class ExtractEntitiesFromTextOperation extends EngineDependentOperation {
                         _engineConfig = engineConfig;
                         _historyEntryID = HistoryEntry.allocateID();
 
-                        _job = new ExtractEntitiesFromTextJob(_extension);
+                        _job = new ExtractEntitiesJob(_extension);
                 }
 
                 @Override
@@ -179,7 +179,9 @@ public class ExtractEntitiesFromTextOperation extends EngineDependentOperation {
                         }.init(rowIndices));
                 }
 
-                //TODO: changed ids to full texts
+                //TODO: changed ids to full texts, have to change them into something else
+                // be careful: you have to 'reconcile' anchors provided by partner by getting text from links
+                //user interface is needed to select anchor column and link column (if named accordingly no GUI is needed)
                 protected int extendRows(
                                 List<Integer> rowIndices, 
                                 List<DataExtension> dataExtensions, 

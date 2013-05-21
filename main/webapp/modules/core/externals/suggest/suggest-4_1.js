@@ -1414,6 +1414,7 @@
     },
 
     flyout_request: function(data) {
+      console.log("Flyout request.")
       var self = this;
       var o = this.options;
       var sug_data = this.flyoutpane.data("data.suggest");
@@ -1450,6 +1451,8 @@
         },
         success: function(data) {
           data["req:id"] = flyout_id;
+          console.log("YAHOOOOOO");
+          console.log(data);
           data.html = $.suggest.suggest.create_flyout(data, self.flyout_image_url);
           $.suggest.flyout.cache[flyout_id] = data;
           self.flyout_response(data);
@@ -1483,6 +1486,8 @@
     },
 
     flyout_response: function(data) {
+
+      console.log("In flyout response...");
       var o = this.options,
           p = this.pane,
           s = this.get_selected() || [];
@@ -1492,6 +1497,8 @@
           this.flyoutpane.html(data.html);
           this.flyout_position(s);
           this.flyoutpane.show()
+//            .data("data.suggest", data);
+//          this.flyoutpane.show()
             .data("data.suggest", sug_data);
           this.input.trigger("fb-flyoutpane-show", this);
         }
@@ -1716,85 +1723,112 @@
      *   parameters to the flyout image service (api key, dimensions, etc.) is
      *   already encoded into the url template.
      */
+
+    /* */
     create_flyout: function(data, flyout_image_url) {
-        var get_property = $.suggest.suggest.get_property;
-        var get_values =  $.suggest.suggest.get_values;
-        var get_first_value = $.suggest.suggest.get_first_value;
-        var name = get_first_value(data, "/type/object/name");
-        if (name) {
-            name = name.text;
-        }
-        // prefer /common/topic/description over /common/topic/article
-        var article =
-            get_first_value(data, "/common/topic/description") ||
-            get_first_value(data, "/common/topic/article") || false;
-        if (article) {
-            article = article.text;
-        }
-        var image = get_first_value(data, "/common/topic/image") || false;
-        if (image) {
-            image = flyout_image_url.replace(/\$\{id\}/g, data.id);
-        }
-        var notable_props = [];
-        var notability = [data.id];
 
-        // notable (disambiguating) properties
-        var values = get_values(data, "/common/topic/notable_properties");
-        if (values) {
-            $.each(values, function(i, prop) {
-                var p = get_property(data, prop.id);
-                if (p && p.valuetype !== 'compound') {
-                  var prop_values = get_values(data, prop.id);
-                  if (prop_values && prop_values.length) {
-                    prop_values = $.map(prop_values, function(v) {
-                      return v.text;
-                    }).join(", ");
-                    notable_props.push([prop.text || prop.id, prop_values]);
+        var content = $('<div class="fbs-flyout-content">'); 
+        var footer = $('<div class="fbs-attribution">');
+        
+        console.log("In create_flyout")
+        console.log(data)
+        // ZEMANTA HACK
+        if(data.zem && data.zem == 'true') {
+          console.log("This is ZAMANTA!");
+          
+          //page['title']: {
+          //          'pageid': page['pageid'],
+          //          'description': page['extract'],
+          //          'url': page['fullurl'],
+          //          'text': page['displaytitle'] 
+
+          console.log(data.title)
+          content.append($('<h1 id="fbs-flyout-title">').text(data.title));
+          content.append($('<p class="fbs-topic-article">').html(data.description))
+          footer.append($('<span>').text(data.url));
+        }
+        else { //Freebase stuff
+
+          var get_property = $.suggest.suggest.get_property;
+          var get_values =  $.suggest.suggest.get_values;
+          var get_first_value = $.suggest.suggest.get_first_value;
+          var name = get_first_value(data, "/type/object/name");
+          if (name) {
+              name = name.text;
+          }
+          // prefer /common/topic/description over /common/topic/article
+          var article =
+              get_first_value(data, "/common/topic/description") ||
+              get_first_value(data, "/common/topic/article") || false;
+          if (article) {
+              article = article.text;
+          }
+          var image = get_first_value(data, "/common/topic/image") || false;
+          if (image) {
+              image = flyout_image_url.replace(/\$\{id\}/g, data.id);
+          }
+          var notable_props = [];
+          var notability = [data.id];
+
+          // notable (disambiguating) properties
+          var values = get_values(data, "/common/topic/notable_properties");
+          if (values) {
+              $.each(values, function(i, prop) {
+                  var p = get_property(data, prop.id);
+                  if (p && p.valuetype !== 'compound') {
+                    var prop_values = get_values(data, prop.id);
+                    if (prop_values && prop_values.length) {
+                      prop_values = $.map(prop_values, function(v) {
+                        return v.text;
+                      }).join(", ");
+                      notable_props.push([prop.text || prop.id, prop_values]);
+                    }
                   }
-                }
-            });
-        }
+              });
+          }
 
-        // notability (notable_for and notable_types)
-        var notable_for = get_values(data, "/common/topic/notable_for");
-        var notable_types = get_values(data, "/common/topic/notable_types");
-        if (notable_for || notable_types) {
-            var seen = {};
-            notability = [];
-            $.each([notable_for, notable_types], function(i, notable) {
-                if (notable) {
-                    notable.forEach(function(n) {
-                        if (n.id && !seen[n.id]) {
-                            notability.push(n.text);
-                            seen[n.id] = true;
-                        }
-                    });
-                }
-            });
-        }
+          // notability (notable_for and notable_types)
+          var notable_for = get_values(data, "/common/topic/notable_for");
+          var notable_types = get_values(data, "/common/topic/notable_types");
+          if (notable_for || notable_types) {
+              var seen = {};
+              notability = [];
+              $.each([notable_for, notable_types], function(i, notable) {
+                  if (notable) {
+                      notable.forEach(function(n) {
+                          if (n.id && !seen[n.id]) {
+                              notability.push(n.text);
+                              seen[n.id] = true;
+                          }
+                      });
+                  }
+              });
+          }
 
-        notability = notability.join(", ");
+          notability = notability.join(", ");
 
-        var content = $('<div class="fbs-flyout-content">');
-        if (name) {
-          content.append($('<h1 id="fbs-flyout-title">').text(name));
-        }
-        content.append($('<h3 class="fbs-topic-properties fbs-flyout-id">').text(data.id));
-        $.each(notable_props, function(i, prop) {
-            content.append($('<h3 class="fbs-topic-properties">')
-                .append($('<strong>').text(prop[0] + ': '))
-                .append(document.createTextNode(prop[1])));
-        });
-        if (article) {
-            content.append($('<p class="fbs-topic-article">').text(article));
-        }
-        if (image) {
-            content.children().addClass('fbs-flyout-image-true');
-            content.prepend($('<img id="fbs-topic-image" class="fbs-flyout-image-true" src="' + image + '">'));
-        }
+          //var content = $('<div class="fbs-flyout-content">');
+          if (name) {
+            content.append($('<h1 id="fbs-flyout-title">').text(name));
+          }
+          content.append($('<h3 class="fbs-topic-properties fbs-flyout-id">').text(data.id));
+          $.each(notable_props, function(i, prop) {
+              content.append($('<h3 class="fbs-topic-properties">')
+                  .append($('<strong>').text(prop[0] + ': '))
+                  .append(document.createTextNode(prop[1])));
+          });
+          if (article) {
+              content.append($('<p class="fbs-topic-article">').text(article));
+          }
+          if (image) {
+              content.children().addClass('fbs-flyout-image-true');
+              content.prepend($('<img id="fbs-topic-image" class="fbs-flyout-image-true" src="' + image + '">'));
+          }
 
-        var types = $('<span class="fbs-flyout-types">').text(notability);
-        var footer = $('<div class="fbs-attribution">').append(types);
+          var types = $('<span class="fbs-flyout-types">').text(notability);
+          //var footer = $('<div class="fbs-attribution">').append(types);
+          footer.append(types);
+        }
 
         return $('<div>')
             .append(content)
