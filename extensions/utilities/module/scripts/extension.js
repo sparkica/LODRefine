@@ -63,12 +63,6 @@ ExtensionBar.addExtensionMenu(
 	 "id" : "utilities",
 	 "label": "Utilities",
 	 "submenu": [
-	             {
-	            	 "id": "utilities/remove-columns",
-	            	 "label": "Remove multiple columns",
-	            	 click: UtilitiesExtension.handlers.removeMultipleColumns
-	             },
-	    		 {},
 	    		 {
 	    			 "id": "utilities/openrefine-settings",
 	    			 "label": "All settings",
