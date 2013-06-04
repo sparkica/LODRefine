@@ -1,5 +1,6 @@
 language: java
-install: ant deps
 jdk:
-	- openjdk6
-script: ./script/ci/refine_travis.sh
+  - oraclejdk7
+  - openjdk7
+  - openjdk6
+script: ./refine_travis.sh
