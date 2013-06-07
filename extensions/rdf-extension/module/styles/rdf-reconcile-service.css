@@ -67,7 +67,7 @@ div.dialog-body img.validation {
     margin-left: 0.5em;
 }
 
-div.dialog-body.rdf-schema input[type=text], div.dialog-body input[type=password] {
+div.dialog-body.rdf-schema input[type=text], div.dialog-body.rdf-schema input[type=password] {
     width: 200px;
     /*margin-left: 1em;
     padding: 3px;*/
@@ -99,4 +99,20 @@ div.registering dl dd {
 
 div.dialog-body input[type=text].error {
     border: solid 1px red;
+}
+
+.box {
+	background-color: #ccc;
+	border-bottom: 2px solid;
+	padding-bottom: 5px;
+	
+}
+
+table.upload-triples {
+	width: 100%;
+}
+
+td.upload.triples {
+	width: 40%;
+	font-weight: bold;
 }
