@@ -440,9 +440,23 @@ RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso = function() {
 				},
 				function(o)
 				{
-					console.log("Something is going on.");
+					
 					if(o.status == "error") {
-						alert("Error uploading triples: " + o.message);
+						
+						$('<div class="lodrefine" id="dialog-confirm" title="Error uploading triples">' +
+								  '<p class="text-error"><i class="icon-exclamation-sign"></i>' +
+								  '<strong>An error occured: </strong></p> <p>' +
+								  o.message +
+								  '</p></div>').dialog({
+								      resizable: false,
+								      height:140,
+								      modal: true,
+								      buttons: {
+								        "OK": function() {
+								          $( this ).dialog( "close" );
+								        }
+								      }
+								  });
 					}
 					else {
 						alert("Yay! Upload completed.");

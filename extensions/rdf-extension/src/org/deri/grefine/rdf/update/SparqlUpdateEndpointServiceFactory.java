@@ -171,8 +171,7 @@ public abstract class SparqlUpdateEndpointServiceFactory implements EndpointServ
 				);
 		client.getParams().setParameter(AuthPNames.PROXY_AUTH_PREF, AuthPolicy.DIGEST);
 
-		HttpPost httpPost;
-		httpPost = new HttpPost(endpoint.toURI());
+		HttpPost httpPost = new HttpPost(endpoint.toURI());
 
 		try {
         		List <NameValuePair> nvps = new ArrayList <NameValuePair>();
