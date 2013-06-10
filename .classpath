@@ -88,10 +88,6 @@
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jackson-core-asl-1.9.5.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jackson-mapper-asl-1.9.5.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/java-rdfa-0.4.1.jar"/>
-	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-arq-2.9.0-incubating.jar"/>
-	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-core-2.7.0-incubating.jar"/>
-	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-iri-0.9.0-incubating.jar"/>
-	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-larq-1.0.0-incubating.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/lucene-core-3.6.0.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/nekohtml-1.9.14.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/openrdf-sesame-2.3.2-onejar.jar"/>
@@ -105,5 +101,10 @@
 	<classpathentry exported="true" kind="lib" path="extensions/freebase/module/MOD-INF/lib/mail.jar"/>
 	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/httpclient-4.2.5.jar"/>
 	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/httpcore-4.2.4.jar"/>
+	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-arq-2.10.2-20130528.075133-12.jar"/>
+	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-core-2.10.2-20130528.074942-12.jar"/>
+	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-iri-0.9.7-20130528.074823-12.jar"/>
+	<classpathentry kind="lib" path="/grefine-rdf-extension/module/MOD-INF/lib/jena-larq-1.0.1-20130218.045518-64.jar"/>
+	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/commons-codec-1.8.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

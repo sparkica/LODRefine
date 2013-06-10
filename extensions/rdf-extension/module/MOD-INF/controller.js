@@ -1,6 +1,12 @@
+var logger = Packages.org.slf4j.LoggerFactory.getLogger("rdf-extension"),
+	refineServlet = Packages.com.google.refine.RefineServlet,
+	File = Packages.java.io.File,
+	update = Packages.org.deri.grefine.rdf.update;
 
 importPackage(org.deri.grefine.rdf.commands);
 importPackage(org.deri.grefine.reconcile.commands);
+importPackage(org.deri.grefine.rdf.update);
+importPackage(org.deri.grefine.rdf.update.commands);
 var GRefineServiceManager = Packages.org.deri.grefine.reconcile.GRefineServiceManager;
 
 var rdfReconcileExtension = {
@@ -77,6 +83,11 @@ var RS = Packages.com.google.refine.RefineServlet;
 
 
 function init() {
+	
+	logger.info("Initializing SPARQL Update service manager.");
+	var cacheFolder = new refineServlet().getCacheDir("rdf-extension");
+	var endpointManager = new update.EndpointServiceManager(new File(cacheFolder + "/registered-update-endpoints.json"));
+	
 	RS.registerClassMapping(
 	        "org.deri.grefine.operations.SaveRdfSchemaOperation$RdfSchemaChange",
 	        "org.deri.grefine.rdf.operations.SaveRdfSchemaOperation$RdfSchemaChange");
@@ -144,6 +155,10 @@ function init() {
 	RS.registerCommand(module, "addSindiceService", new AddSindiceService());
 	RS.registerCommand(module, "addStanbolService", new AddStanbolServiceCommand());
 	RS.registerCommand(module, "initializeServices", new InitializeServicesCommand());
+	
+	//Upload triples command
+	RS.registerCommand(module, "upload-triples", new UploadRdfCommand(endpointManager));
+	
 	//RefineServlet.registerCommand(module, "sindiceReconcile", new SindiceReconcileCommand());
 	//this is just to initialize ServiceRegistry
 	RS.registerCommand(module, "reconcile-initialize", new InitializationCommand());
@@ -159,6 +174,7 @@ function init() {
         module,
         [
             "scripts/rdf-data-table-view.js",
+            "scripts/dialogs/rdf-upload-triples.js",
             "scripts/menu-bar-extensions.js",
             "scripts/rdf-schema-alignment.js",
             "scripts/rdf-schema-alignment-ui-node.js",
@@ -180,7 +196,8 @@ function init() {
         [
             "styles/rdf-schema-alignment-dialog.css",
 			"styles/rdf-reconcile-service.css",
-            "styles/sindice/recon-dialog.css"
+            "styles/sindice/recon-dialog.css",
+            "styles/dialogs.css"
         ]
     );
     

@@ -39,10 +39,6 @@
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/jackson-core-asl-1.9.5.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/jackson-mapper-asl-1.9.5.jar"/>
-	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-arq-2.9.0-incubating.jar"/>
-	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-core-2.7.0-incubating.jar"/>
-	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-iri-0.9.0-incubating.jar"/>
-	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-larq-1.0.0-incubating.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -61,5 +57,12 @@
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/opencsv-2.4-SNAPSHOT.jar" sourcepath="/LODRefine/main/webapp/WEB-INF/lib-src/opencsv-2.4-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/httpclient-4.2.5.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/httpcore-4.2.4.jar"/>
+	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-arq-2.10.2-20130528.075133-12.jar"/>
+	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-core-2.10.2-20130528.074942-12.jar"/>
+	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-iri-0.9.7-20130528.074823-12.jar"/>
+	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/httpclient-4.2.5.jar"/>
+	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/httpcore-4.2.4.jar"/>
+	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-larq-1.0.1-20130218.045518-64.jar"/>
+	<classpathentry kind="lib" path="module/MOD-INF/lib/commons-codec-1.8.jar"/>
 	<classpathentry kind="output" path="module/MOD-INF/classes"/>
 </classpath>

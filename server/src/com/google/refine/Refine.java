@@ -123,7 +123,6 @@ public class Refine {
                 RefineClient client = new RefineClient();
                 client.init(host,port,start_browser);
             } catch (Exception e) {
-                System.out.println("Exception error: " + e.getLocalizedMessage());
                 logger.warn("Sorry, some error prevented us from launching the browser for you.\n\n Point your browser to http://" + host + ":" + port + "/ to start using Refine.");
             }
         }

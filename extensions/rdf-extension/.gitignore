@@ -4,3 +4,4 @@
 *.DS_Store
 module/MOD-INF/classes/*
 dist/
+.settings/
