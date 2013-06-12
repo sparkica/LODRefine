@@ -3,7 +3,7 @@
   <div class="dialog-body" bind="dialogBody">
     <div class="grid-layout layout-normal layout-full" style="height:400px;overflow:auto">
   
-    <div class="refine-tabs ui-tabs ui-tabs-nav" bind="jobTabs" id="jobTabs">
+    <div class="refine-tabs" bind="jobTabs" id="jobTabs">
     <ul>
     	<li><a href="#new-job-tab">Create new job</a></li>
     	<li><a href="#existing-job-tab">Upload to existing job</a></li>
@@ -134,8 +134,8 @@
    </div><!-- ./grid-layout -->
    </div> <!--  -->
   <div class="dialog-footer" bind="dialogFooter">
-    <div id="status-message" bind="statusMessage">
-    Status: 
+    <div id="msg-frame">
+        <p id="status-message" bind="statusMessage"></p>
     </div>
     
     <button class="btn btn-success" bind="okButton" type="button">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>

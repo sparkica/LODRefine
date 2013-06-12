@@ -11,7 +11,6 @@ function ZemantaCrowdFlowerDialog(onDone) {
         this._elmts = DOM.bind(this._dialog);
         this._elmts.dialogHeader.text("Upload data to CrowdFlower");
 
-        this._elmts.jobTabs.tabs();
 
         var tabindex = 0;
 
@@ -27,6 +26,9 @@ function ZemantaCrowdFlowerDialog(onDone) {
         this._elmts.extFieldsPanel.hide();
         this._elmts.extColumnsPanel.hide();
         this._elmts.jobTemplatePanel.hide();
+        
+        this._elmts.jobTabs.tabs();
+
 
         this._elmts.createFromTemplate.click(function () {
 
@@ -197,9 +199,15 @@ ZemantaCrowdFlowerDialog.prototype._copyAndUpdateJob = function(jobid) {
         ZemantaCrowdSourcingExtension.util.copyJob(self._extension, function(data){
                 if(data[status] == "ERROR") {
                         ZemUtil.showErrorDialog("There was an error either during copying or updating list.");
+                        //add class to status-message
+                        self._elmts.statusMessage.removeClass('text-success');
+                        self._elmts.statusMessage.addClass("text-error");
                         self._elmts.statusMessage.html("There was an error either during copying or updating list.");
                 } else {
+                        self._elmts.statusMessage.removeClass("text-error");
+                        self._elmts.statusMessage.addClass('text-success');
                         self._elmts.statusMessage.html("Job was copied.");
+                        //TODO: update this!
                         alert("Job copied!");
                 }
                 self._updateJobList(data);
@@ -223,11 +231,15 @@ ZemantaCrowdFlowerDialog.prototype._updateJobList = function(data) {
 
         if(status === "ERROR") {
                 ZemUtil.showErrorDialog(data["message"]);
+                self._elmts.statusMessage.removeClass('text-success');
+                self._elmts.statusMessage.addClass("text-error");
                 self._elmts.statusMessage.html("There was an error: <br/>" + data["message"]);
                 return;
         }
         else {
 
+                self._elmts.statusMessage.removeClass("text-error");
+                self._elmts.statusMessage.addClass('text-success');
                 self._elmts.statusMessage.html("Job list was updated.");
 
                 if(data["jobs"] && data["jobs"]!= null) {
@@ -266,11 +278,15 @@ ZemantaCrowdFlowerDialog.prototype._renderAllExistingJobs = function() {
         ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status) {
 
                 if(status === "OK" | status === 200) {
+                        elemStatus.removeClass("text-error");
+                        elemStatus.addClass('text-success');
                         elemStatus.html("Jobs are loaded.");
-                        ZemUtil.showConfirmation("HELL YEAH!", "Jobs are loaded");
                 } else {
-                        ZemUtil.showErrorDialog("There was an error loading jobs.\n" + status);
-                        elemStatus.html("There was an error loading jobs. Error message: <br/>" + status);
+                        var msg = "There was an error loading jobs. Details: \n" + status;
+                        ZemUtil.showErrorDialog(msg);
+                        elemStatus.removeClass('text-success');
+                        elemStatus.addClass("text-error");
+                        elemStatus.html(msg);
                         return;
                 }
 
@@ -307,11 +323,15 @@ ZemantaCrowdFlowerDialog.prototype._updateJobInfo = function(data) {
 
         if(status === "ERROR") {
                 ZemUtil.showErrorDialog(status + ': ' + data["message"]);
+                self._elmts.statusMessage.removeClass('text-success');
+                self._elmts.statusMessage.addClass("text-error");
                 self._elmts.statusMessage.html(status + ': ' + data["message"]);
                 return;
         } else {
 
-                self._elmts.statusMessage.html('Updated job information.' );
+                self._elmts.statusMessage.removeClass("text-error");
+                self._elmts.statusMessage.addClass('text-success');
+                self._elmts.statusMessage.html('Job info updated.' );
 
 
                 if(data["title"] === null || data["title"] === "" ) {
@@ -567,8 +587,4 @@ ZemantaCrowdFlowerDialog.prototype._updateFieldsFromTemplate = function (param) 
                 self._elmts.jobTitle.val("Image reconciliation job");
                 self._elmts.jobInstructions.val("Fill in instructions for image reconciliation");
         }
-
-
-
-
 };
