@@ -54,11 +54,15 @@ ZemantaCrowdSourcingExtension.handlers.openJobSettingsDialog = function()  {
                                 function(o)
                                 {
                                         if(o.status != "ERROR") {
+                                                var msg = "";
+                                                
                                                 if(extension.new_job === true) {
-                                                        alert("New job was created successfully.\nYou can see it on your CrowdFlower account."); 
+                                                        msg = "New job was created successfully.\nYou can see it on your CrowdFlower account."; 
                                                 } else {  
-                                                        alert("Data was uploaded successfully.\nYou can see it on your CrowdFlower account.");  
+                                                        msg = "Data was uploaded successfully.\nYou can see it on your CrowdFlower account.";
                                                 }
+                                                
+                                                ZemUtil.showConfirmation("Creating job/Uploading data", msg);
                                         } else {
                                                 ZemUtil.showErrorDialog("An error occured that prevented creating the job. \n" + o.message);
                                         }
@@ -86,11 +90,11 @@ ZemantaCrowdSourcingExtension.handlers.evaluateReconDialog = function()  {
                                                 //alert("There is something wrong with your data. It was not uploaded to CrowdFlower Service.");
                                         }
                                         else {
-                                                if(o.status == "ok" || o.status == 200) {
-                                                        alert("Data successfully uploaded. Check your CrowdFlower account.");
-                                                } else {
+                                                if(o.status == 'error') {
                                                         ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.status);
-                                                        //alert("Something went wrong while uploading. \n" + o.status);
+                                                } else {
+                                                        var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
+                                                        ZemUtil.showConfirmation("Uploading recon eval data", msg);
                                                 }
                                         }
                                 },
@@ -117,10 +121,11 @@ ZemantaCrowdSourcingExtension.handlers.imageReconDialog = function()  {
                                                 ZemUtil.showErrorDialog("There is something wrong with your data. It was not uploaded to CrowdFlower Service.");
                                         }
                                         else {
-                                                if(o.status == "ok" || o.status == 200) {
-                                                        alert("Data successfully uploaded. Check your CrowdFlower account.");
-                                                } else {
+                                                if(o.status == 'error') {
                                                         ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.status);
+                                                } else {
+                                                        var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
+                                                        ZemUtil.showConfirmation("Uploading recon eval data", msg);
                                                 }
                                         }
                                 },

@@ -96,11 +96,15 @@ ZemantaCrowdSourcingExtension.util.getJobInfo = function(extension, updateJobInf
 };
 
 ZemUtil.showErrorDialog = function (message) {
-        var dlg = $('<div class="lodrefine" id="dialog-confirm" title="An error occured">' +
-                            '<p class="text-error"><i class="icon-exclamation-sign"></i> &nbsp; &nbsp;' +
-                            '<strong>An error occured. Error message: </strong></p> <p>' +
-                            message +
-            '</p></div>');
+        
+        var dlg = $(DOM.loadHTML("crowdsourcing", "scripts/dialogs/confirmation-dialog.html"));
+        dlg._elmts = DOM.bind(dlg);
+        
+        dlg._elmts.dlgTitle.addClass('text-error');
+        dlg._elmts.dlgTitle.text("An error occured.");
+        dlg._elmts.dlgMessage.addClass('text-error');
+        dlg._elmts.dlgMessage.text(message);
+        
         
         dlg.dialog({
                 resizable: false,
@@ -119,7 +123,9 @@ ZemUtil.showConfirmation = function (title, message) {
         var dlg = $(DOM.loadHTML("crowdsourcing", "scripts/dialogs/confirmation-dialog.html"));
         dlg._elmts = DOM.bind(dlg);
         
+        dlg._elmts.dlgTitle.addClass('text-success');
         dlg._elmts.dlgTitle.text(title);
+        dlg._elmts.dlgMessage.addClass('text-success');
         dlg._elmts.dlgMessage.text(message);
         
         dlg.dialog({

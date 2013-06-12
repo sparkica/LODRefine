@@ -1,0 +1,17 @@
+<div>
+&lt;img src="{{img_url}}" id="" width="{{w_size}}" height="{{h_size}}"&gt;
+&lt;p&gt;Description:&#160;
+{{name}}&lt;br&gt;Destination url: &#160;&lt;a target="_blank" href="{{dst_url}}"&gt;{{dst_url}}
+&#160;&lt;/a&gt;&lt;/p&gt;
+&lt;cml:select label="Image matches description" class="" validates="required"&gt;
+    &lt;cml:option label="yes, completely" selected="true"/&gt;
+    &lt;cml:option label="not at all" id=""/&gt;
+  &lt;/cml:select&gt;
+  &lt;cml:select label="Image matches the content at the destination URL" class="" validates="required"&gt;
+    &lt;cml:option label="yes, completely" selected="true"/&gt;
+    &lt;cml:option label="not at all" id=""/&gt;
+  &lt;/cml:select&gt;
+  &lt;cml:text label="Specific keyword describing the image " class="" validates="alphanum" instructions="E.g.: cotton canvas printed window panel"/&gt;
+  &lt;cml:text label="General keyword describing the image" class="" validates="alphanum" instructions="E.g.: window panel"/&gt;
+  &lt;cml:text label="Matching wikipedia link" class="" instructions="Important: no redirecting pages!" validates="required url"/&gt;
+  </div>

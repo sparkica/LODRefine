@@ -115,10 +115,15 @@ ZemCFImgReconDialog.prototype._renderAllExistingJobs = function() {
 
         ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status) {
 
-                if(status === "OK" | status === 200) {
-                        elemStatus.html("Jobs are loaded.");
-                } else {
+                if(status === "error") {
+                        elemStatus.addClass('text-error');
+                        elemStatus.removeClass('text-success');
                         elemStatus.html("There was an error loading jobs. Error message: <br/>" + status);
+                        
+                } else {
+                        elemStatus.removeClass('text-error');
+                        elemStatus.addClass('text-success');
+                        elemStatus.html("Jobs are loaded.");
                 }
 
                 $.each(data, function(index, value) {

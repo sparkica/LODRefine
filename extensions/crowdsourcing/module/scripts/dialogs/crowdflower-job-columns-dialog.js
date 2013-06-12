@@ -41,7 +41,7 @@ function ZemantaCrowdFlowerDialog(onDone) {
                 self._elmts.jobTemplatePanel.show();
 
         });
-
+        
         this._elmts.createFromBlank.click(function () {
 
                 self._elmts.jobTemplatePanel.hide();
@@ -56,6 +56,21 @@ function ZemantaCrowdFlowerDialog(onDone) {
                 self._cml = "";
         });
 
+        //TODO: how to get it above first dialog?
+        this._elmts.buttonPreviewTemplate.click(function () {
+                var content = $(self._elmts.jobInstructions.val());
+                var dlg = $('<div>').append(content);
+                dlg.dialog({
+                        resizable: false,
+                        height:300,
+                        modal: true,
+                        buttons: {
+                                "OK": function() {
+                                        $( this ).dialog( "close" );
+                                }
+                        }
+                });
+        });
 
 
         this._elmts.chkUploadToNewJob.click(function () {
@@ -197,19 +212,24 @@ ZemantaCrowdFlowerDialog.prototype._copyAndUpdateJob = function(jobid) {
         }
 
         ZemantaCrowdSourcingExtension.util.copyJob(self._extension, function(data){
+                
+                var msg = "";
+                
                 if(data[status] == "ERROR") {
-                        ZemUtil.showErrorDialog("There was an error either during copying or updating list.");
+                        msg = "There was an error either during copying or updating list.";
+                        ZemUtil.showErrorDialog(msg);
                         //add class to status-message
                         self._elmts.statusMessage.removeClass('text-success');
-                        self._elmts.statusMessage.addClass("text-error");
-                        self._elmts.statusMessage.html("There was an error either during copying or updating list.");
+                        self._elmts.statusMessage.addClass('text-error');
+                        self._elmts.statusMessage.html(msg);
                 } else {
-                        self._elmts.statusMessage.removeClass("text-error");
+                        msg = "Job was successfully copied.";
+                        self._elmts.statusMessage.removeClass('text-error');
                         self._elmts.statusMessage.addClass('text-success');
-                        self._elmts.statusMessage.html("Job was copied.");
+                        self._elmts.statusMessage.html(msg);
                         //TODO: update this!
-                        alert("Job copied!");
-                }
+                        ZemUtil.showConfirmation("Copying job",msg);
+                 }
                 self._updateJobList(data);
         });
 
@@ -232,13 +252,13 @@ ZemantaCrowdFlowerDialog.prototype._updateJobList = function(data) {
         if(status === "ERROR") {
                 ZemUtil.showErrorDialog(data["message"]);
                 self._elmts.statusMessage.removeClass('text-success');
-                self._elmts.statusMessage.addClass("text-error");
+                self._elmts.statusMessage.addClass('text-error');
                 self._elmts.statusMessage.html("There was an error: <br/>" + data["message"]);
                 return;
         }
         else {
 
-                self._elmts.statusMessage.removeClass("text-error");
+                self._elmts.statusMessage.removeClass('text-error');
                 self._elmts.statusMessage.addClass('text-success');
                 self._elmts.statusMessage.html("Job list was updated.");
 
@@ -273,19 +293,17 @@ ZemantaCrowdFlowerDialog.prototype._renderAllExistingJobs = function() {
 
         $('<option name="opt_none" value="none">--- select a job --- </option>').appendTo(selContainer);
 
-
-
         ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status) {
 
                 if(status === "OK" | status === 200) {
-                        elemStatus.removeClass("text-error");
+                        elemStatus.removeClass('text-error');
                         elemStatus.addClass('text-success');
                         elemStatus.html("Jobs are loaded.");
                 } else {
-                        var msg = "There was an error loading jobs. Details: \n" + status;
+                        var msg = "There was an error loading jobs.\n" + status;
                         ZemUtil.showErrorDialog(msg);
                         elemStatus.removeClass('text-success');
-                        elemStatus.addClass("text-error");
+                        elemStatus.addClass('text-error');
                         elemStatus.html(msg);
                         return;
                 }
@@ -322,14 +340,14 @@ ZemantaCrowdFlowerDialog.prototype._updateJobInfo = function(data) {
         var status = data["status"];
 
         if(status === "ERROR") {
-                ZemUtil.showErrorDialog(status + ': ' + data["message"]);
+                ZemUtil.showErrorDialog(status + ': ' + data.message);
                 self._elmts.statusMessage.removeClass('text-success');
-                self._elmts.statusMessage.addClass("text-error");
-                self._elmts.statusMessage.html(status + ': ' + data["message"]);
+                self._elmts.statusMessage.addClass('text-error');
+                self._elmts.statusMessage.html(status + ': ' + data.message);
                 return;
         } else {
 
-                self._elmts.statusMessage.removeClass("text-error");
+                self._elmts.statusMessage.removeClass('text-error');
                 self._elmts.statusMessage.addClass('text-success');
                 self._elmts.statusMessage.html('Job info updated.' );
 
@@ -364,8 +382,6 @@ ZemantaCrowdFlowerDialog.prototype._updateJobInfo = function(data) {
                         this._elmts.extColumnsPanel.show();
                 }
         }
-
-
 };
 
 ZemantaCrowdFlowerDialog.prototype._renderAllColumns2 = function(columnContainer, columnListContainer, tabindex) {
@@ -432,7 +448,6 @@ ZemantaCrowdFlowerDialog.prototype._showColumnsDialog = function(field, mapped_c
                 if(value.name === mapped_col) {
                         input.attr("checked","true");
                 }
-
         });
 
         footer.html(
@@ -514,12 +529,17 @@ ZemantaCrowdFlowerDialog.prototype._getMappedColumn = function (field) {
         return column;
 };
 
+
+//TODO: check if this works for CML too
+//TODO: how to escape html in javascript?
+//TODO: can I load files instead of HMLT
+
 ZemantaCrowdFlowerDialog.prototype._fillReconEvalTemplate = function (entityType, recon, reconSearchUrl) {
 
         var self = this;
 
-        title = "Find " + recon + " profile page for " + entityType;
-        instructions = "Find " + recon + " page for "+ entityType +" that matches data on " + entityType + "'s profile page.";
+        var title = "Find " + recon + " profile page for " + entityType;
+        var instructions = "Find " + recon + " page for "+ entityType +" that matches data on " + entityType + "'s profile page.";
         instructions += "<b>Check suggested options FIRST</b>. If none of them matches, try to find profile page ";
         instructions += "using <a target=\"_blank\" href=\""+ reconSearchUrl + "\">"+ recon + " search page</a>. ";
 
@@ -557,6 +577,24 @@ ZemantaCrowdFlowerDialog.prototype._fillReconEvalTemplate = function (entityType
         self._elmts.jobInstructions.val(instructions);
 };
 
+
+//TODO: add default size if none present
+//TODO: what about scenario A, B and C (not all questions are generated) -> set attributes?
+ZemantaCrowdFlowerDialog.prototype._fillImageReconTemplate = function () {
+        var self = this;
+        
+        var title = "Find best matching Wikipedia link for image";
+        
+        //TODO: hmmm.... html is parsed into DOM, but I'd need only html
+        // not sure if this is possible, because 
+        var instructions = $(DOM.loadHTML("crowdsourcing", "scripts/templates/image-recon/instructions.html"));
+        var cml = $(DOM.loadHTML("crowdsourcing", "scripts/templates/image-recon/cml.html"));
+        
+        self._elmts.jobTitle.val(title);
+        self._elmts.jobInstructions.val(instructions.text());
+        self._cml = cml.text();
+};
+
 ZemantaCrowdFlowerDialog.prototype._updateFieldsFromTemplate = function (param) {
 
         var self = this;
@@ -583,8 +621,8 @@ ZemantaCrowdFlowerDialog.prototype._updateFieldsFromTemplate = function (param) 
                 self._fillReconEvalTemplate(param, recon, reconSearchUrl);
         }
         else if(template === "img_recon") {
-                //TODO
-                self._elmts.jobTitle.val("Image reconciliation job");
-                self._elmts.jobInstructions.val("Fill in instructions for image reconciliation");
+                self._fillImageReconTemplate();
+                console.log("Done loading img recon template");
+                console.log(self._cml);
         }
 };

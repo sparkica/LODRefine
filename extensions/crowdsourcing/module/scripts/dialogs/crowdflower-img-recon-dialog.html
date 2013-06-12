@@ -6,7 +6,7 @@
 
             <div class="refine-tabs ui-tabs ui-tabs-nav" bind="jobTabs" id="jobTabs">
                 <ul>
-                    <li><a href="#tab2">Upload to existing job</a></li>
+                    <li><a href="#tab2">Upload data for image reconciliation to existing job</a></li>
                 </ul>
                 <div id="tab2">
                 <div class="field-container">
@@ -32,9 +32,11 @@
                     <select name="gold-data" bind="goldDataColumn"></select>
                 </div><!-- ./field-container -->
               
+              <div class="job-box">
                 <div id="infoFieldPanel" class="panel">
                 <label>Select additional columns:</label>
                 <div id="info-fields" bind="infoField" class="project-columns tiny">
+                </div>
                 </div>
             </div>
                 
