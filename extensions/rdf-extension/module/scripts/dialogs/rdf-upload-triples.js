@@ -41,8 +41,6 @@ function RdfUploadTriplesDialog(onDone) {
 		}
 		
 		//schema is added later
-		
-		console.log("Parameters: ");
 		console.log(self._params);
 		self._onDone(self._params);
 		DialogSystem.dismissUntil(self._level - 1);

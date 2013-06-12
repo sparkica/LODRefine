@@ -1,8 +1,6 @@
 
 package com.google.refine.crowdsourcing.crowdflower;
 
-//TODO: does it make sense to implement an importer to import data *from* CF?
-
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -13,6 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
@@ -21,35 +26,25 @@ import com.google.refine.crowdsourcing.CrowdsourcingUtil;
 import com.google.refine.model.Cell;
 import com.google.refine.model.Column;
 import com.google.refine.model.Project;
-import com.google.refine.model.ReconCandidate;
 import com.google.refine.model.Row;
 import com.google.refine.util.ParsingUtilities;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.zemanta.crowdflower.client.CrowdFlowerClient;
 
-public class EvaluateReconJobCommand extends Command {
+public class ImageReconJobCommand extends Command {
 
-        static final Logger logger = LoggerFactory.getLogger("crowdflower_evaluate_recon");
+        static final Logger logger = LoggerFactory.getLogger("crowdflower_image_recon");
         protected List<Integer> _cell_indeces;
-        protected String FREEBASE_VIEW_URL = "http://www.freebase.com/view";
-        protected String reconService = "freebase"; // default
 
         @Override
         public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
                         IOException {
 
+                Project project = getProject(request);
                 try {
 
                         JSONObject extension = new JSONObject(request.getParameter("extension"));
-                        Project project = getProject(request);
                         Engine engine = getEngine(request, project);
+
                         String apiKey = (String) CrowdsourcingUtil.getPreference("crowdflower.apikey");
                         Object defTimeout = CrowdsourcingUtil.getPreference("crowdflower.defaultTimeout");
                         String defaultTimeout = (defTimeout != null) ? (String) defTimeout : "1500";
@@ -60,10 +55,7 @@ public class EvaluateReconJobCommand extends Command {
                         response.setHeader("Content-Type", "application/json");
 
                         if (extension.has("job_id") && !extension.isNull("job_id")) {
-
-                                if (extension.has("recon_service") && !extension.isNull("recon_service")) {
-                                        reconService = extension.getString("recon_service");
-                                }
+                                // do something
 
                                 StringBuffer data = generateObjectsForUpload(extension, project, engine);
                                 String msg = cf_client.bulkUploadJSONToExistingJob(extension.getString("job_id"),
@@ -86,7 +78,8 @@ public class EvaluateReconJobCommand extends Command {
                         }
 
                 } catch (Exception e) {
-                        logger.error(e.getLocalizedMessage(), e);
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                 }
 
         }
@@ -130,12 +123,16 @@ public class EvaluateReconJobCommand extends Command {
                         throws JSONException {
                 _cell_indeces = new ArrayList<Integer>();
 
-                String recon_col_name = extension.getString("recon_column");
+                Column golden_col = null;
                 String golden_col_name = "";
 
                 if (extension.has("golden_column")) {
                         golden_col_name = extension.getString("golden_column");
                 }
+                if (!golden_col_name.equals("")) {
+                        golden_col = project.columnModel.getColumnByName(golden_col_name);
+                }
+                int gold_index = (golden_col != null) ? golden_col.getCellIndex() : -1;
 
                 JSONArray column_names = extension.getJSONArray("column_names");
 
@@ -190,16 +187,6 @@ public class EvaluateReconJobCommand extends Command {
                 }.init(rows_indeces));
 
                 StringBuffer bf = new StringBuffer();
-                // recon information
-                Column recon_col = project.columnModel.getColumnByName(recon_col_name);
-                Column golden_col = null;
-                int max_candidates = 3; // default number of suggestions
-
-                if (!golden_col_name.equals("")) {
-                        golden_col = project.columnModel.getColumnByName(golden_col_name);
-                }
-                int recon_cell_index = recon_col.getCellIndex();
-                int gold_index = (golden_col != null) ? golden_col.getCellIndex() : -1;
 
                 // TODO: what if there are records and not rows!
                 for (Iterator<Integer> it = rows_indeces.iterator(); it.hasNext();) {
@@ -219,97 +206,12 @@ public class EvaluateReconJobCommand extends Command {
                                 }
                         }
 
-                        // add recon information
-                        Cell recon_cell = project.rows.get(row_index).getCell(recon_cell_index);
+                        // TODO: generate objects for upload
+                        // image url, anchor, site url
+                        // we need wikipedia urls
+                        // additional description, additional columns?
 
-                        List<ReconCandidate> candidates = null;
-                        if ((recon_cell != null) && recon_cell.recon != null) candidates = recon_cell.recon.candidates;
-
-                        ReconCandidate rc = null;
-
-                        // generate gold data from column with links
-                        // if link == candidates(i), gold1 = suggestion_i
-
-                        if ((candidates != null) && (candidates.size() > max_candidates))
-                                max_candidates = candidates.size();
-
-                        if ((candidates != null) && candidates.size() > 0) {
-
-                                String gold_value = (gold_index != -1) ? (String) project.rows.get(row_index)
-                                                .getCellValue(gold_index) : "";
-
-                                // in case gold index != -1, but cell value
-                                // returned is null
-                                if (gold_value == null) gold_value = "";
-
-                                boolean candidate_matches = false;
-
-                                // both gold columns need to be defined so they
-                                // get registered as columns
-                                // otherwise data is ignored for next rows
-
-                                if ((golden_col != null) && gold_value.equals("")) {
-
-                                        obj.put("best_suggestion_gold", "");
-                                        obj.put("enter_link_gold", "");
-                                        candidate_matches = true;
-                                }
-
-                                for (int i = 1; i <= candidates.size(); i++) {
-                                        rc = candidates.get(i - 1);
-                                        obj.put("suggestion_name_" + i, rc.name);
-                                        if (reconService.equals("freebase")) {
-                                                obj.put("suggestion_url_" + i, FREEBASE_VIEW_URL + rc.id);
-                                        } else {
-                                                obj.put("suggestion_url_" + i, rc.id);
-                                        }
-
-                                        // compare cell value of golden link
-                                        // with candidates to generate
-                                        // correct answer for form
-                                        if ((golden_col != null) && (!candidate_matches) && (gold_value.equals(rc.id))) {
-                                                obj.put("best_suggestion_gold", "Suggestion " + i);
-                                                // no need for link, because we
-                                                // already have the right answer
-                                                // provided
-                                                obj.put("enter_link_gold", "");
-                                                candidate_matches = true;
-                                        }
-
-                                }
-                                if ((golden_col != null) && (!candidate_matches)) {
-                                        obj.put("best_suggestion_gold", "None of the above");
-
-                                        if (reconService.equals("freebase") && !gold_value.contains("www.freebase.com")) {
-                                                obj.put("enter_link_gold", FREEBASE_VIEW_URL + gold_value);
-                                        } else {
-                                                obj.put("enter_link_gold", gold_value);
-                                        }
-
-                                }
-                        } else {
-                                // if the value was not reconciled, we still
-                                // have to generate something
-                                // especially if this is the first row of values
-                                // otherwise these columns will not be included
-                                // (CF quirk)
-                                // todo: get max number of candidates
-
-                                for (int i = 1; i <= max_candidates; i++) {
-                                        obj.put("suggestion_name_" + i, "(no suggestion)");
-                                        obj.put("suggestion_url_" + i, "#");
-                                }
-
-                                // obj.put("suggestion_name_1",
-                                // "(no suggestion)");
-                                // obj.put("suggestion_name_2",
-                                // "(no suggestion)");
-                                // obj.put("suggestion_name_3",
-                                // "(no suggestion)");
-                                // obj.put("suggestion_url_1", "#");
-                                // obj.put("suggestion_url_2", "#");
-                                // obj.put("suggestion_url_3", "#");
-                        }
+                        // TODO: add gold data if necessary
 
                         bf.append(obj.toString());
 

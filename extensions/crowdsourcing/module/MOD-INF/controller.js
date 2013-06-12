@@ -45,6 +45,7 @@ function init() {
   RS.registerCommand(module, "copy-crowdflower-job", new Packages.com.google.refine.crowdsourcing.crowdflower.CopyJobCommand());
   RS.registerCommand(module, "get-crowdflower-job", new Packages.com.google.refine.crowdsourcing.crowdflower.GetJobInfoCommand());
   RS.registerCommand(module, "evaluate-recon-job", new Packages.com.google.refine.crowdsourcing.crowdflower.EvaluateReconJobCommand());
+  RS.registerCommand(module, "image-recon-job", new Packages.com.google.refine.crowdsourcing.crowdflower.ImageReconJobCommand());
   
   // Script files to inject into /project page
   ClientSideResourceManager.addPaths(
@@ -55,8 +56,8 @@ function init() {
       "scripts/util.js",
       "scripts/dialogs/crowdflower-api-settings-dialog.js",
       "scripts/dialogs/crowdflower-job-columns-dialog.js",
-      "scripts/dialogs/crowdflower-create-gold-dialog.js",
       "scripts/dialogs/crowdflower-eval-recon-dialog.js",
+      "scripts/dialogs/crowdflower-img-recon-dialog.js",
     ]
   );
 

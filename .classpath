@@ -104,7 +104,7 @@
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-arq-2.10.2-20130528.075133-12.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-core-2.10.2-20130528.074942-12.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-iri-0.9.7-20130528.074823-12.jar"/>
-	<classpathentry kind="lib" path="/grefine-rdf-extension/module/MOD-INF/lib/jena-larq-1.0.1-20130218.045518-64.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/commons-codec-1.8.jar"/>
+	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-larq-1.0.1-20130218.045518-64.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
