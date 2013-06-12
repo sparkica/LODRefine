@@ -189,7 +189,8 @@ BrowsingEngine.prototype.addFacet = function(type, config, options) {
 
   this._facets.push({ elmt: elmt, facet: facet });
 
-  ui.leftPanelTabs.tabs("select", 0);
+  
+  ui.leftPanelTabs.tabs("option","active", 0);
 
   Refine.update({ engineChanged: true });
 };
