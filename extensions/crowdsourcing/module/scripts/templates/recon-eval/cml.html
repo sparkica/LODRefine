@@ -1,0 +1,18 @@
+<p>[[ENTITY]]:&#xA0;{{anchor}}<br />
+[[ENTITY]]'s profile page:&#xA0;
+<a href="{{link}}" target="_blank" id="">{{link}}</a>
+</p>
+<br /><hr />
+<p>&#xA0;Check suggested links <strong>FIRST</strong>strong>:</p>
+<ol type="1"><li>Suggestion 1: <a href="{{suggestion_url_1}}" target="_blank">{{suggestion_name_1}}</a></li>
+<li>Suggestion 2: <a href="{{suggestion_url_2}}" target="_blank">{{suggestion_name_2}}</a></li>
+<li>Suggestion 3: <a href="{{suggestion_url_3}}" target="_blank">{{suggestion_name_3}}</a></li>
+<li>None of the above matches (<a target="_blank" href="[[SERVICE_URL]]">find page on your own</a>)</li>
+</ol>
+
+<cml:select label="Best suggestion" validates="required" gold="best_suggestion_gold" instructions="Select the best option for this [[ENTITY]].">    
+<cml:option label="Suggestion 1" value="Suggestion 1"></cml:option>    
+<cml:option label="Suggestion 2" value="Suggestion 2"></cml:option>    
+<cml:option label="Suggestion 3" value="Suggestion 3"></cml:option>    
+<cml:option label="None of the above" value="None of the above"></cml:option>  
+</cml:select><cml:text label="Enter link:" gold="enter_link_gold" only-if="best_suggestion:[4]" instructions="Find [[SERVICE_NAME]] page for this [[ENTITY]] and paste it in this field"  validates="url:['non-search']"></cml:text>

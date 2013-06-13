@@ -1,17 +1,21 @@
-<div>
-&lt;img src="{{img_url}}" id="" width="{{w_size}}" height="{{h_size}}"&gt;
-&lt;p&gt;Description:&#160;
-{{name}}&lt;br&gt;Destination url: &#160;&lt;a target="_blank" href="{{dst_url}}"&gt;{{dst_url}}
-&#160;&lt;/a&gt;&lt;/p&gt;
-&lt;cml:select label="Image matches description" class="" validates="required"&gt;
-    &lt;cml:option label="yes, completely" selected="true"/&gt;
-    &lt;cml:option label="not at all" id=""/&gt;
-  &lt;/cml:select&gt;
-  &lt;cml:select label="Image matches the content at the destination URL" class="" validates="required"&gt;
-    &lt;cml:option label="yes, completely" selected="true"/&gt;
-    &lt;cml:option label="not at all" id=""/&gt;
-  &lt;/cml:select&gt;
-  &lt;cml:text label="Specific keyword describing the image " class="" validates="alphanum" instructions="E.g.: cotton canvas printed window panel"/&gt;
-  &lt;cml:text label="General keyword describing the image" class="" validates="alphanum" instructions="E.g.: window panel"/&gt;
-  &lt;cml:text label="Matching wikipedia link" class="" instructions="Important: no redirecting pages!" validates="required url"/&gt;
-  </div>
+<img src="{{img_url}}" id="" width="{{w_size}}" height="{{h_size}}">
+<p>Description:&#160;
+{{name}}<br>Destination webpage: &#160;<a target="_blank" href="{{dst_url}}">
+{{dst_url}}
+&#160;</a></p>
+<cml:select label="Image matches description" class="" validates="required">
+    <cml:option label="yes, completely" selected="" id="completely"/>
+    <cml:option label="yes, but description is more general" id="desc_general"/>
+    <cml:option label="yes, but description is more specific" id="desc_specific"/>
+    <cml:option label="no, not at all, they are totally different" id="different"/>
+  </cml:select>
+  <cml:select label="Image matches the webpage content at the destination URL" class="" validates="required">
+    <cml:option label="yes, completely" selected="" id="completely"/>
+    <cml:option label="yes, but webpage is more general" id="web_general"/>
+    <cml:option label="yes, but webpage is more specific" id="web_spec"/>    
+    <cml:option label="no, not at all, they are totally different" id="different"/>
+  </cml:select>
+  
+  
+<cml:text label="Tag the image" class="" instructions="Out here keywords that best describe the image (separated by a comma)" validates="alpha"/>
+<cml:text label="Wikipedia page match for image" class="" instructions="Paste URL of a Wikipedia page that is a best match for the image content" validates="required url" gold="wiki"/>

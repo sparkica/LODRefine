@@ -11,12 +11,8 @@ function ZemantaCrowdFlowerDialog(onDone) {
         this._elmts = DOM.bind(this._dialog);
         this._elmts.dialogHeader.text("Upload data to CrowdFlower");
 
-
-        var tabindex = 0;
-
-
         this._renderAllExistingJobs();
-        this._renderAllColumns2(this._elmts.columnsMenu_0, this._elmts.columnList_0, tabindex);
+        this._renderAllColumns2(this._elmts.columnsMenu_0, this._elmts.columnList_0, 0);
 
         var self = this;
 
@@ -58,11 +54,12 @@ function ZemantaCrowdFlowerDialog(onDone) {
 
         //TODO: how to get it above first dialog?
         this._elmts.buttonPreviewTemplate.click(function () {
-                var content = $(self._elmts.jobInstructions.val());
+                var content = $('<p>' + self._elmts.jobInstructions.val() + '</p>');
                 var dlg = $('<div>').append(content);
                 dlg.dialog({
                         resizable: false,
-                        height:300,
+                        height:450,
+                        appendTo: $('#refine-dialog'),
                         modal: true,
                         buttons: {
                                 "OK": function() {
@@ -96,11 +93,11 @@ function ZemantaCrowdFlowerDialog(onDone) {
                 self._extension.content_type = "json";
                 self._extension.column_names = [];
 
-                var curTabPanel = $('#jobTabs .ui-tabs-panel:not(.ui-tabs-hide)');	  
-                var tabindex = curTabPanel.index();
                 var uploadData = false;
 
-                if(tabindex === 0) {
+                var activeTab = $( "#jobTabs" ).tabs( "option", "active" );
+                
+                if(activeTab === 0) {
                         self._extension.new_job = true;  
 
                         if(self._elmts.chkUploadToNewJob.is(':checked')) {
@@ -115,8 +112,6 @@ function ZemantaCrowdFlowerDialog(onDone) {
                         });
 
                         self._extension.cml = self._cml;
-
-
 
                 } else {
                         self._extension.new_job = false;
@@ -377,8 +372,7 @@ ZemantaCrowdFlowerDialog.prototype._updateJobInfo = function(data) {
                         self._renderMappings();
                 } else {			
                         self._elmts.extFieldsPanel.hide();
-                        var tabindex = 1;
-                        self._renderAllColumns2(self._elmts.columnsMenu_1, self._elmts.columnList_1, tabindex);
+                        self._renderAllColumns2(self._elmts.columnsMenu_1, self._elmts.columnList_1, 1);
                         this._elmts.extColumnsPanel.show();
                 }
         }
@@ -529,52 +523,33 @@ ZemantaCrowdFlowerDialog.prototype._getMappedColumn = function (field) {
         return column;
 };
 
-
-//TODO: check if this works for CML too
-//TODO: how to escape html in javascript?
-//TODO: can I load files instead of HMLT
-
 ZemantaCrowdFlowerDialog.prototype._fillReconEvalTemplate = function (entityType, recon, reconSearchUrl) {
 
         var self = this;
 
         var title = "Find " + recon + " profile page for " + entityType;
-        var instructions = "Find " + recon + " page for "+ entityType +" that matches data on " + entityType + "'s profile page.";
-        instructions += "<b>Check suggested options FIRST</b>. If none of them matches, try to find profile page ";
-        instructions += "using <a target=\"_blank\" href=\""+ reconSearchUrl + "\">"+ recon + " search page</a>. ";
+        var instructions = ZemUtil.loadText("crowdsourcing", "scripts/templates/recon-eval/instructions.html");
+        var cml = ZemUtil.loadText("crowdsourcing", "scripts/templates/recon-eval/cml.html");
 
         function capitaliseFirstLetter(string)
         {
                 return string.charAt(0).toUpperCase() + string.slice(1);
         }
+        
+        function replaceAll (find, replace, string) {
+                return string.replace(new RegExp(find, 'g'), replace);
+        };
 
-        self._cml = "<p>" + 
-        capitaliseFirstLetter(entityType) + ":&#xA0;" +
-        "{{anchor}}<br />" + capitaliseFirstLetter(entityType) + "'s profile page:&#xA0;<a href=\"{{link}}\" target=\"_blank\" id=\"\">" +
-        "{{link}}</a></p><br />" +
-        "<hr />" +
-        "<p>&#xA0;<b>FIRST</b> check suggested links:</p>" +
-        "<ol type=\"1\">" + 
-        "<li>Suggestion 1: <a href=\"{{suggestion_url_1}}\" target=\"_blank\">" + 
-        "{{suggestion_name_1}}</a></li>" + 
-        "<li>Suggestion 2: <a href=\"{{suggestion_url_2}}\" target=\"_blank\">" + 
-        "{{suggestion_name_2}}</a></li>" +
-        "<li>Suggestion 3: <a href=\"{{suggestion_url_3}}\" target=\"_blank\">" +
-        "{{suggestion_name_3}}</a></li>" + 
-        "<li>None of the above matches (<a target=\"_blank\" href=\""+ reconSearchUrl + "\">find page on your own</a>)</li>" +
-        "</ol>" + 
-        "<cml:select label=\"Best suggestion\" validates=\"required\" gold=\"best_suggestion_gold\" instructions=\"Select the best option for this "+ entityType +".\">" +
-        "    <cml:option label=\"Suggestion 1\" value=\"Suggestion 1\"></cml:option>" +
-        "    <cml:option label=\"Suggestion 2\" value=\"Suggestion 2\"></cml:option>" +
-        "    <cml:option label=\"Suggestion 3\" value=\"Suggestion 3\"></cml:option>" +
-        "    <cml:option label=\"None of the above\" value=\"None of the above\"></cml:option>" +
-        "  </cml:select>" +
-        "<cml:text label=\"Enter link:\" gold=\"enter_link_gold\" only-if=\"best_suggestion:[4]\" instructions=\"Find " + recon + " page for this " + entityType + " and paste it in this field\"  validates=\"url:['non-search']\">"  +
-        "</cml:text>";
-
-
+        instructions = replaceAll("\\[\\[ENTITY\\]\\]",entityType, instructions);
+        instructions = replaceAll("\\[\\[SERVICE_NAME\\]\\]", recon, instructions);
+        instructions = replaceAll("\\[\\[SERVICE_URL\\]\\]", reconSearchUrl, instructions);
+        cml = replaceAll("\\[\\[ENTITY\\]\\]",entityType, cml);
+        cml = replaceAll("\\[\\[SERVICE_NAME\\]\\]", recon, cml);
+        cml = replaceAll("\\[\\[SERVICE_URL\\]\\]", reconSearchUrl, cml);
+        
         self._elmts.jobTitle.val(title);
         self._elmts.jobInstructions.val(instructions);
+        self._cml = cml;        
 };
 
 
@@ -585,14 +560,13 @@ ZemantaCrowdFlowerDialog.prototype._fillImageReconTemplate = function () {
         
         var title = "Find best matching Wikipedia link for image";
         
-        //TODO: hmmm.... html is parsed into DOM, but I'd need only html
-        // not sure if this is possible, because 
-        var instructions = $(DOM.loadHTML("crowdsourcing", "scripts/templates/image-recon/instructions.html"));
-        var cml = $(DOM.loadHTML("crowdsourcing", "scripts/templates/image-recon/cml.html"));
+        var instructions = ZemUtil.loadText("crowdsourcing", "scripts/templates/image-recon/instructions.html");
+        var cml = ZemUtil.loadText("crowdsourcing", "scripts/templates/image-recon/cml.html");
         
-        self._elmts.jobTitle.val(title);
-        self._elmts.jobInstructions.val(instructions.text());
-        self._cml = cml.text();
+        self._elmts.jobTitle.val(title);        
+        self._elmts.jobInstructions.val(instructions);
+        self._cml = cml;
+        
 };
 
 ZemantaCrowdFlowerDialog.prototype._updateFieldsFromTemplate = function (param) {
@@ -601,7 +575,6 @@ ZemantaCrowdFlowerDialog.prototype._updateFieldsFromTemplate = function (param) 
         var recon = "";
         var reconSearchUrl = "";
 
-        //get selected template
         var template = self._elmts.jobTemplates.children(":selected").val();
 
         if(template === "blank") {
@@ -622,7 +595,5 @@ ZemantaCrowdFlowerDialog.prototype._updateFieldsFromTemplate = function (param) 
         }
         else if(template === "img_recon") {
                 self._fillImageReconTemplate();
-                console.log("Done loading img recon template");
-                console.log(self._cml);
         }
 };

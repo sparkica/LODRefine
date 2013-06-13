@@ -48,8 +48,6 @@ ZemantaCrowdSourcingExtension.util.loadAllExistingJobs = function(getJobs) {
                                         if(data.status != "ERROR") {
                                                 getJobs(data['jobs'],data.status);
                                         } else{
-                                                //ZemUtil.showErrorDialog("An error occured while loading existing jobs.\n" + data.message);  
-                                                console.log("An error occured while loading existing jobs. Details: " + data.message);
                                                 getJobs([], data.message);
                                         }
                                 }
@@ -109,6 +107,7 @@ ZemUtil.showErrorDialog = function (message) {
         dlg.dialog({
                 resizable: false,
                 height:200,
+                appendTo: $('.dialog-frame'),
                 modal: true,
                 buttons: {
                         "OK": function() {
@@ -131,6 +130,7 @@ ZemUtil.showConfirmation = function (title, message) {
         dlg.dialog({
                 resizable: false,
                 height:200,
+                appendTo: $('.dialog-frame'),
                 modal: true,
                 buttons: {
                         "OK": function() {
@@ -140,4 +140,19 @@ ZemUtil.showConfirmation = function (title, message) {
         });
 };
 
-
+//load text from file - for template loading
+ZemUtil._loadedText = {};
+ZemUtil.loadText = function(module, path) {
+  var fullPath = (ModuleWirings[module] + path).substring(1);
+  if (!(fullPath in ZemUtil._loadedText)) {
+    $.ajax({
+      async: false,
+      url: fullPath,
+      dataType: "text",
+      success: function(text) {
+              ZemUtil._loadedText[fullPath] = text;
+      }
+    });
+  }
+  return ZemUtil._loadedText[fullPath];
+};
