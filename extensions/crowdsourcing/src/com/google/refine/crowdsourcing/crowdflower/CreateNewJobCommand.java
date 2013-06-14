@@ -77,7 +77,7 @@ public class CreateNewJobCommand extends Command {
                                 }
                                 // ERROR
                                 else {
-                                        result.put("status", "ERROR");
+                                        result.put("status", "error");
                                         result.put("message", "No job id specified.");
                                 }
                         }

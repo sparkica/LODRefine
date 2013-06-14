@@ -52,7 +52,6 @@ function ZemantaCrowdFlowerDialog(onDone) {
                 self._cml = "";
         });
 
-        //TODO: how to get it above first dialog?
         this._elmts.buttonPreviewTemplate.click(function () {
                 var content = $('<p>' + self._elmts.jobInstructions.val() + '</p>');
                 var dlg = $('<div>').append(content);
@@ -236,7 +235,7 @@ ZemantaCrowdFlowerDialog.prototype._updateJobList = function(data) {
         var self = this;
         var selContainer = self._elmts.allJobsList;
         var selected = "";
-        var status = data["status"];
+        var status = data["status"].toLowerCase();
         var dismissBusy = DialogSystem.showBusy();
 
         selContainer.empty();
@@ -244,8 +243,8 @@ ZemantaCrowdFlowerDialog.prototype._updateJobList = function(data) {
         $('<option name="opt_none" value="none">--- select a job --- </option>').appendTo(selContainer);
 
 
-        if(status === "ERROR") {
-                ZemUtil.showErrorDialog(data["message"]);
+        if(status == "error") {
+                ZemUtil.showErrorDialog(data["message"],'.dialog-frame');
                 self._elmts.statusMessage.removeClass('text-success');
                 self._elmts.statusMessage.addClass('text-error');
                 self._elmts.statusMessage.html("There was an error: <br/>" + data["message"]);
@@ -288,15 +287,14 @@ ZemantaCrowdFlowerDialog.prototype._renderAllExistingJobs = function() {
 
         $('<option name="opt_none" value="none">--- select a job --- </option>').appendTo(selContainer);
 
-        ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status) {
+        ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status, message) {
 
                 if(status === "OK" | status === 200) {
                         elemStatus.removeClass('text-error');
                         elemStatus.addClass('text-success');
                         elemStatus.html("Jobs are loaded.");
                 } else {
-                        var msg = "There was an error loading jobs.\n" + status;
-                        ZemUtil.showErrorDialog(msg);
+                        var msg = "There was an error loading jobs.\n" + message;
                         elemStatus.removeClass('text-success');
                         elemStatus.addClass('text-error');
                         elemStatus.html(msg);
@@ -335,7 +333,7 @@ ZemantaCrowdFlowerDialog.prototype._updateJobInfo = function(data) {
         var status = data["status"];
 
         if(status === "ERROR") {
-                ZemUtil.showErrorDialog(status + ': ' + data.message);
+                ZemUtil.showErrorDialog(status + ': ' + data.message, '.dialog-frame');
                 self._elmts.statusMessage.removeClass('text-success');
                 self._elmts.statusMessage.addClass('text-error');
                 self._elmts.statusMessage.html(status + ': ' + data.message);
@@ -380,27 +378,14 @@ ZemantaCrowdFlowerDialog.prototype._updateJobInfo = function(data) {
 
 ZemantaCrowdFlowerDialog.prototype._renderAllColumns2 = function(columnContainer, columnListContainer, tabindex) {
 
-        //var self = this;
         var columns = theProject.columnModel.columns;
-
-        var chkid = 0;
-
-        var renderColumns = function(columns, elem) {
-
-                $.each(columns, function(index, value){
-                        var id = 'chk_' + tabindex + '_' + chkid;
-                        $('<input type="checkbox" class="zem-col" value="' + value.name + '" id="' + id + '"/>').appendTo(elem);
-                        $('<label for="' + id + '">' + value.name + '</label> <br/>').appendTo(elem);
-                        chkid++;
-                });
-        };
 
         var linkSelectAll = $('<a href="#" id="select-all-columns-' + tabindex +'"> Select all </a>');
         columnContainer.append(linkSelectAll);
         var linkClearAll = $('<a href="#" id="clear-all-columns-' + tabindex + '"> Clear all </a>');
         columnContainer.append(linkClearAll);
 
-        renderColumns(columns, columnListContainer);
+        ZemUtil.renderColumns(columns, columnListContainer, tabindex);
 
         linkClearAll.click(function () {
                 $('#project-columns-' + tabindex + ' input.zem-col').each(function () {
@@ -578,7 +563,7 @@ ZemantaCrowdFlowerDialog.prototype._updateFieldsFromTemplate = function (param) 
         var template = self._elmts.jobTemplates.children(":selected").val();
 
         if(template === "blank") {
-                ZemUtil.showErrorDialog("Choose template first.");
+                ZemUtil.showErrorDialog("Choose template first.", '.dialog-frame');
                 return;
         }
         

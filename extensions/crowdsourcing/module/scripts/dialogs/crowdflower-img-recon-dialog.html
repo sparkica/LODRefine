@@ -6,41 +6,57 @@
 
             <div class="refine-tabs ui-tabs ui-tabs-nav" bind="jobTabs" id="jobTabs">
                 <ul>
-                    <li><a href="#tab2">Upload data for image reconciliation to existing job</a></li>
+                    <li><a href="#tab2">Upload data for image reconciliation</a></li>
                 </ul>
                 <div id="tab2">
+            <div class="job-box">
                 <div class="field-container">
                     <label>Select existing job:</label>
                     <div id="job-list" bind="jobList">
-                    <select id="all-jobs" bind="allJobsList"></select>
+                    <select id="all_jobs" bind="allJobsList"></select>
                     </div>
                 </div><!-- ./field-container -->
                 <div class="field-container">
                     <label>Image url:</label>
-                    <select name="img-url" bind="imgUrlColumn"></select>
+                    <select name="img_url" bind="imgUrlColumn"></select>
                 </div><!-- ./field-container -->
                 <div class="field-container">
                     <label>Image description:</label>
-                    <select name="img-desc" bind="imgDescColumn"></select>
+                    <select name="img_desc" bind="imgDescColumn"></select>
                 </div><!-- ./field-container -->
                 <div class="field-container">
                     <label>Destination url:</label>
-                    <select name="dest-url" bind="destUrlColumn"></select>
+                    <select name="dest_url" bind="destUrlColumn"></select>
                 </div><!-- ./field-container -->
+
+         </div>
+         <div class="job-box">
+         <h3>Options</h3>
+                <div class="wrapper">
+            <div class="column-left">
+            <h3>Gold data (correct answers)</h3>
                 <div class="field-container">
-                    <label>Gold data:</label>
-                    <select name="gold-data" bind="goldDataColumn"></select>
+                <label>Upload gold data? </label>
+                <input type="checkbox" id="upload-gold" bind="uploadGoldBtn"><br/>
                 </div><!-- ./field-container -->
+            <br/>
+            <div id="gold-data-panel" bind="goldDataPanel">
+                    <div class="field-container">
+                    <label>Select Gold data column:</label>
+                    <select name="gold_data" bind="goldDataColumn"></select>
+                </div><!-- ./field-container -->
+                </div> <!-- ./gold-data-panel -->
+              </div>
+              <div class="column-right">
+                <h3>Additional information</h3>
+                <label>Select columns (scroll right for more):</label>
+                <p class="text-info"><small>May require template update: you have to add field for this column manually.</small></p>
+                <div id="info-fields" bind="infoField" class="project-columns">
               
-              <div class="job-box">
-                <div id="infoFieldPanel" class="panel">
-                <label>Select additional columns:</label>
-                <div id="info-fields" bind="infoField" class="project-columns tiny">
                 </div>
-                </div>
-            </div>
-                
-                
+            </div><!-- ./column right -->
+            </div> 
+              </div> <!-- ./job box -->
                 </div>
                 <!-- /tab2 -->
             </div>

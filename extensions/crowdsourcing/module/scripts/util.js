@@ -45,10 +45,10 @@ ZemantaCrowdSourcingExtension.util.loadAllExistingJobs = function(getJobs) {
                         function(data)
                         {
                                 if(data != null) {  	  			  
-                                        if(data.status != "ERROR") {
-                                                getJobs(data['jobs'],data.status);
+                                        if(data.status.toLowerCase() != "error") {
+                                                getJobs(data['jobs'],data.status, "");
                                         } else{
-                                                getJobs([], data.message);
+                                                getJobs([], data.status, data.message);
                                         }
                                 }
                         },
@@ -64,7 +64,7 @@ ZemantaCrowdSourcingExtension.util.copyJob = function(extension, updateJobs) {
                         {"extension": JSON.stringify(extension)},
                         function(data)
                         {
-                                if(data != null && data.status != "ERROR") {
+                                if(data != null && data.status.toLowerCase() != "error") {
                                         updateJobs(data);
                                 } 
                                 else {
@@ -83,7 +83,7 @@ ZemantaCrowdSourcingExtension.util.getJobInfo = function(extension, updateJobInf
                         {"extension": JSON.stringify(extension)},
                         function(data)
                         {
-                                if(data != null && data.status != "ERROR") {
+                                if(data != null && data.status.toLowerCase() != "error") {
                                         updateJobInfo(data);
                                 } else {
                                         ZemUtil.showErrorDialog("Error occured while updating job information.\n" + data.message);
@@ -93,21 +93,37 @@ ZemantaCrowdSourcingExtension.util.getJobInfo = function(extension, updateJobInf
         );     
 };
 
-ZemUtil.showErrorDialog = function (message) {
-        
+
+
+ZemUtil.renderColumns = function(columns, elem, tabindex) {
+
+        var chkid = 0;
+        $.each(columns, function(index, value){
+                var id = 'chk_' + tabindex + '_' + chkid;
+                $('<input type="checkbox" class="zem-col" value="' + value.name + '" id="' + id + '"/>').appendTo(elem);
+                $('<label for="' + id + '">' + value.name + '</label> <br/>').appendTo(elem);
+                chkid++;
+        });
+
+};
+
+
+
+ZemUtil.showErrorDialog = function (message, parent) {
+
         var dlg = $(DOM.loadHTML("crowdsourcing", "scripts/dialogs/confirmation-dialog.html"));
         dlg._elmts = DOM.bind(dlg);
-        
+
         dlg._elmts.dlgTitle.addClass('text-error');
         dlg._elmts.dlgTitle.text("An error occured.");
         dlg._elmts.dlgMessage.addClass('text-error');
         dlg._elmts.dlgMessage.text(message);
-        
-        
+
+
         dlg.dialog({
                 resizable: false,
                 height:200,
-                appendTo: $('.dialog-frame'),
+                appendTo: $(parent),
                 modal: true,
                 buttons: {
                         "OK": function() {
@@ -118,19 +134,19 @@ ZemUtil.showErrorDialog = function (message) {
 
 };
 
-ZemUtil.showConfirmation = function (title, message) {
+ZemUtil.showConfirmation = function (title, message, parent) {
         var dlg = $(DOM.loadHTML("crowdsourcing", "scripts/dialogs/confirmation-dialog.html"));
         dlg._elmts = DOM.bind(dlg);
-        
+
         dlg._elmts.dlgTitle.addClass('text-success');
         dlg._elmts.dlgTitle.text(title);
         dlg._elmts.dlgMessage.addClass('text-success');
         dlg._elmts.dlgMessage.text(message);
-        
+
         dlg.dialog({
                 resizable: false,
                 height:200,
-                appendTo: $('.dialog-frame'),
+                appendTo: $(parent),
                 modal: true,
                 buttons: {
                         "OK": function() {
@@ -143,16 +159,16 @@ ZemUtil.showConfirmation = function (title, message) {
 //load text from file - for template loading
 ZemUtil._loadedText = {};
 ZemUtil.loadText = function(module, path) {
-  var fullPath = (ModuleWirings[module] + path).substring(1);
-  if (!(fullPath in ZemUtil._loadedText)) {
-    $.ajax({
-      async: false,
-      url: fullPath,
-      dataType: "text",
-      success: function(text) {
-              ZemUtil._loadedText[fullPath] = text;
-      }
-    });
-  }
-  return ZemUtil._loadedText[fullPath];
+        var fullPath = (ModuleWirings[module] + path).substring(1);
+        if (!(fullPath in ZemUtil._loadedText)) {
+                $.ajax({
+                        async: false,
+                        url: fullPath,
+                        dataType: "text",
+                        success: function(text) {
+                                ZemUtil._loadedText[fullPath] = text;
+                        }
+                });
+        }
+        return ZemUtil._loadedText[fullPath];
 };
