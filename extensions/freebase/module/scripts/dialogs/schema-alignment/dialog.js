@@ -253,8 +253,9 @@ SchemaAlignmentDialog.prototype._createDialog = function() {
   });
 
   $("#schema-alignment-tabs").tabs();
-  $("#schema-alignment-tabs-preview-mqllike").css("display", "");
-  $("#schema-alignment-tabs-preview-tripleloader").css("display", "");
+  //This causes trouble with jquery ui v1.10
+  //$("#schema-alignment-tabs-preview-mqllike").css("display", "");
+  //$("#schema-alignment-tabs-preview-tripleloader").css("display", "");
 
   this._previewPanes = $(".schema-alignment-dialog-preview");
 

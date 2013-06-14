@@ -126,8 +126,7 @@ RdfSchemaAlignmentDialog.prototype._renderBody = function(body) {
 			}
 		}
 	});
-	$("#rdf-schema-alignment-tabs-preview").css("display", "");
-
+	
 	self._canvas = $(".schema-alignment-dialog-canvas");
 	self._nodeTable = $('<table></table>')
 	.addClass("schema-alignment-table-layout")

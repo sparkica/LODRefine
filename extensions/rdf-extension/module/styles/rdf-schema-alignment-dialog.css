@@ -42,6 +42,12 @@ div.vocabulary-manager-footer h2{
     overflow: auto;
 	}
 
+#rdf-schema-alignment-dialog-preview{
+  padding: 2px;
+  height: 250px;
+}
+
+
 .rdf-schema-top-separated {
 	border-top:2px solid #ECE9D8;
 	}
