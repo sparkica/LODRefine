@@ -303,15 +303,14 @@ function init() {
     "index/scripts",
     module,
     [
-      
-      //"externals/jquery-1.7.2.min.js",
       "externals/jquery-1.10.1.min.js",
       "externals/jquery.cookie.js",
       "externals/jquery.eventstack-0.3.js",
       "externals/jquery-ui/jquery-ui-1.10.3.custom.min.js",
-      //"externals/jquery-ui/jquery-ui-1.8.20.custom.min.js",
       "externals/date.js",
       "externals/bootstrap-lodrefine/js/bootstrap.min.js",
+      //temporary fix for jquery migration issues 
+      "externals/jquery-migrate-1.2.1.min.js",
       
       "externals/CFInstall.min.js",
       "scripts/chrome-frame.js",
@@ -354,7 +353,6 @@ function init() {
     [
       "externals/jquery-ui/css/cupertino/jquery-ui-1.10.3.custom.min.css",
       "externals/jquery-ui/css/lodrefine_start/jquery-ui-1.10.3.custom.min.css",
-      //"externals/jquery-ui/css/ui-lightness/jquery-ui-1.8.20.custom.css",
       "externals/bootstrap-lodrefine/css/bootstrap.min.css",
       "styles/jquery-ui-overrides.less",
       "styles/common.less",
@@ -384,16 +382,16 @@ function init() {
     "project/scripts",
     module,
     [
-      //"externals/jquery-1.7.2.min.js",
       "externals/jquery-1.10.1.min.js",
       "externals/jquery.cookie.js",
       "externals/jquery.eventstack-0.3.js",
       "externals/suggest/suggest-4_1.custom.min.js",
       "externals/jquery-ui/jquery-ui-1.10.3.custom.min.js",
-      //"externals/jquery-ui/jquery-ui-1.8.20.custom.min.js",
       "externals/imgareaselect/jquery.imgareaselect.js",
       "externals/date.js",
       "externals/bootstrap-lodrefine/js/bootstrap.min.js",
+      //temporary fix for jquery migration issues 
+      "externals/jquery-migrate-1.2.1.min.js",
 
       "externals/CFInstall.min.js",
       "scripts/chrome-frame.js",
@@ -458,7 +456,6 @@ function init() {
       "externals/suggest/css/suggest-4_1.min.css",
       "externals/jquery-ui/css/cupertino/jquery-ui-1.10.3.custom.min.css",
       "externals/jquery-ui/css/lodrefine_start/jquery-ui-1.10.3.custom.min.css",
-      //"externals/jquery-ui/css/ui-lightness/jquery-ui-1.8.20.custom.css",
       "externals/imgareaselect/css/imgareaselect-default.css",
       "externals/bootstrap-lodrefine/css/bootstrap.min.css",
 
@@ -496,15 +493,15 @@ function init() {
     "preferences/scripts",
     module,
     [
-     //"externals/jquery-1.7.2.min.js",
       "externals/jquery-1.10.1.min.js",
       "externals/jquery.cookie.js",
       "externals/suggest/suggest-4_1.custom.min.js",
       "externals/jquery-ui/jquery-ui-1.10.3.custom.min.js",
-      //"externals/jquery-ui/jquery-ui-1.8.20.custom.min.js",
       "externals/imgareaselect/jquery.imgareaselect.js",
       "externals/date.js",
       "externals/bootstrap-lodrefine/js/bootstrap.min.js",
+      //temporary fix for jquery migration issues 
+      "externals/jquery-migrate-1.2.1.min.js",
       "scripts/preferences.js"
     ]
   );
@@ -515,7 +512,6 @@ function init() {
       "externals/suggest/css/suggest-4_1.min.css",
       "externals/jquery-ui/css/cupertino/jquery-ui-1.10.3.custom.min.css",
       "externals/jquery-ui/css/lodrefine_start/jquery-ui-1.10.3.custom.min.css",
-      //"externals/jquery-ui/css/ui-lightness/jquery-ui-1.8.20.custom.css",
       "externals/bootstrap-lodrefine/css/bootstrap.min.css",
       "styles/jquery-ui-overrides.less",
       "styles/common.less",
