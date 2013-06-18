@@ -147,6 +147,7 @@ ReconDialog.prototype._selectService = function(record) {
         if (record.handler) {
           record.handler.activate();
         } else {
+          //todo: add error handling for extensions not complying to the guides
           var handlerConstructor = eval(record.service.ui.handler);
 
           record.handler = new handlerConstructor(

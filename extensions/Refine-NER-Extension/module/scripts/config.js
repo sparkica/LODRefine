@@ -5,7 +5,7 @@ NERExtension.servicesPath = NERExtension.commandPath + "services";
 
 // Register a dummy reconciliation service that will be used to display named entities
 ReconciliationManager.registerService({
-  name: "NamedEntity",
+  name: "NamedEntity Service",
   url: "NamedEntity",
   // By setting the URL to "{{id}}",
   // this whole string will be replaced with the actual URL

@@ -43,38 +43,43 @@ function ReconStandardServicePanel(column, service, container) {
 ReconStandardServicePanel.prototype._guessTypes = function(f) {
   var self = this;
   var dismissBusy = DialogSystem.showBusy();
-
+  
   $.post(
-    "command/core/guess-types-of-column?" + $.param({
-      project: theProject.id, 
-      columnName: this._column.name,
-      service: this._service.url
-    }),
-    null, 
+    "command/core/guess-types-of-column?",
+    {
+            "project": theProject.id, 
+            "columnName": this._column.name,
+            "service": this._service.url
+     }, 
     function(data) {
-      self._types = data.types;
-
-      if (self._types.length === 0 && "defaultTypes" in self._service) {
-        var defaultTypes = {};
-        $.each(self._service.defaultTypes, function() {
-          defaultTypes[this.id] = this.name;
-        });
-        $.each(self._types, function() {
-          delete defaultTypes[typeof this == "string" ? this : this.id];
-        });
-        for (var id in defaultTypes) {
-          if (defaultTypes.hasOwnProperty(id)) {
-            self._types.push({
-              id: id,
-              name: defaultTypes[id].name
-            });
-          }
-        }
+      if(data.code == 'error') {
+              alert("There was an error while connecting to reconciliation service. Details: \n" + 
+                     data.message);
       }
-
+      else {
+          self._types = data.types;    
+          if (self._types.length === 0 && "defaultTypes" in self._service) {
+            var defaultTypes = {};
+            $.each(self._service.defaultTypes, function() {
+              defaultTypes[this.id] = this.name;
+            });
+            $.each(self._types, function() {
+              delete defaultTypes[typeof this == "string" ? this : this.id];
+            });
+            for (var id in defaultTypes) {
+              if (defaultTypes.hasOwnProperty(id)) {
+                self._types.push({
+                  id: id,
+                  name: defaultTypes[id].name
+                });
+              }
+            }
+          }
+      }
       dismissBusy();
       f();
-    }
+    },
+    "json"
   );
 };
 
@@ -110,7 +115,7 @@ ReconStandardServicePanel.prototype.dispose = function() {
 
 ReconStandardServicePanel.prototype._populatePanel = function() {
   var self = this;
-
+  
   /*
    *  Populate types
    */
@@ -243,7 +248,7 @@ ReconStandardServicePanel.prototype._rewirePropertySuggests = function(type) {
     }
     inputs.suggestP(suggestOptions);
   } else if (this._isInFreebaseSchemaSpace()) {
-    var namespace = (type) ? (typeof type == "string" ? type : type.id) : "/common/topic"
+    var namespace = (type) ? (typeof type == "string" ? type : type.id) : "/common/topic";
     inputs.suggestP({
       filter : '(should (any namespace:/type/object namespace:' + namespace + '))'
     });

@@ -37,6 +37,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -86,21 +87,28 @@ public class GuessTypesOfColumnCommand extends Command {
                 writer.key("code"); writer.value("error");
                 writer.key("message"); writer.value("No such column");
             } else {
-                    List<TypeGroup> typeGroups = guessTypes(project, column, serviceUrl);
+                    List<TypeGroup> typeGroups;
                     
-                    writer.key("code"); writer.value("ok");
-                    writer.key("types"); writer.array();         
-                    
-                    for (TypeGroup tg : typeGroups) {
-                        writer.object();
-                        writer.key("id"); writer.value(tg.id);
-                        writer.key("name"); writer.value(tg.name);
-                        writer.key("score"); writer.value(tg.score);
-                        writer.key("count"); writer.value(tg.count);
-                        writer.endObject();
+                    try {
+                            typeGroups = guessTypes(project, column, serviceUrl);
+                            writer.key("code"); writer.value("ok");
+                            writer.key("types"); writer.array();         
+                            
+                            for (TypeGroup tg : typeGroups) {
+                                writer.object();
+                                writer.key("id"); writer.value(tg.id);
+                                writer.key("name"); writer.value(tg.name);
+                                writer.key("score"); writer.value(tg.score);
+                                writer.key("count"); writer.value(tg.count);
+                                writer.endObject();
+                            }
+                            writer.endArray();
                     }
-                    
-                    writer.endArray();
+                    //special exception when service is not available
+                    catch (ConnectException e) {
+                            writer.key("code"); writer.value("error");
+                            writer.key("message"); writer.value(e.getLocalizedMessage());
+                    }
             }
             
             writer.endObject();
