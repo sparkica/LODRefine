@@ -108,16 +108,16 @@ public class ImageReconJobCommand extends Command {
                 try {
                         writer.object();
                         writer.key("status");
-                        writer.value(data.get("status"));
+                        writer.value("error");
                         writer.key("message"); 
                         if(data.has("message")) {
                                 writer.value(data.get("message"));
                         }
                         else {
-                                writer.value(data.getJSONObject("error").get("message"));                                
+                                writer.value(data.getJSONObject("error").get("message"));
                         }
                 } catch (Exception e) {
-                        logger.error("Generating ERROR response failed.");
+                        logger.error("Generating error response failed.");
                 } finally {
                         writer.endObject();
                         w.flush();
@@ -131,7 +131,6 @@ public class ImageReconJobCommand extends Command {
 
                 Column golden_col = null;
                 String golden_col_name = "";
-                int gold_index = (golden_col != null) ? golden_col.getCellIndex() : -1;
 
                 if (extension.has("golden_column")) {
                         golden_col_name = extension.getString("golden_column");
@@ -139,6 +138,7 @@ public class ImageReconJobCommand extends Command {
                 if (!golden_col_name.equals("")) {
                         golden_col = project.columnModel.getColumnByName(golden_col_name);
                 }
+                int gold_index = (golden_col != null) ? golden_col.getCellIndex() : -1;
 
                 JSONArray column_names = extension.getJSONArray("column_names");
 
@@ -209,11 +209,11 @@ public class ImageReconJobCommand extends Command {
                                         obj.put(key, "");
                                 }
                         }
-
-                        String gold_value = (gold_index != -1) ? (String) project.rows.get(row_index).getCellValue(gold_index) : "";
-                        if (gold_value == null) gold_value = "";
-                        
                         if (golden_col != null) {
+                                
+                                String gold_value = (gold_index != -1) ? (String) project.rows.get(row_index).getCellValue(gold_index) : "";
+                                if (gold_value == null) gold_value = "";
+
                                 obj.put("wiki_gold", gold_value);
                         }
                         bf.append(obj.toString());

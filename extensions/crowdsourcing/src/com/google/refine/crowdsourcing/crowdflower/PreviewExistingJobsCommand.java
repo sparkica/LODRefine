@@ -112,7 +112,7 @@ public class PreviewExistingJobsCommand extends Command {
 
                         writer.object();
                         writer.key("status");
-                        writer.value("ERROR");
+                        writer.value("error");
                         writer.key("message");
                         writer.value(message);
                         writer.endObject();

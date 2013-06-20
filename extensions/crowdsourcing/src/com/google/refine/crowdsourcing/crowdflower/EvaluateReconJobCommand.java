@@ -114,7 +114,7 @@ public class EvaluateReconJobCommand extends Command {
                 try {
                         writer.object();
                         writer.key("status");
-                        writer.value(data.get("status"));
+                        writer.value("error");
                         writer.key("message");
                         writer.value(data.get("message"));
                 } catch (Exception e) {

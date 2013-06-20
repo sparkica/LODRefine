@@ -48,7 +48,7 @@ function ZemCFImgReconDialog(onDone) {
                         col.safe_name = ZemantaCrowdSourcingExtension.util.convert2SafeName(col.name);
                         self._extension.column_names.push(col);
                 });
-
+                
                 DialogSystem.dismissUntil(self._level - 1);
                 self._onDone(self._extension);
         });
@@ -115,11 +115,10 @@ ZemCFImgReconDialog.prototype._renderAllExistingJobs = function() {
 
         ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status, message) {
 
-                if(status == "ok") {
+                if(status != "error") {
                         elemStatus.removeClass('text-error');
                         elemStatus.addClass('text-success');
                         elemStatus.html("Jobs are loaded.");
-
                 } else {
                         elemStatus.addClass('text-error');
                         elemStatus.removeClass('text-success');

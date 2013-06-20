@@ -44,8 +44,8 @@ ZemantaCrowdSourcingExtension.util.loadAllExistingJobs = function(getJobs) {
                         },
                         function(data)
                         {
-                                if(data != null) {  	  			  
-                                        if(data.status.toLowerCase() != "error") {
+                                if(data) {  	  			  
+                                        if(data.status != "error") {
                                                 getJobs(data['jobs'],data.status, "");
                                         } else{
                                                 getJobs([], data.status, data.message);

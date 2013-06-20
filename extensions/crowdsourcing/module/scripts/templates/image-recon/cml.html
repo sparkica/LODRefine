@@ -1,7 +1,7 @@
 <img src="{{img_url}}" id="" width="{{w_size}}" height="{{h_size}}">
 <p>Description:&#160;
-{{name}}<br>Destination webpage: &#160;<a target="_blank" href="{{dst_url}}">
-{{dst_url}}
+{{img_desc}}<br>Destination webpage: &#160;<a target="_blank" href="{{dest_url}}">
+{{dest_url}}
 &#160;</a></p>
 <cml:select label="Image matches description" class="" validates="required">
     <cml:option label="yes, completely" selected="" id="completely"/>
@@ -16,5 +16,5 @@
     <cml:option label="no, not at all, they are totally different" id="different"/>
   </cml:select>
   
-<cml:text label="Tag the image" class="" instructions="Enter keywords that best describe the image (separated by a comma)" validates="alpha"/>
+<cml:text label="Tag the image" class="" instructions="Enter keywords that best describe the image (separated by a comma)" validates="required alpha"/>
 <cml:text label="Wikipedia page match for image" class="" instructions="Paste URL of a Wikipedia page that is a best match for the image content" validates="required url" gold="wiki_gold"/>

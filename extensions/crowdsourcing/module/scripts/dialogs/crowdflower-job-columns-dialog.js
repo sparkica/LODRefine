@@ -94,9 +94,9 @@ function ZemantaCrowdFlowerDialog(onDone) {
 
                 var uploadData = false;
 
-                var activeTab = $( "#jobTabs" ).tabs( "option", "active" );
+                var tabindex = $( "#jobTabs" ).tabs( "option", "active" );
                 
-                if(activeTab === 0) {
+                if(tabindex === 0) {
                         self._extension.new_job = true;  
 
                         if(self._elmts.chkUploadToNewJob.is(':checked')) {
@@ -209,7 +209,7 @@ ZemantaCrowdFlowerDialog.prototype._copyAndUpdateJob = function(jobid) {
                 
                 var msg = "";
                 
-                if(data[status] == "ERROR") {
+                if(data[status].toLowerCase() == "error") {
                         msg = "There was an error either during copying or updating list.";
                         ZemUtil.showErrorDialog(msg);
                         //add class to status-message
@@ -243,8 +243,7 @@ ZemantaCrowdFlowerDialog.prototype._updateJobList = function(data) {
         $('<option name="opt_none" value="none">--- select a job --- </option>').appendTo(selContainer);
 
 
-        if(status == "error") {
-                ZemUtil.showErrorDialog(data["message"],'.dialog-frame');
+        if(status.toLowerCase() === "error") {
                 self._elmts.statusMessage.removeClass('text-success');
                 self._elmts.statusMessage.addClass('text-error');
                 self._elmts.statusMessage.html("There was an error: <br/>" + data["message"]);
@@ -289,7 +288,7 @@ ZemantaCrowdFlowerDialog.prototype._renderAllExistingJobs = function() {
 
         ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status, message) {
 
-                if(status === "OK" | status === 200) {
+                if(status == "ok" | status == 200) {
                         elemStatus.removeClass('text-error');
                         elemStatus.addClass('text-success');
                         elemStatus.html("Jobs are loaded.");
@@ -332,7 +331,7 @@ ZemantaCrowdFlowerDialog.prototype._updateJobInfo = function(data) {
 
         var status = data["status"];
 
-        if(status === "ERROR") {
+        if(status.toLowerCase() === "error") {
                 ZemUtil.showErrorDialog(status + ': ' + data.message, '.dialog-frame');
                 self._elmts.statusMessage.removeClass('text-success');
                 self._elmts.statusMessage.addClass('text-error');
@@ -543,7 +542,7 @@ ZemantaCrowdFlowerDialog.prototype._fillReconEvalTemplate = function (entityType
 ZemantaCrowdFlowerDialog.prototype._fillImageReconTemplate = function () {
         var self = this;
         
-        var title = "Find best matching Wikipedia link for image";
+        var title = "Find best matching Wikipedia page for image";
         
         var instructions = ZemUtil.loadText("crowdsourcing", "scripts/templates/image-recon/instructions.html");
         var cml = ZemUtil.loadText("crowdsourcing", "scripts/templates/image-recon/cml.html");
