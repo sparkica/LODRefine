@@ -127,7 +127,7 @@ public class GetJobInfoCommand extends Command {
                 try {
                         writer.object();
                         writer.key("status");
-                        writer.value(data.get("status"));
+                        writer.value("error");
 
                         if (data.has("error")) {
                                 writer.key("message");

@@ -143,7 +143,7 @@ public class CopyJobCommand extends Command {
                         }
 
                 } else {
-                        result.put("status", "ERROR");
+                        result.put("status", "error");
                         result.put("message", "Cannot obtain job id: no job was selected.");
                 }
 
@@ -200,7 +200,7 @@ public class CopyJobCommand extends Command {
                 try {
                         writer.object();
                         writer.key("status");
-                        writer.value(data.get("status"));
+                        writer.value("error");
                         writer.key("message");
 
                         String error_msg = "";

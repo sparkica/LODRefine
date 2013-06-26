@@ -77,7 +77,7 @@ public class CreateNewJobCommand extends Command {
                                 }
                                 // ERROR
                                 else {
-                                        result.put("status", "ERROR");
+                                        result.put("status", "error");
                                         result.put("message", "No job id specified.");
                                 }
                         }
@@ -168,7 +168,7 @@ public class CreateNewJobCommand extends Command {
                 try {
                         writer.object();
                         writer.key("status");
-                        writer.value(data.get("status"));
+                        writer.value("error");
                         writer.key("message");
                         writer.value(data.get("message"));
                 } catch (Exception e) {

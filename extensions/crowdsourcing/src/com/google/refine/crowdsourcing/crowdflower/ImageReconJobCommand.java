@@ -72,14 +72,15 @@ public class ImageReconJobCommand extends Command {
                         } else {
 
                                 JSONObject obj = new JSONObject();
-                                obj.put("status", "ERROR");
+                                obj.put("status", "error");
                                 obj.put("message", "No job id was specified.");
                                 generateErrorResponse(response, obj);
                         }
 
                 } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        String error = "{\"status\":\"error\", \"message\":\"" + ParsingUtilities.encode(e.getLocalizedMessage()) + "\"}";
+                        respond(response, error);
+                        //generateErrorResponse(response, error);
                 }
 
         }
@@ -107,11 +108,16 @@ public class ImageReconJobCommand extends Command {
                 try {
                         writer.object();
                         writer.key("status");
-                        writer.value(data.get("status"));
-                        writer.key("message");
-                        writer.value(data.get("message"));
+                        writer.value("error");
+                        writer.key("message"); 
+                        if(data.has("message")) {
+                                writer.value(data.get("message"));
+                        }
+                        else {
+                                writer.value(data.getJSONObject("error").get("message"));
+                        }
                 } catch (Exception e) {
-                        logger.error("Generating ERROR response failed.");
+                        logger.error("Generating error response failed.");
                 } finally {
                         writer.endObject();
                         w.flush();
@@ -145,7 +151,7 @@ public class ImageReconJobCommand extends Command {
                 FilteredRows rows = engine.getAllFilteredRows();
                 List<Integer> rows_indeces = new ArrayList<Integer>();
 
-                // for each row create JSON object
+                // for each row create a JSON object
                 rows.accept(project, new RowVisitor() {
 
                         List<Integer> _rowIndices;
@@ -173,11 +179,9 @@ public class ImageReconJobCommand extends Command {
                                 for (int k = 0; k < _cell_indeces.size(); k++) {
 
                                         Cell cell = row.getCell(_cell_indeces.get(k));
-                                        if (cell != null) { // as soon a value
-                                                            // is encountered in
-                                                            // any of selected
-                                                            // columns, add row
-                                                            // index
+                                        if (cell != null) { // as soon a value is encountered in
+                                                            // any of selected columns
+                                                            // columns, add row index
                                                 _rowIndices.add(rowIndex);
                                                 break;
                                         }
@@ -205,16 +209,14 @@ public class ImageReconJobCommand extends Command {
                                         obj.put(key, "");
                                 }
                         }
+                        if (golden_col != null) {
+                                
+                                String gold_value = (gold_index != -1) ? (String) project.rows.get(row_index).getCellValue(gold_index) : "";
+                                if (gold_value == null) gold_value = "";
 
-                        // TODO: generate objects for upload
-                        // image url, anchor, site url
-                        // we need wikipedia urls
-                        // additional description, additional columns?
-
-                        // TODO: add gold data if necessary
-
+                                obj.put("wiki_gold", gold_value);
+                        }
                         bf.append(obj.toString());
-
                 }
                 return bf;
         }

@@ -6,8 +6,6 @@ function RdfUploadTriplesDialog(onDone) {
 	this._elmts = DOM.bind(this._dialog);
 	//var dismissBusy = DialogSystem.showBusy();
 
-	console.log("initiating...");
-
 	this._elmts.okButton.click(function() {
 
 		self._params.endpoint = {}
@@ -25,9 +23,6 @@ function RdfUploadTriplesDialog(onDone) {
 		self._params.endpoint.username = self._elmts.userName.val();
 		self._params.endpoint.password = self._elmts.userPwd.val();
 		
-		
-		//how to store credentials? encode them and then decode them?
-		
 		if ($('#config-creds').is(':checked')) {
 			alert("Username and password are provided at the installation time. " +
 					"They should be looked up in config file.")
@@ -40,8 +35,6 @@ function RdfUploadTriplesDialog(onDone) {
 			DialogSystem.dismissUntil(self._level - 1);
 		}
 		
-		//schema is added later
-		console.log(self._params);
 		self._onDone(self._params);
 		DialogSystem.dismissUntil(self._level - 1);
 			
@@ -58,8 +51,8 @@ function RdfUploadTriplesDialog(onDone) {
 	
 	this._elmts.saveEndpointButton.click(function () {
 		//TODO: set up endpoint manager
-		alert("storing the endpoint or something");
-		//post request to store it all
+		alert("Saving endpoint in the list...");
+
 	});
 
 	this._level = DialogSystem.showDialog(this._dialog);

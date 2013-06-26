@@ -13,8 +13,7 @@ ZemantaCrowdSourcingExtension.handlers.storeCrowdFlowerSettings = function() {
                                 },
                                 function(o) {
                                         if (o.code == "error") {
-                                                //alert(o.message);
-                                                ZemUtil.showErrorDialog(o.message);
+                                                ZemUtil.showErrorDialog(o.message,'body');
                                         }
                                 },
                                 "json"
@@ -27,7 +26,7 @@ ZemantaCrowdSourcingExtension.handlers.storeCrowdFlowerSettings = function() {
                                 },
                                 function(o) {
                                         if (o.code == "error") {
-                                                ZemUtil.showErrorDialog(o.message);
+                                                ZemUtil.showErrorDialog(o.message, 'body');
                                         }
                                 },
                                 "json"
@@ -53,7 +52,7 @@ ZemantaCrowdSourcingExtension.handlers.openJobSettingsDialog = function()  {
                                 },
                                 function(o)
                                 {
-                                        if(o.status != "ERROR") {
+                                        if(o && o.status != "error") {
                                                 var msg = "";
                                                 
                                                 if(extension.new_job === true) {
@@ -62,9 +61,9 @@ ZemantaCrowdSourcingExtension.handlers.openJobSettingsDialog = function()  {
                                                         msg = "Data was uploaded successfully.\nYou can see it on your CrowdFlower account.";
                                                 }
                                                 
-                                                ZemUtil.showConfirmation("Creating job/Uploading data", msg);
+                                                ZemUtil.showConfirmation("Creating job/Uploading data", msg, 'body');
                                         } else {
-                                                ZemUtil.showErrorDialog("An error occured that prevented creating the job. \n" + o.message);
+                                                ZemUtil.showErrorDialog("An error occured that prevented creating the job. \n" + o.message, 'body');
                                         }
                                 },
                                 "json"
@@ -85,17 +84,11 @@ ZemantaCrowdSourcingExtension.handlers.evaluateReconDialog = function()  {
                                 },
                                 function(o)
                                 {
-                                        if(o === null) {
-                                                ZemUtil.showErrorDialog("There is something wrong with your data. It was not uploaded to CrowdFlower Service.");
-                                                //alert("There is something wrong with your data. It was not uploaded to CrowdFlower Service.");
-                                        }
-                                        else {
-                                                if(o.status == 'error') {
-                                                        ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.status);
-                                                } else {
-                                                        var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
-                                                        ZemUtil.showConfirmation("Uploading recon eval data", msg);
-                                                }
+                                        if(o && o.status != "error") {
+                                                var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
+                                                ZemUtil.showConfirmation("Uploading recon eval data", msg, 'body');
+                                        } else {
+                                                ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.status, 'body');                                                
                                         }
                                 },
                                 "json"
@@ -117,16 +110,13 @@ ZemantaCrowdSourcingExtension.handlers.imageReconDialog = function()  {
                                 },
                                 function(o)
                                 {
-                                        if(o === null) {
-                                                ZemUtil.showErrorDialog("There is something wrong with your data. It was not uploaded to CrowdFlower Service.");
-                                        }
-                                        else {
-                                                if(o.status == 'error') {
-                                                        ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.status);
-                                                } else {
-                                                        var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
-                                                        ZemUtil.showConfirmation("Uploading recon eval data", msg);
-                                                }
+                                        //status can be 200
+                                        if (o && o.status != "error") {
+                                                var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
+                                                ZemUtil.showConfirmation("Uploading recon eval data", msg, 'body');
+
+                                        } else {
+                                                ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.message, 'body');                                                
                                         }
                                 },
                                 "json"
@@ -138,9 +128,7 @@ ZemantaCrowdSourcingExtension.handlers.imageReconDialog = function()  {
 
 
 ZemantaCrowdSourcingExtension.handlers.getApiKey =  function() {
-        console.log("Getting API key...");
         ZemantaCrowdSourcingExtension.util.loadCrowdFlowerApiKeyFromSettings(function(apiKey) {
-                console.log("Read API key: " + apiKey);
                 return apiKey;
         });
 };

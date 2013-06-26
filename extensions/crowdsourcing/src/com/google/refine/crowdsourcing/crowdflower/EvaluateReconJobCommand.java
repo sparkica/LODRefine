@@ -80,7 +80,7 @@ public class EvaluateReconJobCommand extends Command {
                         } else {
 
                                 JSONObject obj = new JSONObject();
-                                obj.put("status", "ERROR");
+                                obj.put("status", "error");
                                 obj.put("message", "No job id was specified.");
                                 generateErrorResponse(response, obj);
                         }
@@ -114,7 +114,7 @@ public class EvaluateReconJobCommand extends Command {
                 try {
                         writer.object();
                         writer.key("status");
-                        writer.value(data.get("status"));
+                        writer.value("error");
                         writer.key("message");
                         writer.value(data.get("message"));
                 } catch (Exception e) {
@@ -176,11 +176,8 @@ public class EvaluateReconJobCommand extends Command {
                                 for (int k = 0; k < _cell_indeces.size(); k++) {
 
                                         Cell cell = row.getCell(_cell_indeces.get(k));
-                                        if (cell != null) { // as soon a value
-                                                            // is encountered in
-                                                            // any of selected
-                                                            // columns, add row
-                                                            // index
+                                        if (cell != null) { // as soon a value is encountered in
+                                                            // any of selected columns, add row index
                                                 _rowIndices.add(rowIndex);
                                                 break;
                                         }
