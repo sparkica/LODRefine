@@ -50,7 +50,7 @@ public class UploadFileAndAddServiceCommand extends AbstractAddServiceCommand{
 	        service.writeAsJson(w);
 	        w.endObject();
 	        sw.flush();
-			out.print("<html><body><textarea>" + sw.toString() + "</textarea></body></html>");
+			out.print(sw.toString());
 			out.flush();
 		} catch (Exception e) {
 			respondError(response,e);

@@ -307,6 +307,7 @@ ReconciliationRdfServiceDialog.prototype._footer = function(footer){
 			$.post("command/rdf-extension/addService",
 					{"datasource":"file_url","name":name,"url":file_url,properties:prop_uris, "file_format":file_format},
 					function(data){
+					    console.log("Adding service.");
 						self._dismissBusy();
 						RdfReconciliationManager.registerService(data,self._level);					
 					},"json");
@@ -315,14 +316,21 @@ ReconciliationRdfServiceDialog.prototype._footer = function(footer){
 
 		self._elmts.hidden_service_name.val(name);
 		self._elmts.hidden_properties.val(prop_uris);
-
+						
 		self._elmts.file_upload_form.ajaxSubmit({
 			dataType:  'json',
-			success: function(data) {
-				self._dismissBusy();
-				RdfReconciliationManager.registerService(data,self._level);
+			success: function(data, message) {
+		             self._dismissBusy();
+		             RdfReconciliationManager.registerService(data,self._level);
+			},
+			error: function(data, message) {
+			        alert("There was an error while uploading RDF dump: " + message);
+			        self._dismissBusy();
 			}
 		});
+		
+	      return false;
+
 
 	}).appendTo(footer);
 
@@ -441,11 +449,11 @@ RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso = function() {
 				function(o)
 				{
 					
-					if(o.status == "error") {
+					if(o.status == 'error' | o.code == 'error') {
 						
 						$('<div class="lodrefine" id="dialog-confirm" title="Error uploading triples">' +
-								  '<p class="text-error"><i class="icon-exclamation-sign"></i>' +
-								  '<strong>An error occured: </strong></p> <p>' +
+								  '<p class="text-error"><i class="icon-exclamation-sign"></i> &nbsp; &nbsp;' +
+								  '<strong>An error occured. Error message: </strong></p> <p>' +
 								  o.message +
 								  '</p></div>').dialog({
 								      resizable: false,
@@ -460,6 +468,7 @@ RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso = function() {
 					}
 					else {
 						alert("Yay! Upload completed.");
+						console.log(o);
 					}
 				},
 				"json"

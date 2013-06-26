@@ -177,21 +177,21 @@ public class LarqSparqlQueryFactory extends AbstractSparqlQueryFactory{
 	private static final String SUGGEST_TYPE_QUERY_TEMPLATE =
 				"PREFIX pf:<http://jena.hpl.hp.com/ARQ/property#> " +
 				"SELECT DISTINCT ?type ?label1 ?score1 ?label2 ?score2 " +
-				"WHERE{" +
+				"WHERE { " +
 				"[] a ?type. " +
 				"{" +
-				"OPTIONAL {?type <http://www.w3.org/2000/01/rdf-schema#label> ?label1. " +
-				"(?label1 ?score1) pf:textMatch '[[QUERY]]*'. }" +
-				"OPTIONAL {?type <http://www.w3.org/2004/02/skos/core#prefLabel> ?label2. " +
-				"(?label2 ?score2) pf:textMatch '[[QUERY]]*'. } " +
-				"FILTER (bound(?label1) || bound(?label2))" +
+				" OPTIONAL {?type <http://www.w3.org/2000/01/rdf-schema#label> ?label1. " +
+				" (?label1 ?score1) pf:textMatch '[[QUERY]]*'. }" +
+				" OPTIONAL {?type <http://www.w3.org/2004/02/skos/core#prefLabel> ?label2. " +
+				" (?label2 ?score2) pf:textMatch '[[QUERY]]*'. } " +
+				" FILTER (bound(?label1) || bound(?label2))" +
 				"}" +
 				"} ORDER BY desc(?score1) LIMIT [[LIMIT]]";
 	
 	private static final String SUGGEST_PROPERTY_WITH_SPECIFIC_SUBJECT_TYPE_QUERY_TEMPLATE =
 				"PREFIX pf:<http://jena.hpl.hp.com/ARQ/property#> " +
 				"SELECT DISTINCT ?p ?label1 ?score1 ?label2 ?score2 " +
-				"WHERE{" +
+				"WHERE {" +
 				"[] a <[[TYPE_URI]]>; " +
 				"?p ?v. " +
 				"{" +
@@ -236,13 +236,13 @@ public class LarqSparqlQueryFactory extends AbstractSparqlQueryFactory{
 		"PREFIX pf:<http://jena.hpl.hp.com/ARQ/property#> " +
 		"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+  
 		"SELECT ?entity ?label (MAX(?score) AS ?score1) " +
-		"WHERE" +
+		"WHERE " +
 		"{" +
 			"?entity <[[LABEL_PROPERTY_URI]]> ?label." +
 			"(?label ?score) pf:textMatch '[[QUERY]]'. " +
 			"[[TYPE_FILTER]]" +
 			"[[CONTEXT_FILTER]]" +
-		"}GROUP BY ?entity ?label " +
+		"} GROUP BY ?entity ?label " +
 		"ORDER BY DESC(?score1) LIMIT [[LIMIT]]";
 	private static final String PROPERTY_FILTER = "?entity <[[PROPERTY_URI]]> [[VALUE]]. ";
 	

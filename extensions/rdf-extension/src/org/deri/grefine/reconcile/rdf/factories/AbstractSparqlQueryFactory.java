@@ -135,6 +135,7 @@ public abstract class AbstractSparqlQueryFactory implements SparqlQueryFactory{
 		boolean match = false;
 		boolean moreThanOneMatchFound = false;
 		double maxScore = 0.0; boolean first = true;
+		
 		while(result.hasNext()){
 			QuerySolution solution = result.nextSolution();
 			String entityUri = solution.getResource("entity").getURI();
