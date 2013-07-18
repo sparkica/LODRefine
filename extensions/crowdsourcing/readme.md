@@ -7,3 +7,5 @@ An extension for OpenRefine to:
 
 This extension requires CrowdFlowerClient. You can get it here: https://github.com/sparkica/CrowdFlowerClient
 
+Note: this extension does not work well in Refine v2.5.
+

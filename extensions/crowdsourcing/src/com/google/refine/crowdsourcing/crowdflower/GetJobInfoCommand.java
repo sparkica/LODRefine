@@ -52,7 +52,7 @@ public class GetJobInfoCommand extends Command {
                         // copy job, store id
                         if (extension.has("job_id") && !extension.isNull("job_id")) {
 
-                                logger.info("Copying job with id: " + extension.getString("job_id"));
+                                logger.info("Getting job info with id: " + extension.getString("job_id"));
                                 result = cf_client.getJob(extension.getString("job_id"));
                                 JSONObject res = ParsingUtilities.evaluateJsonStringToObject(result);
 
@@ -71,7 +71,7 @@ public class GetJobInfoCommand extends Command {
                         } else {
 
                                 JSONObject err = new JSONObject();
-                                err.put("status", "ERROR");
+                                err.put("status", "error");
                                 err.put("message", "Job id was not provided. could not obtain job information.");
                                 generateErrorResponse(response, err);
                         }
