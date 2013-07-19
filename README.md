@@ -1,15 +1,31 @@
-#OpenRefine
+#LODRefine
 
-[![Build Status](https://travis-ci.org/OpenRefine/OpenRefine.png?branch=master)](https://travis-ci.org/OpenRefine/OpenRefine)
+[![Build Status](https://travis-ci.org/sparkica/LODRefine.png?branch=master)](https://travis-ci.org/sparkica/LODRefine)
+
+
+LODRefine is LOD-enabled version of OpenRefine. 
+
 
 OpenRefine is a power tool that allows you to load data, understand it,
 clean it up, reconcile it to master database, and augment it with data coming from
 Freebase or other web sources. All with the comfort and privacy of 
 your own computer.
 
+### What's the difference between OpenRefine and LODRefine?
+LODRefine is actually OpenRefine with integrated extensions that make transition from tabular data to Linked Data a bit easier.
+
+Integrated extensions are:
+- RDF extension
+- DBpedia extension
+- Crowdsourcing extension
+- Stats extension
 
 ###Where can I get more information?
 
+####LODRefine
+You can read about LODRefine at http://code.zemanta.com/sparkica/
+
+####OpenRefine
 Look at the OpenRefine web site http://openrefine.org and the wiki http://github.com/OpenRefine/OpenRefine/wiki
 
 ###Licensing and legal issues
