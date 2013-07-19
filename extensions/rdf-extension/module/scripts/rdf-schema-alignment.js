@@ -4,25 +4,29 @@ function RdfSchemaAlignmentDialog(schema){
 	this._init(schema);
 	this._buildBody();
 
-	//initialize vocabularyManager
 	this._prefixesManager = new RdfPrefixesManager(this, this._schema.prefixes);   
 	this._replaceBaseUri(RdfSchemaAlignment._defaultNamespace || URL.getHostname()+'/',true);
+
+	//activate first tab, otherwise somehow 2nd gets activated, reason yet unknown
+	$("#rdf-schema-alignment-tabs").tabs('select',0);
 
 };
 
 RdfSchemaAlignmentDialog.prototype._init = function(schema) {
 	var self = this;
+
 	self._originalSchema = schema || { rootNodes: [] };	
 	self._schema = cloneDeep(self._originalSchema); // this is what can be munched on
+
+	if (! schema) {
+		self._schema.prefixes = cloneDeep(theProject.overlayModels.rdfSchema.prefixes);
+	}
 
 	if (!self._schema.rootNodes.length) {
 		self._schema.rootNodes.push(RdfSchemaAlignment.createNewRootNode());
 	}
 
-	//this._schema = { rootNodes: [] };
-	//this._schema.rootNodes.push(RdfSchemaAlignment.createNewRootNode());
 	self._nodeUIs = [];
-
 	RdfSchemaAlignment._defaultNamespace = self._schema.baseUri;		
 };
 
@@ -56,7 +60,6 @@ RdfSchemaAlignmentDialog.prototype._buildBody = function() {
 	self._constructBody(body);
 	this._renderBody(body);
 };
-
 
 RdfSchemaAlignmentDialog.prototype._constructBody = function(body) {
 	var self = this;    
@@ -121,7 +124,7 @@ RdfSchemaAlignmentDialog.prototype._renderBody = function(body) {
 
 	$("#rdf-schema-alignment-tabs").tabs({
 		select:function(evt,tabs){
-			if(tabs.index===1){
+			if(tabs.index == 1){
 				self._previewRdf();
 			}
 		}
@@ -257,4 +260,3 @@ RdfSchemaAlignmentDialog._findColumn = function(columnName) {
 	}
 	return null;
 };
-

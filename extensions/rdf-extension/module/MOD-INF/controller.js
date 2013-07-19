@@ -84,8 +84,9 @@ var RS = Packages.com.google.refine.RefineServlet;
 
 function init() {
 	
-	logger.info("Initializing SPARQL Update service manager.");
+	logger.info("Initializing rdf extension");
 	var cacheFolder = new refineServlet().getCacheDir("rdf-extension");
+    logger.info("Initializing endpoint manager");
 	var endpointManager = new update.EndpointServiceManager(new File(cacheFolder + "/registered-update-endpoints.json"));
 	
 	RS.registerClassMapping(

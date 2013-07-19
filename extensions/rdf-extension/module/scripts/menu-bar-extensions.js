@@ -34,33 +34,19 @@ RdfExporterMenuBar.exportRDF = function(format, ext) {
 
 
 RdfExporterMenuBar.rdfExportRows = function(format, ext) {
-	var name = $.trim(theProject.metadata.name.replace(/\W/g, ' ')).replace(/\s+/g, '-');
-	var form = document.createElement("form");
-	$(form)
-	.css("display", "none")
-	.attr("method", "post")
-	.attr("action", "command/core/export-rows/" + name + "." + ext)
-	.attr("target", "gridworks-export");
 
-	$('<input />')
-	.attr("name", "engine")
-	.attr("value", JSON.stringify(ui.browsingEngine.getJSON()))
-	.appendTo(form);
-	$('<input />')
-	.attr("name", "project")
-	.attr("value", theProject.id)
-	.appendTo(form);
-	$('<input />')
-	.attr("name", "format")
-	.attr("value", format)
-	.appendTo(form);
+  var form = ExporterManager.prepareExportRowsForm(format, true, ext);
+  $('<input />')
+  .attr("name", "contentType")
+  .attr("value", "application/x-unknown") // force download
+  .appendTo(form);
+  
+  document.body.appendChild(form);
 
-	document.body.appendChild(form);
+  window.open("about:blank", "refine-export");
+  form.submit();
 
-	window.open("about:blank", "gridworks-export");
-	form.submit();
 
-	document.body.removeChild(form);
 };
 
 RdfExporterMenuBar.editRdfSchema = function(reset) {
@@ -438,7 +424,7 @@ var RdfUploadTriplesExtension = {handlers:{}};
 RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso = function() {
 
 	new RdfUploadTriplesDialog(function(params) {
-		console.log("Posting request...");
+		console.log("Posting upload request...");
 		$.post(
 				"command/rdf-extension/upload-triples",
 				{ "project" : theProject.id, 

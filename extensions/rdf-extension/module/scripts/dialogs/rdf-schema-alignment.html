@@ -1,6 +1,7 @@
 <div class="dialog-frame" style="width: 800px;">
   <div class="dialog-header" bind="dialogHeader">RDF Schema Alignment</div>
   <div class="dialog-body" bind="dialogBody">
+    <div class="grid-layout layout-normal layout-full" style="height: 450px; overflow: auto">
   <p>
 	The RDF schema alignment skeleton below specifies how the RDF data that will get generated from your grid-shaped data.
     The cells in each record of your data will get placed into nodes within the skeleton. 
@@ -28,7 +29,7 @@
                 <a bind="_save_skeleton" href="#" style="float:right">Save</a>
                 </div>
             </div>
-            <div id="rdf-schema-alignment-tabs-preview" style="display: none;">
+            <div id="rdf-schema-alignment-tabs-preview">
                 <div class="rdf-scheme-dialog-subheader">
                 	This is a sample <code>Turtle</code> representation of (up-to) the <em>first 10</em> rows
                 </div> 
@@ -36,9 +37,9 @@
                 </div>
             </div><!--./rdf-schema-alignment-tabs-preview-->
         </div><!-- ./rdf-schema-alignment-tabs -->
-  
+  </div> <!-- ./grid -->
   </div><!-- ./dialog-body -->
   <div class="dialog-footer" bind="dialogFooter">
-    <button class="button" bind="okButton">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-    <button class="button" bind="cancelButton">Cancel</button>
+    <button class="btn btn-success" bind="okButton">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
+    <button class="btn" bind="cancelButton">Cancel</button>
   </div>

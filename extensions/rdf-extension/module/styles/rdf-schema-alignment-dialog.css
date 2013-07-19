@@ -8,11 +8,11 @@ td.highlighted {
 }
 
 div.rdf-schema-alignment-dialog-preview {
-    height: 350px;
+    height: 340px;
 }
 
 div.rdf-schema-alignment-dialog-canvas {
-	height: 350px;
+	height: 250px;
 }
 
 div.note{

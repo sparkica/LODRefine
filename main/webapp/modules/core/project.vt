@@ -53,8 +53,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       <div id="project-controls">
         <a href="./" class="btn btn-small" target="_blank"><i class="icon-folder-open"></i> Open...</a>
         <a class="btn btn-small btn-success" bind="exportButton" id="export-button" href="#export"> 
-        <i class="icon-download icon-white"></i> Export <span class="caret"></span></a>
-        <a href="http://code.google.com/p/google-refine/wiki/DocumentationForUsers" target="_blank" class="btn btn-small btn-info">
+        <i class="icon-download icon-white"></i> <span class="button-menu">Export</span> <span class="caret"></span></a>
+        <a href="http://github.com/OpenRefine/OpenRefine/wiki/DocumentationForUsers" target="_blank" class="btn btn-small btn-info">
         <i class="icon-question-sign icon-white"></i> Help</a>
       </div>
     </div>
