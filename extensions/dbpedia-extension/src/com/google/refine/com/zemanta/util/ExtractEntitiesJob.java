@@ -57,9 +57,8 @@ public class ExtractEntitiesJob {
         public ExtractEntitiesJob(JSONObject obj) throws JSONException {
                 this.extension = obj;
 
-                //this is not needed, because there is no type filtering
                 
-                /*String columnType = "";
+                String columnType = "";
                 String columnName = "";
 
                 if(obj.has("types") && !obj.isNull("types")) {
@@ -71,10 +70,9 @@ public class ExtractEntitiesJob {
                                 columnName = parts[parts.length-1] + " [" + columnType + "]";                    
                                 columns.add(new ColumnInfo(columnName,columnType));
                         }
-                }*/
+                }
                 
-                //no columns will be added
-                this.columnCount = 0;//columns.size();
+                this.columnCount = columns.size();
         }
 
         public Map<String, ExtractEntitiesJob.DataExtension> extend (
@@ -100,10 +98,9 @@ public class ExtractEntitiesJob {
                                 text = singleText.next();
                                 if(text != null) {
                                         parameters.put("text", text);
-                                        String raw = zem.getRawData(parameters); //zemanta api calls
+                                        String raw = zem.getRawData(parameters); //zemanta api call, returns json
                                         JSONObject result = ParsingUtilities.evaluateJsonStringToObject(raw);
 
-                                        System.out.println("Raw results: " + raw);
                                         if(result != null && result.has("status")) {
                                                 if(result.get("status").equals("ok")) {
                                                         ExtractEntitiesJob.DataExtension ext =  extractRowsWithEntities(reconCandidateMap, text, result);
@@ -113,7 +110,7 @@ public class ExtractEntitiesJob {
                                                         }
                                                 }
                                                 else {
-                                                        System.out.println("Request to Zemanta API failed.");  
+                                                        throw new Exception("Request to Zemanta API failed.");
                                                 }
                                         }
                                 }            

@@ -33,7 +33,7 @@ function init() {
  */
 function process(path, request, response) {
     if (path == "/" || path == "") {
-        var context = {};
+        //var context = {};
         
         return "Hello World!";
         //send(request, response, "index.vt", context);

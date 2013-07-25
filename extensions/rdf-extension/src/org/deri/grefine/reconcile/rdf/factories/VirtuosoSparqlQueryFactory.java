@@ -53,7 +53,8 @@ public class VirtuosoSparqlQueryFactory extends AbstractSparqlQueryFactory{
 	
 	@Override
 	public String getTypeSuggestSparqlQuery(String prefix, int limit) {
-		//We couldn't use parameterised query because ARQ 2.8.7 does not support QuerySolutionMap with sparqlService i.e. can't be used with remote SPARQL endpoints :-( #shame
+		//We couldn't use parameterised query because ARQ 2.8.7 does not support QuerySolutionMap with sparqlService i.e. 
+		//can't be used with remote SPARQL endpoints :-( #shame
 		String formattedQuery = formatTextQueryString(prefix) + "*";
 		return SUGGEST_TYPE_QUERY_TEMPLATE.replace("[[QUERY]]", formattedQuery).replace("[[LIMIT]]",String.valueOf(limit));
 	}
@@ -120,6 +121,17 @@ public class VirtuosoSparqlQueryFactory extends AbstractSparqlQueryFactory{
 	//TODO accept as a parameter
 	private static final int AVERAGE_NUM_OF_LABELS =2;
 	
+//  FILTER isIRI() was causing query to time out
+//	private static final String RECONCILE_QUERY_TEMPLATE =
+//		"SELECT DISTINCT ?entity ?label ?score1 " +
+//		"WHERE" +
+//		"{" +
+//		"?entity ?p ?label. " +
+//		"?label <bif:contains> \"'[[QUERY]]'\" OPTION(score ?score1). " +
+//		"[[PROPERTY_URIS_FILTER]]. " +
+//		"[[TYPE_FILTER]]" +
+//		"[[CONTEXT_FILTER]]" +
+//		"FILTER isIRI(?entity). } ORDER BY desc(?score1) LIMIT [[LIMIT]]";
 	private static final String RECONCILE_QUERY_TEMPLATE =
 		"SELECT DISTINCT ?entity ?label ?score1 " +
 		"WHERE" +
@@ -129,7 +141,7 @@ public class VirtuosoSparqlQueryFactory extends AbstractSparqlQueryFactory{
 		"[[PROPERTY_URIS_FILTER]]. " +
 		"[[TYPE_FILTER]]" +
 		"[[CONTEXT_FILTER]]" +
-		"FILTER isIRI(?entity). } ORDER BY desc(?score1) LIMIT [[LIMIT]]";
+		"} ORDER BY desc(?score1) LIMIT [[LIMIT]]";
 	private static final String TYPE_FILTER = 
 		"?entity a ?type. " +
 		"FILTER (?type IN ([[TYPE_URIS_LIST]])). ";
@@ -164,7 +176,16 @@ public class VirtuosoSparqlQueryFactory extends AbstractSparqlQueryFactory{
 		"FILTER (?label_prop=<http://www.w3.org/2000/01/rdf-schema#label> || ?label_prop=<http://www.w3.org/2004/02/skos/core#prefLabel>). " +
 		"?label <bif:contains> \"'[[QUERY]]'\" OPTION(score ?score1). " +
 		"} ORDER BY desc(?score1) LIMIT [[LIMIT]]";
-	
+
+//  FILTER isIRI causes query time outs	
+//	private static final String SEARCH_ENTITY_QUERY_TEMPLATE =
+//		"SELECT DISTINCT ?entity ?label " +
+//		"WHERE" +
+//		"{" +
+//		"?entity ?p ?label. " +
+//		"?label <bif:contains> \"'[[QUERY]]'\" OPTION(score ?score1). " +
+//		"[[PROPERTY_URIS_FILTER]]. " +
+//		"FILTER isIRI(?entity). } ORDER BY desc(?score1) LIMIT [[LIMIT]]";
 	private static final String SEARCH_ENTITY_QUERY_TEMPLATE =
 		"SELECT DISTINCT ?entity ?label " +
 		"WHERE" +

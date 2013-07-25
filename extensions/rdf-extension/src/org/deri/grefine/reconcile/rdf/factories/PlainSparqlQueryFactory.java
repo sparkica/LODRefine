@@ -317,6 +317,17 @@ public class PlainSparqlQueryFactory extends AbstractSparqlQueryFactory{
 //		return Pattern.quote(query.replaceAll("'", "\\\\'"));
 	}
 	
+//	FILTER isIRI() was causing jena to hang
+//	private static final String RECONCILE_QUERY_TEMPLATE =
+//		"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+//		"PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> " +
+//		"SELECT ?entity[[LABEL_CLAUSE]] " +
+//		"WHERE" +
+//		"{" +
+//		"[[FULLTEXT_SEARCH_FILTER]]" +
+//		"[[TYPE_FILTER]]" +
+//		"[[CONTEXT_FILTER]]" +
+//		"FILTER isIRI(?entity). }LIMIT [[LIMIT]]";
 	private static final String RECONCILE_QUERY_TEMPLATE =
 		"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 		"PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> " +
@@ -326,7 +337,7 @@ public class PlainSparqlQueryFactory extends AbstractSparqlQueryFactory{
 		"[[FULLTEXT_SEARCH_FILTER]]" +
 		"[[TYPE_FILTER]]" +
 		"[[CONTEXT_FILTER]]" +
-		"FILTER isIRI(?entity). }LIMIT [[LIMIT]]";
+		"}LIMIT [[LIMIT]]";
 	private static final String LABEL = " ?label";
 	private static final String REGEX_SEARCH_PATTERN = 
 		"OPTIONAL{ " +
@@ -383,12 +394,21 @@ public class PlainSparqlQueryFactory extends AbstractSparqlQueryFactory{
 	 	"FILTER (?label_prop=<http://www.w3.org/2000/01/rdf-schema#label> || ?label_prop=<http://www.w3.org/2004/02/skos/core#prefLabel>). " +
 	 	"FILTER regex(str(?label),'^[[QUERY]]','i')" +
 	 	"} LIMIT [[LIMIT]]";
-	
+
+// 	FILTER isIRI() causes query time outs	
+//	private static final String SEARCH_ENTITY_QUERY_TEMPLATE =
+//		"SELECT ?entity[[LABEL_CLAUSE]] " +
+//		"WHERE" +
+//		"{" +
+//		"[[REGEX_SEARCH_PATTERN]]" +
+//		"FILTER ([[BOUND_LABEL_FILTER]]). " +
+//		"FILTER isIRI(?entity). }LIMIT [[LIMIT]]";
 	private static final String SEARCH_ENTITY_QUERY_TEMPLATE =
 		"SELECT ?entity[[LABEL_CLAUSE]] " +
 		"WHERE" +
 		"{" +
 		"[[REGEX_SEARCH_PATTERN]]" +
 		"FILTER ([[BOUND_LABEL_FILTER]]). " +
-		"FILTER isIRI(?entity). }LIMIT [[LIMIT]]";
+		"}LIMIT [[LIMIT]]";
+
 }

@@ -16,10 +16,13 @@ public class VirtuosoRemoteQueryExecutor extends RemoteQueryExecutor{
 
 	@Override
 	public ResultSet sparql(String sparql) {
-		//we use QueryEngineHTTP to skip query validation as Virtuoso needs non-standardised extensions and will not pass ARQ validation
+		//we use QueryEngineHTTP to skip query validation as Virtuoso 
+		//needs non-standardised extensions and will not pass ARQ validation
 		QueryEngineHTTP qExec = new QueryEngineHTTP(sparqlEndpointUrl, sparql);
+		qExec.setTimeout(20000,60000);
+		
 		if(defaultGraphUri!=null){
-			qExec.setDefaultGraphURIs(Collections.singletonList(defaultGraphUri));
+				qExec.setDefaultGraphURIs(Collections.singletonList(defaultGraphUri));
 		}
 		ResultSet res = qExec.execSelect();
 		return res;

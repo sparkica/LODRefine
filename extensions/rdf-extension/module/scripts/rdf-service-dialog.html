@@ -9,7 +9,7 @@
   	  </th>
   	  <td class="rdf-reconcile-spaced">
   	    <input type="text" bind="service_name" id="service-name"/>
-  	    <div class="rdf-reconcile-field-details">A human readable name</div>
+  	    <div class="rdf-reconcile-field-details">A human readable name for reconciliation service</div>
   	  </td>
   	</tr>
   </table>
@@ -54,8 +54,8 @@
   <fieldset class="rdf-reconcile-fieldset">
     <legend>Label properties</legend>
     <div class="rdf-reconcile-content">
-      <span>Select properties that are used to label resources in the RDF data. These properties will be used to match resources:</span>
-      <div style="clear:both;height:10px;"></div>
+      <span><span class="label label-important">Important</span> Select properties that are <b>used to label resources</b> in the RDF data. Selecting other labels may affect performance. These properties will be used to match resources:</span>
+      <div style="clear:both;height:5px;"></div>
       <div bind="label_prop_container">
         <div class="rdf-reconcile-label-option" title="http://www.w3.org/2000/01/rdf-schema#label"><input name="label_prop" type="checkbox" value="http://www.w3.org/2000/01/rdf-schema#label" checked="checked"/>rdfs:label</div>
         <div class="rdf-reconcile-label-option" title="http://www.w3.org/2004/02/skos/core#prefLabel"><input name="label_prop" type="checkbox" value="http://www.w3.org/2004/02/skos/core#prefLabel" />skos:prefLabel</div>

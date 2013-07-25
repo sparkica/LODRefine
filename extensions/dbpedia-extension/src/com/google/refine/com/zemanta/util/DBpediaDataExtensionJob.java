@@ -229,11 +229,9 @@ public class DBpediaDataExtensionJob {
                         for(int j = 0; j < ci.path.size(); j++) {
                                 if(propertyID.equals(ci.path.get(j))){
                                         column = i;
-
                                 }
                         }
                 }
-
                 return column;
 
         }
@@ -250,7 +248,6 @@ public class DBpediaDataExtensionJob {
                                 }
                         }
                 }
-
                 return maxRows;
         }
 
@@ -272,7 +269,6 @@ public class DBpediaDataExtensionJob {
 
                                         JSONObject o = ParsingUtilities.evaluateJsonStringToObject(s).getJSONObject("results");
                                         if (o.has("bindings")) {
-
                                                 JSONArray bindings = o.getJSONArray("bindings");        
 
                                                 HashMap<String,JSONArray> extractedResults = new HashMap<String,JSONArray>();                
@@ -358,9 +354,7 @@ public class DBpediaDataExtensionJob {
                         if(i < last) {
                                 subQuery += ",";
                         }
-
                 }
-
                 return subQuery;
         }
 
@@ -377,7 +371,6 @@ public class DBpediaDataExtensionJob {
                                 }
                         }            
                 }
-
                 return subQuery;
         }
 

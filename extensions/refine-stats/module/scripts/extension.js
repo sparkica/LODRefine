@@ -32,7 +32,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
             "onDone": function(response) {
                 doStatsDialog(response);
             }
-        }
+        };
 
         Refine.postProcess(
             "refine-stats",
@@ -42,7 +42,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
             updateOptions,
             callbacks
         );
-    }
+    };
 
     MenuSystem.insertAfter(
         menu,

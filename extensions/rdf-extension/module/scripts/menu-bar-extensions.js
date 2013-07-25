@@ -256,7 +256,7 @@ function ReconciliationRdfServiceDialog(){
 
 ReconciliationRdfServiceDialog.prototype._footer = function(footer){
 	var self = this;
-	$('<button></button>').addClass('button').html("&nbsp;&nbsp;OK&nbsp;&nbsp;").click(function() {
+	$('<button></button>').addClass('btn btn-success').html("&nbsp;&nbsp;OK&nbsp;&nbsp;").click(function() {
 		self._dismissBusy = DialogSystem.showBusy('Adding new reconciliation service');
 		var name = self._elmts.service_name.val();
 		if(name.trim()===""){
@@ -320,7 +320,7 @@ ReconciliationRdfServiceDialog.prototype._footer = function(footer){
 
 	}).appendTo(footer);
 
-	$('<button></button>').addClass('button').text("Cancel").click(function() {
+	$('<button></button>').addClass('btn').text("Cancel").click(function() {
 		DialogSystem.dismissUntil(self._level - 1);
 	}).appendTo(footer);
 };
@@ -354,7 +354,7 @@ function ReconciliationSparqlServiceDialog(){
 
 ReconciliationSparqlServiceDialog.prototype._footer = function(footer){
 	var self = this;
-	$('<button></button>').addClass('button').html("&nbsp;&nbsp;OK&nbsp;&nbsp;").click(function() {
+	$('<button></button>').addClass('btn btn-success').html("&nbsp;&nbsp;OK&nbsp;&nbsp;").click(function() {
 		self._dismissBusy = DialogSystem.showBusy('Adding new reconciliation service');
 		var name = self._elmts.service_name.val();
 		var endpoint = self._elmts.endpoint_url.val();
@@ -397,7 +397,7 @@ ReconciliationSparqlServiceDialog.prototype._footer = function(footer){
 		);
 	}).appendTo(footer);
 
-	$('<button></button>').addClass('button').text("Cancel").click(function() {
+	$('<button></button>').addClass('btn').text("Cancel").click(function() {
 		DialogSystem.dismissUntil(self._level - 1);
 	}).appendTo(footer);
 };
