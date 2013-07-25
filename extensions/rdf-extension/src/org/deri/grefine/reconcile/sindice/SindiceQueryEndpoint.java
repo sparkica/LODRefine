@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 
 public class SindiceQueryEndpoint {
@@ -46,7 +47,8 @@ public class SindiceQueryEndpoint {
 		}
 		String sparql = this.queryFactory.getTypesOfEntitiesQuery(ImmutableList.copyOf(entities));
 		ResultSet resultSet = queryExecutor.sparql(sparql);
-		Multimap<String, String> typesMap = this.queryFactory.wrapTypesOfEntities(resultSet);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		Multimap<String, String> typesMap = this.queryFactory.wrapTypesOfEntities(resultSetCopy);
 		//order
 		LinkedHashMultimap<String, String> result = LinkedHashMultimap.create();
 		for(String uri:entities){
@@ -58,7 +60,9 @@ public class SindiceQueryEndpoint {
 	private List<ReconciliationCandidate> reconcileEntities(QueryExecutor queryExecutor, ReconciliationRequest request, ImmutableList<String> searchPropertyUris, double matchThreshold) {
 		String sparql = this.queryFactory.getReconciliationSparqlQuery(request, searchPropertyUris);
 		ResultSet resultSet = queryExecutor.sparql(sparql);
-		List<ReconciliationCandidate> candidates = this.queryFactory.wrapReconciliationResultset(resultSet, request.getQueryString(), searchPropertyUris, request.getLimit(), matchThreshold);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet) ;
+		
+		List<ReconciliationCandidate> candidates = this.queryFactory.wrapReconciliationResultset(resultSetCopy, request.getQueryString(), searchPropertyUris, request.getLimit(), matchThreshold);
 		return candidates;
 	}
 

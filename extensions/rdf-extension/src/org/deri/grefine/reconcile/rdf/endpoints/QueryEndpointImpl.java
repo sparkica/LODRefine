@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFactory;
 
 public class QueryEndpointImpl implements QueryEndpoint{
 	final static Logger logger = LoggerFactory.getLogger("QueryEndpointImpl");
@@ -36,8 +37,9 @@ public class QueryEndpointImpl implements QueryEndpoint{
 		long start = System.currentTimeMillis();
 		String sparql = this.queryFactory.getReconciliationSparqlQuery(request, searchPropertyUris);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet) ;
 
-		List<ReconciliationCandidate> candidates = this.queryFactory.wrapReconciliationResultset(resultSet, request.getQueryString(), searchPropertyUris, request.getLimit(), matchThreshold);
+		List<ReconciliationCandidate> candidates = this.queryFactory.wrapReconciliationResultset(resultSetCopy, request.getQueryString(), searchPropertyUris, request.getLimit(), matchThreshold);
 		//if type is not specified, populate types
 		if(request.getTypes().length==0 && candidates.size()>0){
 			List<String> entities = new ArrayList<String>();
@@ -46,7 +48,8 @@ public class QueryEndpointImpl implements QueryEndpoint{
 			}
 			String typeSparql = this.queryFactory.getTypesOfEntitiesQuery(ImmutableList.copyOf(entities));
 			ResultSet typeResultSet = this.queryExecutor.sparql(typeSparql);
-			Multimap<String, String> typesMap = this.queryFactory.wrapTypesOfEntities(typeResultSet);
+			ResultSet typeResultSetLocal = ResultSetFactory.copyResults(typeResultSet);
+			Multimap<String, String> typesMap = this.queryFactory.wrapTypesOfEntities(typeResultSetLocal);
 			for(ReconciliationCandidate candidate:candidates){
 				candidate.setTypes(typesMap.get(candidate.getId()).toArray(new String[]{}));
 			}
@@ -75,21 +78,24 @@ public class QueryEndpointImpl implements QueryEndpoint{
 	public ImmutableList<SearchResultItem> suggestType(String prefix, int limit) {
 		String sparql = this.queryFactory.getTypeSuggestSparqlQuery(prefix, limit);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return queryFactory.wrapTypeSuggestResultSet(resultSet, prefix, limit);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return queryFactory.wrapTypeSuggestResultSet(resultSetCopy, prefix, limit);
 	}
 
 	@Override
 	public ImmutableList<SearchResultItem> suggestProperty(String prefix, String typeUri, int limit) {
 		String sparql = this.queryFactory.getPropertySuggestSparqlQuery(prefix, typeUri, limit);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return queryFactory.wrapPropertySuggestResultSet(resultSet, prefix, limit);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return queryFactory.wrapPropertySuggestResultSet(resultSetCopy, prefix, limit);
 	}
 
 	@Override
 	public ImmutableList<SearchResultItem> suggestProperty(String prefix, int limit) {
 		String sparql = this.queryFactory.getPropertySuggestSparqlQuery(prefix, limit);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return queryFactory.wrapPropertySuggestResultSet(resultSet, prefix, limit);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return queryFactory.wrapPropertySuggestResultSet(resultSetCopy, prefix, limit);
 	}
 
 	
@@ -97,21 +103,24 @@ public class QueryEndpointImpl implements QueryEndpoint{
 	public ImmutableList<SearchResultItem> getSampleInstances(String typeUri, ImmutableList<String> searchPropertyUris, int limit) {
 		String sparql = this.queryFactory.getSampleInstancesSparqlQuery(typeUri, searchPropertyUris, limit);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return this.queryFactory.wrapSampleInstancesResultSet(resultSet, typeUri, searchPropertyUris, limit);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return this.queryFactory.wrapSampleInstancesResultSet(resultSetCopy, typeUri, searchPropertyUris, limit);
 	}
 	
 	@Override
 	public ImmutableList<String[]> getSampleValuesOfProperty(String propertyUri, int limit) {
 		String sparql = this.queryFactory.getSampleValuesOfPropertySparqlQuery(propertyUri, limit);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return this.queryFactory.wrapSampleValuesOfPropertyResultSet(resultSet, propertyUri, limit);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return this.queryFactory.wrapSampleValuesOfPropertyResultSet(resultSetCopy, propertyUri, limit);
 	}
 
 	@Override
 	public Multimap<String, String> getResourcePropertiesMap(String resourceUri, int limit) {
 		String sparql = this.queryFactory.getResourcePropertiesMapSparqlQuery(resourceUri, limit);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return this.queryFactory.wrapResourcePropertiesMapResultSet(resultSet, resourceUri, limit);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return this.queryFactory.wrapResourcePropertiesMapResultSet(resultSetCopy, resourceUri, limit);
 	}
 
 	
@@ -119,14 +128,16 @@ public class QueryEndpointImpl implements QueryEndpoint{
 	public Multimap<String, String> getResourcePropertiesMap(PreviewResourceCannedQuery cannedQuery, String resourceUri) {
 		String sparql = this.queryFactory.getResourcePropertiesMapSparqlQuery(cannedQuery,resourceUri);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return this.queryFactory.wrapResourcePropertiesMapResultSet(cannedQuery, resultSet);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return this.queryFactory.wrapResourcePropertiesMapResultSet(cannedQuery, resultSetCopy);
 	}
 
 	@Override
 	public ImmutableList<SearchResultItem> searchForEntities(String prefix, ImmutableList<String> searchPropertyUris, int limit) {
 		String sparql = this.queryFactory.getEntitySearchSparqlQuery(prefix, searchPropertyUris, limit);
 		ResultSet resultSet = this.queryExecutor.sparql(sparql);
-		return this.queryFactory.wrapEntitySearchResultSet(resultSet, limit);
+		ResultSet resultSetCopy = ResultSetFactory.copyResults(resultSet);
+		return this.queryFactory.wrapEntitySearchResultSet(resultSetCopy, limit);
 	}
 	
 	@Override

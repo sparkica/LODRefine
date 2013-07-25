@@ -38,13 +38,20 @@ var RS = Packages.com.google.refine.RefineServlet;
 var OR = Packages.com.google.refine.operations.OperationRegistry;
 var RC = Packages.com.google.refine.model.recon.ReconConfig;
 
-
+var logger = Packages.org.slf4j.LoggerFactory.getLogger("dbpedia-extension"),
+    File = Packages.java.io.File,
+    refineServlet = Packages.com.google.refine.RefineServlet,
+    ner = Packages.org.freeyourmetadata.ner,
+    services = ner.services,
+    commands = ner.commands;
 
 
 /*
  * Function invoked to initialize the extension.
  */
 function init() {
+
+  logger.info("Initializing DBpedia extension...");
 
   RS.registerClassMapping(
   "com.google.refine.model.changes.DataExtensionChange",

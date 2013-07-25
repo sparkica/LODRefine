@@ -36,10 +36,19 @@ var encoding = "UTF-8";
 var ClientSideResourceManager = Packages.com.google.refine.ClientSideResourceManager;
 var RS = Packages.com.google.refine.RefineServlet;
 
+var logger = Packages.org.slf4j.LoggerFactory.getLogger("crowdsourcing"),
+    File = Packages.java.io.File,
+    refineServlet = Packages.com.google.refine.RefineServlet,
+    ner = Packages.org.freeyourmetadata.ner,
+    services = ner.services,
+    commands = ner.commands;
+
 /*
  * Function invoked to initialize the extension.
  */
 function init() {
+  logger.info("Initializing crowdsourcing extension...");
+
   RS.registerCommand(module, "create-crowdflower-job", new Packages.com.google.refine.crowdsourcing.crowdflower.CreateNewJobCommand());
   RS.registerCommand(module, "preview-crowdflower-jobs", new Packages.com.google.refine.crowdsourcing.crowdflower.PreviewExistingJobsCommand());
   RS.registerCommand(module, "copy-crowdflower-job", new Packages.com.google.refine.crowdsourcing.crowdflower.CopyJobCommand());

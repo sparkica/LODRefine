@@ -4,14 +4,12 @@
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="lib" path="/LODRefine/server/lib/servlet-api-2.5.jar" sourcepath="/LODRefine/server/lib-src/servlet-api-2.5-sources.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/butterfly-trunk.jar" sourcepath="/LODRefine/main/webapp/WEB-INF/lib-src/butterfly-trunk.jar"/>
-	<classpathentry kind="lib" path="/LODRefine/main/tests/server/lib/testng-5.12.1.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/slf4j-api-1.5.6.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/nekohtml-1.9.14.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/openrdf-sesame-2.3.2-onejar.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/tika-core-0.6.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/tika-parsers-0.6.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/arithcode-1.1.jar"/>
-	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/commons-codec-1.5.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/commons-io-1.4.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/commons-lang-2.5.jar"/>
@@ -30,7 +28,6 @@
 	<classpathentry kind="lib" path="/LODRefine/main/webapp/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/server/lib/jetty-6.1.22.jar"/>
 	<classpathentry kind="lib" path="/LODRefine/server/lib/jetty-util-6.1.22.jar"/>
-	<classpathentry kind="lib" path="/LODRefine/main/tests/server/lib/mockito-all-1.8.4.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/guava-r07.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/simmetrics_jar_v1_6_2_d07_02_07.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/apache-mime4j-0.6.jar"/>
@@ -62,5 +59,7 @@
 	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-arq-2.10.0.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-core-2.10.0.jar"/>
 	<classpathentry kind="lib" path="module/MOD-INF/lib/jena-iri-0.9.5.jar"/>
+	<classpathentry kind="lib" path="/LODRefine/main/tests/server/lib/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="/LODRefine/main/tests/server/lib/testng-6.8.jar"/>
 	<classpathentry kind="output" path="module/MOD-INF/classes"/>
 </classpath>
