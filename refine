@@ -529,7 +529,7 @@ mac_dist() {
     mkdir -p "$REFINE_BUILD_DIR/mac/.background"
     cp graphics/dmg_background/dmg_background.png "$REFINE_BUILD_DIR/mac/.background/dmg_background.png"
     
-    SIZE=200
+    SIZE=300
     
     if [ -f "$REFINE_BUILD_DIR/temp_refine.dmg" ] ; then
         rm "$REFINE_BUILD_DIR/temp_refine.dmg"
@@ -560,7 +560,7 @@ mac_dist() {
             close
             open               
             update without registering applications
-            delay 5            
+            delay 7            
             eject
          end tell
        end tell
@@ -569,12 +569,12 @@ mac_dist() {
     sync
     hdiutil detach $DEVICE
     
-    if [ -f "$REFINE_DIST_DIR/lodrefine-$VERSION-$REVISION.dmg" ] ; then
-        rm "$REFINE_DIST_DIR/lodrefine-$VERSION-$REVISION.dmg"
+    if [ -f "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg" ] ; then
+        rm "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg"
     fi
     
-    hdiutil convert "$REFINE_BUILD_DIR/temp_refine.dmg" -format UDZO -imagekey zlib-level=9 -o "$REFINE_DIST_DIR/lodrefine-$VERSION-$REVISION.dmg" || error "Error compressing DMG"
-    hdiutil internet-enable -yes "$REFINE_DIST_DIR/lodrefine-$VERSION-$REVISION.dmg" || error "Error internet-enabling DMG"
+    hdiutil convert "$REFINE_BUILD_DIR/temp_refine.dmg" -format UDZO -imagekey zlib-level=9 -o "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg" || error "Error compressing DMG"
+    hdiutil internet-enable -yes "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg" || error "Error internet-enabling DMG"
         
     #rm -f "$REFINE_BUILD_DIR/temp_refine.dmg"
 }
