@@ -93,9 +93,9 @@ function ZemantaCrowdFlowerDialog(onDone) {
                 self._extension.column_names = [];
 
                 var uploadData = false;
-
-                var tabindex = $( "#jobTabs" ).tabs( "option", "active" );
-                
+                //for newer versions of jquery ui
+                //var tabindex = $( "#jobTabs" ).tabs( "option", "active" );
+                var tabindex = $("#jobTabs").tabs('option', 'selected');
                 if(tabindex === 0) {
                         self._extension.new_job = true;  
 
