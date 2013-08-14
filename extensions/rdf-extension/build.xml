@@ -61,7 +61,7 @@
             
     <target name="build_java" depends="copyfiles,copyresources">
         <mkdir dir="${classes.dir}" />
-        <javac destdir="${classes.dir}" debug="true" includeAntRuntime="no">
+        <javac source="${java_version}" target="${java_version}" bootclasspath="${java.bootclass.path}" destdir="${classes.dir}" debug="true" includeAntRuntime="no">
             <src path="${src.dir}"/>
             <src path="${rsrc.dir}"/>
             <classpath refid="class.path" />
