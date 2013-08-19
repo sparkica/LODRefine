@@ -12,7 +12,7 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
-			<triggers>full,incremental,</triggers>
+			<triggers>auto,full,incremental,</triggers>
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
@@ -21,13 +21,13 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-				<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
-				<arguments>
-				</arguments>
+			<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
+			<arguments>
+			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-			<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
 </projectDescription>
