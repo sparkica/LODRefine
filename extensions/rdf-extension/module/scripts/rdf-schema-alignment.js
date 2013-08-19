@@ -15,12 +15,11 @@ function RdfSchemaAlignmentDialog(schema){
 RdfSchemaAlignmentDialog.prototype._init = function(schema) {
 	var self = this;
 
-	self._originalSchema = schema || { rootNodes: [] };	
+	self._originalSchema = schema || { rootNodes: [] };
+	console.log(self._originalSchema);
 	self._schema = cloneDeep(self._originalSchema); // this is what can be munched on
-
-	if (! schema) {
-		self._schema.prefixes = cloneDeep(theProject.overlayModels.rdfSchema.prefixes);
-	}
+	console.log(self._schema);
+	
 
 	if (!self._schema.rootNodes.length) {
 		self._schema.rootNodes.push(RdfSchemaAlignment.createNewRootNode());
