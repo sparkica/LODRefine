@@ -383,7 +383,7 @@ function init() {
       "externals/jquery.eventstack-0.3.js",
 
       //"externals/suggest/suggest-4_1.custom.min.js",
-      "externals/suggest/suggest-4_2.min.js",
+      "externals/suggest/suggest-4_2.js",
       "externals/jquery-ui/jquery-ui-1.8.20.custom.min.js",
       "externals/imgareaselect/jquery.imgareaselect.js",
       "externals/date.js",

@@ -1806,7 +1806,7 @@
       var notable = get_value(data, 'notable');
 
       //Zemanta hack
-      if(data.zem && data.zem == 'true') {
+      if('zem=true' in data.url) {
         var content = $('<div class="fbs-flyout-content">'); 
         var footer = $('<div class="fbs-attribution">');
         content.append($('<h1 id="fbs-flyout-title">').text(data.title));
