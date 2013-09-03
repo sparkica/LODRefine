@@ -8,12 +8,12 @@ SindiceDialog.prototype.show = function(column){
     var frame = DialogSystem.createDialog();
     frame.width("400px");
     
-    var header = $('<div></div>').addClass("dialog-header").text("Related RDF datasets").appendTo(frame);
+    var header = $('<div></div>').addClass("dialog-header").text($.i18n._('rdf-ext-sindice')["related"]).appendTo(frame);
     var body = $('<div class="grid-layout layout-full"></div>').addClass("dialog-body").appendTo(frame);
     var footer = $('<div></div>').addClass("dialog-footer").appendTo(frame);
     
     var html = $(
-    		'<div class="" ><span>List of domains:</span><div class="rdf-extension-sindice-domain-container" bind="domains_container"></div></div>'    		
+    		'<div class="" ><span>'+$.i18n._('rdf-ext-sindice')["domain-list"]+':</span><div class="rdf-extension-sindice-domain-container" bind="domains_container"></div></div>'    		
     ).appendTo(body);
     
     self._elmts = DOM.bind(html);
@@ -25,7 +25,7 @@ SindiceDialog.prototype.show = function(column){
 
 SindiceDialog.prototype.guessDomain = function(column){
 	var self = this;
-	var dismissBusy = DialogSystem.showBusy('Finding related RDF datasets...(This could take up to 5 minutes)');
+	var dismissBusy = DialogSystem.showBusy($.i18n._('rdf-ext-sindice')["find-related"]);
 	$.post("command/rdf-extension/sindiceGuessType",{"project":theProject.id,"columnName":self._column.name},function(data){
 		dismissBusy();
 		if(data.code==='error'){
@@ -33,7 +33,7 @@ SindiceDialog.prototype.guessDomain = function(column){
 		}else{
 			
 			if(data.domains.length==0){
-				self._elmts.domains_container.text('No domains were found!');
+				self._elmts.domains_container.text($.i18n._('rdf-ext-sindice')["no-domain"]);
 			}else{
 				for(var i=0;i<data.domains.length;i++){
 					var domain = data.domains[i];
@@ -47,14 +47,14 @@ SindiceDialog.prototype.guessDomain = function(column){
 
 SindiceDialog.prototype._footer = function(footer){
 	var self = this;
-	$('<button></button>').addClass('button').text("Cancel").click(function() {
+	$('<button></button>').addClass('button').text($.i18n._('rdf-ext-buttons')["cancel"]).click(function() {
         DialogSystem.dismissUntil(self._level - 1);
     }).appendTo(footer);
 	
-	$('<button></button>').addClass('button').text("Add domain-specific Sindice service").click(function() {
+	$('<button></button>').addClass('button').text($.i18n._('rdf-ext-buttons')["add-sindice"]).click(function() {
 		var domain = self._elmts.domains_container.find('input[name="domain_radio"]:checked').val();
 		if(!domain){
-			alert("a domain needs to be selected");
+			alert($.i18n._('rdf-ext-sindice')["sel-domain"]);
 			return;
 		}
 		$.post("command/rdf-extension/addSindiceService",{"domain":domain},function(data){

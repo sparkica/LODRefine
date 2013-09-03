@@ -123,7 +123,7 @@
                      cache:false,
                      //             soft:true,
                      nomatch:  {
-                         title: "No suggested matches. (Shift + Enter) to add it",
+                         title: $.i18n._('rdf-ext-schema')["no-matches"],
                          heading: null,
                          tips: null
                          }

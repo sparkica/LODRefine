@@ -6,6 +6,25 @@ function RdfUploadTriplesDialog(onDone) {
 	this._elmts = DOM.bind(this._dialog);
 	//var dismissBusy = DialogSystem.showBusy();
 
+	this._elmts.dialogHeader.text($.i18n._('rdf-ext-virtuoso')["header"]);
+	this._elmts.rdfext_virtuoso_endName.text($.i18n._('rdf-ext-virtuoso')["endpoint-name"]);
+	this._elmts.rdfext_virtuoso_savedEnd.text($.i18n._('rdf-ext-virtuoso')["saved-endpoints"]+":");
+	this._elmts.rdfext_virtuoso_local.text($.i18n._('rdf-ext-virtuoso')["local-virtuoso"]);
+	this._elmts.rdfext_virtuoso_lod.text($.i18n._('rdf-ext-virtuoso')["lod"]);
+	this._elmts.rdfext_virtuoso_type.text($.i18n._('rdf-ext-virtuoso')["endpoint-type"]+":");
+	this._elmts.rdfext_virtuoso_virt.text($.i18n._('rdf-ext-virtuoso')["virt"]);
+	this._elmts.rdfext_virtuoso_endUrl.text($.i18n._('rdf-ext-virtuoso')["endpoint-url"]+":");
+	this._elmts.rdfext_virtuoso_def.text($.i18n._('rdf-ext-virtuoso')["default-graph"]+":");
+	this._elmts.rdfext_virtuoso_auth.text($.i18n._('rdf-ext-virtuoso')["authentication"]+":");
+	this._elmts.rdfext_virtuoso_digest.text($.i18n._('rdf-ext-virtuoso')["digest"]);
+	this._elmts.rdfext_virtuoso_cred.text($.i18n._('rdf-ext-virtuoso')["creadentials"]+":");
+	this._elmts.rdfext_virtuoso_user.text($.i18n._('rdf-ext-virtuoso')["username"]+":");
+	this._elmts.rdfext_virtuoso_pass.text($.i18n._('rdf-ext-virtuoso')["password"]+":");
+	this._elmts.saveEndpointButton.attr('value',$.i18n._('rdf-ext-buttons')["save-endpoint"]);
+	this._elmts.okButton.html($.i18n._('rdf-ext-buttons')["ok"]);
+	this._elmts.cancelButton.text($.i18n._('rdf-ext-buttons')["cancel"]);
+	this._elmts.manageEndpoints.text($.i18n._('rdf-ext-buttons')["manage-endpoint"]);	
+	
 	this._elmts.okButton.click(function() {
 
 		self._params.endpoint = {}

@@ -79,6 +79,7 @@ function init() {
   RC.registerReconConfig(module, "strict", Packages.com.google.refine.com.zemanta.model.recon.DBpediaStrictReconConfig);
   RC.registerReconConfig(module, "extend", Packages.com.google.refine.com.zemanta.model.recon.DBpediaDataExtensionReconConfig);
 
+  RS.registerCommand(module, "load-language", new LoadLanguageCommand());
  
   // Script files to inject into /project page
   ClientSideResourceManager.addPaths(

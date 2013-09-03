@@ -2,35 +2,34 @@
   <div class="dialog-header" bind="dialogHeader"></div>
   <div class="dialog-body" bind="dialogBody">
     <div class="grid-layout layout-normal layout-full" style="height:400px;overflow:auto">
-<h2>Configure Virtuoso SPARQL UPDATE endpoint</h2>
 <div class="container">
 
 <table class="upload-triples">
-	<tr><td>Endpoint name</td><td><input type="text" id="endpoint-name" bind="endpointName"></td></tr>
-	<tr><td class="box">Saved endpoints:</td><td class="box">
+	<tr><td bind="rdfext_virtuoso_endName"></td><td><input type="text" id="endpoint-name" bind="endpointName"></td></tr>
+	<tr><td class="box" bind="rdfext_virtuoso_savedEnd"></td><td class="box">
 	<select name="localhost" id="endpoints-lst" bind="endpointsList">
-	<option value="http://localhost:8890/sparql-auth">local Virtuoso</option>
-	<option value="http://demo.lod2-eu/virtuoso/sparql-auth">LOD2demo</option>
+	<option value="http://localhost:8890/sparql-auth" bind="rdfext_virtuoso_local"></option>
+	<option value="http://demo.lod2-eu/virtuoso/sparql-auth" bind="rdfext_virtuoso_lod"></option>
 	</select></td></tr>
-	<tr><td class="upload-triples">Endpoint type:</td><td>
+	<tr><td class="upload-triples" bind="rdfext_virtuoso_type"></td><td>
 	<select name="virtuoso" id="endpoint-type" bind="endpointTypes">
-	<option value="virtuoso">Virtuoso</option></select>
+	<option value="virtuoso" bind="rdfext_virtuoso_virt"></option></select>
 	</td></tr>
-	<tr><td class="upload-triples">Endpoint url:</td>
+	<tr><td class="upload-triples" bind="rdfext_virtuoso_endUrl"></td>
 	<td><input type="text" name="endpoint" bind="endpointUrl"></td></tr>
-	<tr><td class="upload-triples">Default graph:</td>
+	<tr><td class="upload-triples" bind="rdfext_virtuoso_def"></td>
 	<td><input type="text" name="graph" bind="defaultGraph" value="http://www.lodrefine-example.com"></td></tr>
-	<tr><td class="upload-triples">Authentication:</td><td> 
+	<tr><td class="upload-triples" bind="rdfext_virtuoso_auth"></td><td> 
 	<select name="digest" bind="authMethod">
- <option value="digest">Digest</option>
+ <option value="digest" bind="rdfext_virtuoso_digest"></option>
 <!--   <option value="oauth">OAuth</option> 
   <option value="webid">WebID</option> --> 
  </select>
 	</td></tr>
-	<tr><td class="upload-triples">Credentials:</td><td><input type="checkbox" id="config-creds" bind="chkConfigCreds"></td></tr>
-	<tr><td class="upload-triples">Username:</td><td> <input type="text" name="user" bind="userName" value="lodrefine"></td></tr>
-	<tr><td class="upload-triples">Password:</td><td> <input type="password" name="pwd" bind="userPwd" value="lodrefine"></td></tr>
-<tr><td><input type="button" bind="saveEndpointButton" value="Save endpoint"></td><td></td></tr>
+	<tr><td class="upload-triples" bind="rdfext_virtuoso_cred"></td><td><input type="checkbox" id="config-creds" bind="chkConfigCreds"></td></tr>
+	<tr><td class="upload-triples" bind="rdfext_virtuoso_user"></td><td> <input type="text" name="user" bind="userName" value="lodrefine"></td></tr>
+	<tr><td class="upload-triples" bind="rdfext_virtuoso_pass"></td><td> <input type="password" name="pwd" bind="userPwd" value="lodrefine"></td></tr>
+<tr><td><input type="button" bind="saveEndpointButton" value=""></td><td></td></tr>
 
 </table>
 
@@ -40,10 +39,10 @@
 </div>
 </div>
   <div class="dialog-footer" bind="dialogFooter">    
-    <button class="btn btn-success" bind="okButton">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-    <button class="btn" bind="cancelButton">Cancel</button>
+    <button class="btn btn-success" bind="okButton"></button>
+    <button class="btn" bind="cancelButton"></button>
     &nbsp;&nbsp;
-    <button class="btn" bind="manageEndpoints">Manage saved endpoints</button>
+    <button class="btn" bind="manageEndpoints"></button>
   </div>
 
 </div>

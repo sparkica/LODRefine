@@ -45,12 +45,12 @@ RdfDataTableView.previewOnVisibleRows = function(isLiteral,column, title, expres
         
         f._elmts = DOM.bind(html);
         
-        $('<button></button>').addClass('button').html("&nbsp;&nbsp;OK&nbsp;&nbsp;").click(function() {
+        $('<button></button>').addClass('button').html($.i18n._('rdf-ext-buttons')["ok"]).click(function() {
         	DialogSystem.dismissUntil(f._level - 1);
             f._onDone(f._previewWidget.getExpression(true));
         }).appendTo(footer);
         
-        $('<button></button>').addClass('button').text("Cancel").click(function() {
+        $('<button></button>').addClass('button').text($.i18n._('rdf-ext-buttons')["cancel"]).click(function() {
         	DialogSystem.dismissUntil(f._level - 1);
         }).appendTo(footer);
         
@@ -145,19 +145,18 @@ RdfDataTableView.getUriPreviewWidget = function(isLiteral,isRowNumberCell,baseUr
 		var container = this._elmts.expressionPreviewPreviewContainer.empty();
 		var table = $('<table width="100%"></table>').appendTo(container)[0];
     
-    
 		tr = table.insertRow(0);
 		$(tr.insertCell(0)).addClass("expression-preview-heading").text("row");
 		$(tr.insertCell(1)).addClass("expression-preview-heading").text(isRowNumberCell?"row.index":"value");
 		$(tr.insertCell(2)).addClass("expression-preview-heading").text(expression);
 		if(!isLiteral){
-			$(tr.insertCell(3)).addClass("expression-preview-heading").text("resolved against the base URI");
+			$(tr.insertCell(3)).addClass("expression-preview-heading").text($.i18n._('rdf-ext-rdf')["table-resolved"]);
 		}
     
 		var renderValue = function(td, v) {
 			if (v !== null && v !== undefined) {
 				if ($.isPlainObject(v)) {
-					$('<span></span>').addClass("expression-preview-special-value").text("Error: " + v.message).appendTo(td);
+					$('<span></span>').addClass("expression-preview-special-value").text($.i18n._('rdf-ext-rdf')["error"]+": " + v.message).appendTo(td);
 				} else {
 					td.text(v);
 				}
@@ -167,9 +166,9 @@ RdfDataTableView.getUriPreviewWidget = function(isLiteral,isRowNumberCell,baseUr
 		};
     
 		if (this._results !== null) {
-			this._elmts.expressionPreviewParsingStatus.empty().removeClass("error").text("No syntax error.");
+			this._elmts.expressionPreviewParsingStatus.empty().removeClass("error").text($.i18n._('rdf-ext-rdf')["no-syntax-error"]);
 		} else {
-			var message = (data.type == "parser") ? data.message : "Internal error";
+			var message = (data.type == "parser") ? data.message : $.i18n._('rdf-ext-rdf')["internal-error"];
 			this._elmts.expressionPreviewParsingStatus.empty().addClass("error").text(message);
 		}
     

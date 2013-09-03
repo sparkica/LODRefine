@@ -60,7 +60,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._renderMain = function() {
   	      		'<tr bind="addRdfTyprTr">' + 
   	      			'<td>' +
   	      				'<div class="padded">' +
-  	      					'<a bind="addRdfTypeLink" href="#" class="action">add rdf:type</a>' +
+  	      					'<a bind="addRdfTypeLink" href="#" class="action">'+$.i18n._('rdf-ext-schema')["add-type"]+'</a>' +
   	      				'</div>' + 
   	      			'</td>' +
   	      		'</tr>' +
@@ -123,12 +123,12 @@ RdfSchemaAlignmentDialog.UINode.prototype._renderMain = function() {
     	if(this._node.isRowNumberCell){
     		a.html(literal?'':' URI');
     		$('<span></span>')
-        	.text('(row index)')
+        	.text('('+$.i18n._('rdf-ext-schema')["row-index"]+')')
         	.addClass("schema-alignment-node-column")
         	.prependTo(a);
     	}else{
     		if ("columnName" in this._node) {
-    			a.html(literal?" cell":" URI");
+    			a.html(literal?" "+$.i18n._('rdf-ext-schema')["cell"]:" URI");
             
     			$('<span></span>')
                 	.text(this._node.columnName)
@@ -142,18 +142,18 @@ RdfSchemaAlignmentDialog.UINode.prototype._renderMain = function() {
         if ("value" in this._node) {
             a.html(RdfSchemaAlignmentDialog.UINode._shortenResource(this._node.value));
         } else {
-            a.html("Which Resource?");
+            a.html($.i18n._('rdf-ext-schema')["which-res"]);
         }
     } else if (this._node.nodeType == "literal") {
         if ("value" in this._node) {
             a.html(RdfSchemaAlignmentDialog.UINode._shortenLiteral(this._node.value));
         } else {
-            a.html("What value?");
+            a.html($.i18n._('rdf-ext-schema')["what-val"]);
         }
     } else if (this._node.nodeType == "blank") {
         a.html("(blank) ");
     }else if (this._node.nodeType == "cell-as-blank") {
-    	a.html("(blank) cell");
+    	a.html("(blank) "+$.i18n._('rdf-ext-schema')["cell"]);
     }
     
     //Types
@@ -233,7 +233,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._renderDetails = function() {
     
     $('<a href="javascript:{}"></a>')
         .addClass("action")
-        .text("add property")
+        .text($.i18n._('rdf-ext-schema')["add-prop"])
         .appendTo(divFooter)
         .click(function() {
             var newLink = {
@@ -261,7 +261,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
     
     frame.width("610px");
     
-    $('<div></div>').addClass("dialog-header").text("RDF Node").appendTo(frame);
+    $('<div></div>').addClass("dialog-header").text($.i18n._('rdf-ext-schema')["rdf-node"]).appendTo(frame);
     var body = $('<div class="grid-layout layout-full"></div>').addClass("dialog-body rdf-schema").appendTo(frame);
     var footer = $('<div></div>').addClass("dialog-footer").appendTo(frame);
     
@@ -277,12 +277,12 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
                         '<tr>' +
                             '<td>' +
                                 '<div class="rdf-schema-alignment-node-dialog-step-header">' +
-                                    'Use content from cell...' +
+                                $.i18n._('rdf-ext-schema')["use-content"]+'...' +
                                 '</div>' +
                             '</td>' +
                             '<td>' +
                             	'<div class="rdf-schema-alignment-node-dialog-step-header">' +
-                            		'The cell\'s content is used ...' + 
+                            	$.i18n._('rdf-ext-schema')["content-used"]+' ...' + 
                             	'</div>' +
         					'</td>'+
                         '</tr>' +
@@ -293,39 +293,39 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
                                 '<table width="100%" cols="2">' +
                                     '<tr>' +
                                         '<td><input type="radio" name="rdf-content-radio" value="resource" bind="rdf_content_uri_radio" /></td>' +
-                                        '<td>as a URI</td>' +
+                                        '<td>'+$.i18n._('rdf-ext-as')["uri"]+'</td>' +
                                     '</tr>' +
                                     '<tr>' +
                                         '<td><input type="radio" name="rdf-content-radio" value="literal" bind="rdf_content_txt_radio" /></td>' +
-                                        '<td>as text</td>' +
+                                        '<td>'+$.i18n._('rdf-ext-as')["text"]+'</td>' +
                                     '</tr>' +
                                     '<tr>' +
                                     	'<td><input type="radio" name="rdf-content-radio" value="literal" id="rdf-content-lang-radio" bind="rdf_content_lang_radio" /></td>' +
-                                    	'<td>as language-tagged text <input type="text" id="rdf-content-lang-input" bind="rdf_content_lang_input" size="4"/></td>' +
+                                    	'<td>'+$.i18n._('rdf-ext-as')["lang"]+' <input type="text" id="rdf-content-lang-input" bind="rdf_content_lang_input" size="4"/></td>' +
                                     '</tr>' +
                                     '<tr>' +
                                     	'<td><input type="radio" name="rdf-content-radio" value="literal" bind="rdf_content_int_radio" id="rdf-content-int-radio"/></td>' +
-                                    	'<td>as integer number</td>' +
+                                    	'<td>'+$.i18n._('rdf-ext-as')["int"]+'</td>' +
                                     '</tr>' +
                                     '<tr>' +
                                     	'<td><input type="radio" name="rdf-content-radio" value="literal" bind="rdf_content_non_int_radio" id="rdf-content-non-int-radio" /></td>' +
-                                    	'<td>as non-integer number</td>' +
+                                    	'<td>'+$.i18n._('rdf-ext-as')["nonint"]+'</td>' +
                                     '</tr>' +
                                     '<tr>' +
                                     	'<td><input type="radio" name="rdf-content-radio" value="literal" bind="rdf_content_date_radio" id="rdf-content-date-radio" /></td>' +
-                                    	'<td>as date <span class="rdf-node-info">(YYYY-MM-DD)</span></td>' +
+                                    	'<td>'+$.i18n._('rdf-ext-as')["date"]+' <span class="rdf-node-info">(YYYY-MM-DD)</span></td>' +
                                     '</tr>' +
                                     '<tr>' +
                                     	'<td><input type="radio" name="rdf-content-radio" value="literal" bind="rdf_content_date_time_radio" id="rdf-content-date-time-radio" /></td>' +
-                                    	'<td>as dateTime <span class="rdf-node-info">(YYYY-MM-DD HH:MM:SS)</span></td>' +
+                                    	'<td>'+$.i18n._('rdf-ext-as')["datetime"]+' <span class="rdf-node-info">(YYYY-MM-DD HH:MM:SS)</span></td>' +
                                     '</tr>' +
                                     '<tr>' +
                                 		'<td><input type="radio" name="rdf-content-radio" value="literal" bind="rdf_content_boolean_radio" id="rdf-content-boolean-radio"/></td>' +
-                                		'<td>as boolean</td>' +
+                                		'<td>'+$.i18n._('rdf-ext-as')["bool"]+'</td>' +
                                 	'</tr>' +
                                     '<tr>' +
                                     	'<td><input type="radio" name="rdf-content-radio" value="literal" bind="rdf_content_type_radio" id="rdf-content-type-radio" /></td>' +
-                                    	'<td>as custom datatype <span class="rdf-node-info">(specify type URI)</span></td>' +
+                                    	'<td>'+$.i18n._('rdf-ext-as')["custom"]+' <span class="rdf-node-info">(specify type URI)</span></td>' +
                                     '</tr>' +
                                     '<tr>' +
                                     	'<td></td>' +
@@ -333,12 +333,12 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
                                 	'</tr>' +
                                     '<tr>' +
                                 	    '<td><input type="radio" name="rdf-content-radio" value="blank" bind="rdf_content_blank_radio" /></td>' +
-                                	    '<td>as a blank node</td>' +
+                                	    '<td>'+$.i18n._('rdf-ext-as')["blank"]+'</td>' +
                                     '</tr>' +
                                   '</table>' +
                                 '</div>' +
                                 '<div class="rdf-schema-alignment-node-dialog-step-header">' +
-                                  'Use custom expression...' + 
+                                $.i18n._('rdf-ext-schema')["use-exp"]+'...' + 
                                 '</div>' + 
                                 '<div class="rdf-schema-alignment-node-dialog-step" style="margin-top:3px">' +
                                 	'<table width="100%" class="grid-layout">' +
@@ -346,7 +346,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
                                 			'<td><span class="rdf-value-expression" bind="rdf_cell_expr" id="rdf-cell-expr"></span></td>' +
                                 		'</tr>' +
                                 		'<tr>' +
-                                			'<td><a href="#" bind="rdf_cell_expr_preview">preview/edit</a></td>' +
+                                			'<td><a href="#" bind="rdf_cell_expr_preview">'+$.i18n._('rdf-ext-schema')["preview-edit"]+'</a></td>' +
                                 		'</tr>' + 
                                 	'</table>' +
                                 '</div>' +
@@ -400,7 +400,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
             
         var td = tr.insertCell(1);
        	$(td).addClass('rdf-schema-bottom-separated');
-        $('<span></span>').text('(row index)').appendTo(td);
+        $('<span></span>').text('('+$.i18n._('rdf-ext-schema')["row-index"]+')').appendTo(td);
     };
     
     var makeConstantValueChoice = function(checked,value){
@@ -419,7 +419,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
             
         var td = tr.insertCell(1);
         $(td).addClass('rdf-schema-top-separated');
-        $('<span></span>').text("Constant Value").appendTo(td);
+        $('<span></span>').text($.i18n._('rdf-ext-schema')["constant-val"]).appendTo(td);
         var initStr = checked ?  'value="' + value + '"':'disabled="disabled"';
         $('<div><input id="rdf-constant-value-input" type="text" ' + initStr + ' size="25" /></div>').appendTo(td);
     };
@@ -514,13 +514,13 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
     			var val = $('#rdf-constant-value-input').val();
     			if(nodeSubtype === 'blank'){
     				//constant blank
-    				alert('All rows will point to a shared blank node');
+    				alert($.i18n._('rdf-ext-schema')["alert-shared"]);
     			}else if(nodeSubtype==='literal'){
     				//constant literal
-    				alert("All rows will have the literal '" +  val + "'");
+    				alert($.i18n._('rdf-ext-schema')["alert-literal"]+" '" +  val + "'");
     			}else if(nodeSubtype==='resource'){
     				//constant resource
-    				alert("All rows will have the resource <" +  val + ">");
+    				alert($.i18n._('rdf-ext-schema')["alert-resource"]+" <" +  val + ">");
     			}
     		}else{
     			//cell-based node
@@ -528,7 +528,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
 		        var expr = $("#rdf-cell-expr").text();
     			if(nodeSubtype === 'blank'){
     				//blank... not much to do
-    				alert('A blank node will be created per row');
+    				alert($.i18n._('rdf-ext-schema')["alert-blank-create"]);
     			}else if(nodeSubtype==='literal'){
     				//literal... expression preview
     				self._preview(expr,columnName,false);
@@ -599,7 +599,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
         		//check that value is entered
         		var val = $('#rdf-constant-value-input').val();
         		if(!val){
-        			alert('Enter the constant value');
+        			alert($.i18n._('rdf-ext-schema')["alert-enter-const"]);
         			return null;
         		}
         		node.value = val;
@@ -608,7 +608,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
         return node;
     };
     
-    $('<button></button>').addClass('button').html("&nbsp;&nbsp;OK&nbsp;&nbsp;").click(function() {
+    $('<button></button>').addClass('button').html($.i18n._('rdf-ext-buttons')["ok"]).click(function() {
     	var node = getResultJSON();
         if (node !== null) {
         	if(self._node.rdfTypes){
@@ -630,7 +630,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._showNodeConfigDialog = function(){
         }
     }).appendTo(footer);
     
-    $('<button></button>').addClass('button').text("Cancel").click(function() {
+    $('<button></button>').addClass('button').text($.i18n._('rdf-ext-buttons')["cancel"]).click(function() {
         DialogSystem.dismissUntil(self._level - 1);
     }).appendTo(footer);
     
@@ -646,7 +646,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._preview = function(expr,columnName,is
 					"cellIndex":columnName?RdfSchemaAlignmentDialog._findColumn(columnName).cellIndex:0,
 					"columnName":columnName
 				},
-				"Preview URI values", 
+				$.i18n._('rdf-ext-schema')["preview-uri-val"], 
 				expr,
 				!columnName,
 				RdfSchemaAlignment._defaultNamespace,
@@ -661,7 +661,7 @@ RdfSchemaAlignmentDialog.UINode.prototype._preview = function(expr,columnName,is
 					"cellIndex":columnName?RdfSchemaAlignmentDialog._findColumn(columnName).cellIndex:0,
 					"columnName":columnName
 				},
-				"Preview URI values", 
+				$.i18n._('rdf-ext-schema')["preview-uri-val"], 
 				expr,
 				!columnName,
 				function(expression){
@@ -823,10 +823,10 @@ RdfSchemaAlignmentDialog.UINode.prototype.getJSON = function() {
 RdfSchemaAlignmentDialog.NewRdfResourceDialog = function(elmt,defaultVal,onDone){
 	var menu = MenuSystem.createMenu().width('400px');
 	menu.html('<div class="schema-alignment-link-menu-type-search">' + 
-			'<span class="schema-alignment-node-column">URI: <small>(relative URIs will be resolved against base URI)</small></span>' + 
+			'<span class="schema-alignment-node-column">URI: <small>('+$.i18n._('rdf-ext-schema')["resolve"]+')</small></span>' + 
 			'<input type="text" bind="newResourceUri" size="50"><br/>' +
-			'<button class="button" bind="applyBtn">Apply</button>' + 
-			'<button class="button" bind="cancelBtn">Cancel</button>'
+			'<button class="button" bind="applyBtn">'+$.i18n._('rdf-ext-buttons')["apply"]+'</button>' + 
+			'<button class="button" bind="cancelBtn">'+$.i18n._('rdf-ext-buttons')["cancel"]+'</button>'
 			);
 	MenuSystem.showMenu(menu,function(){});
 	MenuSystem.positionMenuLeftRight(menu, $(elmt));
@@ -839,7 +839,7 @@ RdfSchemaAlignmentDialog.NewRdfResourceDialog = function(elmt,defaultVal,onDone)
 	elmts.applyBtn.click(function(){
 		var val = elmts.newResourceUri.val();
 		if(!val){
-			alert('Enter URI');
+			alert($.i18n._('rdf-ext-schema')["alert-uri"]);
 			return;
 		}
 		MenuSystem.dismissAll();
@@ -857,7 +857,7 @@ RdfSchemaAlignmentDialog.RdfResourceDialog = function(elmt,lookFor,projectId,par
 	//var self = this;
 	var menu = MenuSystem.createMenu().width('250px');
 	menu.html('<div class="schema-alignment-link-menu-type-search">' + 
-			'<span>Search for ' + lookFor + ':</span>' + 
+			'<span>'+$.i18n._('rdf-ext-schema')["search-for"]+' ' + lookFor + ':</span>' + 
 			'<input type="text" bind="newResourceUri" >' 
 			);
 	MenuSystem.showMenu(menu,function(){});
@@ -881,7 +881,7 @@ RdfSchemaAlignmentDialog.RdfResourceDialog = function(elmt,lookFor,projectId,par
 				MenuSystem.dismissAll();
 				return;
 			}else{
-				parent._prefixesManager._addPrefix('<em>' + prefix + '</em> is unknown prefix. Enter the full URI below to add it.',prefix);
+				parent._prefixesManager._addPrefix('<em>' + prefix + '</em> '+$.i18n._('rdf-ext-schema')["unknown-pref"],prefix);
 			}
 		}else{
 			new RdfSchemaAlignmentDialog.NewRdfResourceDialog(elmt,val,onDone);	

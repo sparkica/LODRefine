@@ -25,7 +25,7 @@
     <condition property="dist.dir" value="dist">
         <not><isset property="dist.dir"/></not>
     </condition>
-
+    
     <property name="name" value="dbpedia-extension" />
     <property name="fullname" value="${name}-${version}" />
     
@@ -77,7 +77,7 @@
 	            
     <target name="build_java">
         <mkdir dir="${classes.dir}" />
-        <javac encoding="utf-8" source="${java_version}" target="${java_version}" bootclasspath="${java.bootclass.path}" destdir="${classes.dir}" debug="true" includeAntRuntime="no">
+        <javac source="${java_version}" target="${java_version}" encoding="utf-8" destdir="${classes.dir}" debug="true" includeAntRuntime="no">
             <src path="${src.dir}"/>
             <classpath refid="class.path" />
         </javac>
@@ -87,7 +87,7 @@
 
     <target name="build_test" depends="build_java">
         <mkdir dir="${classes.dir}" />
-        <javac encoding="utf-8" destdir="${classes.dir}" debug="true" includeAntRuntime="no">
+        <javac source="${java_version}" target="${java_version}" encoding="utf-8" destdir="${classes.dir}" debug="true" includeAntRuntime="no">
             <src path="${test.src.dir}"/>
             <classpath refid="test.class.path" />
         </javac>
