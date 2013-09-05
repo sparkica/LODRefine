@@ -1,18 +1,25 @@
 <div class="dialog-frame zemanta-api-pref-dialog" style="width: 800px;">
   <div class="dialog-header" bind="dialogHeader"></div>
   <div class="dialog-body" bind="dialogBody">
-  <div style="height:100px;">
-  <p><a href="/preferences">Check your OpenRefine settings...</a></p>
-  <p>&nbsp;</p>
-  <p>Don't have CrowdFlower API key yet? Register for an account at <a href="http://crowdflower.com">CrowdFlower webpage</a>  </p></div>  
-    <div class="grid-layout layout-normal layout-full">
-    	<div>Enter Crowdflower API key: <input bind="apiKeyInput" /></div>
-    	<div>Set default connection timeout (in miliseconds): <input bind="defaultTimeoutInput" value="1500"/><br/>
-    	If you experience ant problems with getting data from CrowdFlower, try to increase this number.</div>
-  </div>
+  <div >
+  <a class="btn btn-small" href="/preferences" bind="crowdext_api_settings"></a>
+  <p bind="crowdext_registration"></p></div> 
+    	<div class="control-group">
+        <label class="control-label" bind="crowdext_api_label_key"></label> 
+        <div class="controls">
+        <input type="text" bind="apiKeyInput" />
+      </div>
+      </div>
+    	<div class="control-group">
+        <label class="control-label" bind="crowdext_api_label_timeout"></label>
+        <div class="controls">
+        <input type="text" bind="defaultTimeoutInput" value="1500"/>
+      </div>
+        <p class="text-info" bind="crowdext_api_timeout_notice"></p>
+    </div>
   </div>
   <div class="dialog-footer" bind="dialogFooter">
-    <button class="btn btn-success" bind="okButton">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-    <button class="btn" bind="cancelButton">Cancel</button>
+    <button class="btn btn-success" bind="okButton"></button>
+    <button class="btn" bind="cancelButton"></button>
   </div>
 </div>

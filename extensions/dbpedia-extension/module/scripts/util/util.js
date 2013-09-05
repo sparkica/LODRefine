@@ -20,7 +20,6 @@ ZemantaDBpediaExtension.util.loadZemantaSettings = function (onDone) {
 	self._apiKey = "";
 	self._timeout = "";
 
-	console.log("Loading Zemanta settings");
 	ZemantaDBpediaExtension.util.loadSetting("zemanta.apikey", 
 			function(apk) {
 			self._apiKey = apk;

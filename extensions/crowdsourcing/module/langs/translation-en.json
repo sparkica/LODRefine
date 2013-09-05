@@ -1,0 +1,90 @@
+{
+    "crowd-ext-buttons":
+    {
+        "ok": "OK",
+        "cancel": "Cancel"
+    },
+    "crowd-ext-create":{
+        "new-job":"New job was created successfully.\nYou can see it on your CrowdFlower account.",
+        "data-upload":"Data was uploaded successfully.\nYou can see it on your CrowdFlower account.",
+        "conf-header": "Creating job/Uploading data",
+        "create-error": "An error occured that prevented creating the job. \n",
+        "success-upload": "Data was successfully uploaded. Check your CrowdFlower account.",
+        "upload-header": "Uploading recon eval data",
+        "upload-error": "Something went wrong while uploading. \n"
+    },
+    "crowd-ext-menu":
+    {
+        "crowdsourcing": "Crowdsourcing",
+        "create-job": "Create new job / upload data",
+        "templates": "Templates",
+        "eval-recon": "Evaluate reconciled data",
+        "recon-img": "Reconcile images",
+        "cf-settings": "CrowdFlower settings"
+    },
+    "crowd-ext-api":
+    {
+        "header": "Enter your CrowdFlower API key",
+        "settings": "Show OpenRefine settings...",
+        "register": "If you don't have CrowdFlower API key, register for an account at <a href=\"http://crowdflower.com\">CrowdFlower page</a>.",
+        "label-key":"Crowdflower API key:",
+        "label-timeout":"Default connection timeout (miliseconds): ",
+        "timeout-notice":"If you experience any problems with getting data from CrowdFlower, try to increase this number.",
+        "key-warning": "Please enter your API key!",
+        "error": "CrowdFlower API key was not found in the settings. Please add it first."
+    },
+    "crowd-ext-eval" : {
+        "header": "Evaluate reconciled data",
+        "no-template":"--- no template ---",
+        "error-no-template": "Choose recon template first",
+        "select-job-opt": "--- select a job ---",
+        "error-loading": "There was an error loading jobs. Details: <br/>",
+        "success-loading": "Jobs are loaded.",
+        "title-undefined": "Title not defined",
+        "tab-recon": "Reconciled data",
+        "upload-header": "Upload data to job from reconciliation template",
+        "job-header": "Job and reconciliation template",
+        "select-job": "Select existing job:",
+        "select-template": "Select recon. template:",
+        "freebase-template": "Freebase reconciliation",
+        "dbpedia-template": "DBpedia reconciliation",
+        "service-warning": "Choose the service with which you reconciled data",
+        "map-header": "Map columns to fields: ",
+        "ent-name": "Entity name (alias): ",
+        "ent-url": "Entity URL: ",
+        "recon-col-header": "Reconciled columns",
+        "sel-col": "Select column: ",
+        "gold-header": "Gold data (correct answers)",
+        "gold-info": "You can upload correct answers (entity URLs), i.e. gold data by  checking Upload gold data below and selecting column containing gold data.",
+        "gold-upload": "Upload gold data ",
+        "additional-cols": "Additional columns for upload",
+        "additional-cols-info": "May require template update: you have to add field for this column manually.",
+        "sel-cols": "Select columns:",
+        "options": "Options"
+        },
+        "crowd-ext-img": {
+            "header": "Reconciling images",
+            "upload-tab": "Upload data for image reconciliation",
+            "select-job-label": "Select existing job:",
+            "img-url": "Image URL: ",
+            "img-desc": "Image description:",
+            "dest-url": "Destination URL:",
+            "options": "Options",
+            "gold-data": "Gold data (correct answers)",
+            "upload-gold": "Upload gold data? ",
+            "select-gold-col": "Select Gold data column:",
+            "additional-info": "Additional information",
+            "sel-cols": "Select columns (scroll right for more):",
+            "info-update": "<small>May require template update: you have to add field for this column manually.</small>",
+            "select-job": "--- select a job ---",
+            "error": "There was an error loading jobs. Error message: <br/>",
+            "title-undefined": "Title is not defined",
+            "job-id": " - job id: "
+        },
+        "crowd-ext-util":
+        {
+            "error-copy": "Could not refresh the job list.\n",
+            "error-get-info": "Error occured while updating job information.\n",
+            "dlg-title": "An error occured"
+        }
+}

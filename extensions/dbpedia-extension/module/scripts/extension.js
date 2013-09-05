@@ -33,6 +33,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var ZemantaDBpediaExtension = {handlers: {}, util: {}};
 
+// Internationalization init
+var lang = navigator.language.split("-")[0]
+    || navigator.userLanguage.split("-")[0];
+var dictionary = "";
+$.ajax({
+  url : "/command/dbpedia-extension/load-language?",
+  type : "POST",
+  async : false,
+  data : {
+    lng : lang
+  },
+  success : function(data) {
+    dictionary = data;
+  }
+});
+$.i18n.setDictionary(dictionary);
+// End internationalization
+
 ZemantaDBpediaExtension.handlers.doNothing = function() {
 	alert("Zemanta extension active...");
 };
@@ -101,7 +119,7 @@ ExtensionBar.addExtensionMenu({
 "submenu": [
 	 {
 		 "id":"dbpedia-ext/settings",
-		        	 label: "Zemanta API settings",
+		        	 label: $.i18n._('zem-ext-menu')["api-set"],
 		        	 click: ZemantaDBpediaExtension.handlers.storeAllSettings
 	}
 	]
@@ -125,9 +143,7 @@ ExtensionBar.addExtensionMenu({
   }
   
   if(reconId === null || !isDBpedia) {
-	  alert("Adding columns from DBpedia requires " +
-			"DBpedia-reconciled values in selected column.\n" + 
-			"Reconcile this column with DBpedia first.");
+	  alert($.i18n._('zem-ext-menu')["alert-recon"]);
 	  return;
   }
 
@@ -159,7 +175,7 @@ ExtensionBar.addExtensionMenu({
     [ "core/edit-column", "core/add-column-by-fetching-urls" ],
     {
       id: "dbpedia-ext/add-columns-from-dbpedia",
-      label: "Add columns from DBpedia ...",
+      label: $.i18n._('zem-ext-menu')["add-col"] + "...",
       click: doAddColumnFromDBpedia
     }
   );
@@ -199,7 +215,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
 	    [ "core/edit-column", "dbpedia-ext/add-columns-from-dbpedia" ],
 	    {
 	      id: "dbpedia-ext/extract-entities-from-text",
-	      label: "Extract entities from text (Zemanta API)",
+	      label: $.i18n._('zem-ext-menu')["extract-ent"],
 	      click: doExtractEntitiesFromText
 	    }
 	  );

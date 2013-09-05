@@ -3,16 +3,16 @@
 	<div class="dialog-header" bind="dialogHeader"></div>
 	<div class="dialog-body" bind="dialogBody">
 		<div class="grid-layout layout-normal layout-full">
-			<div class="dialog-label">Preview text:</div>
+			<div class="dialog-label" bind="zemext_extract_preview"></div>
 			<div class="original-text" bind="originalText" style="overflow: auto"></div>
-			<div class="dialog-label">Extracted entities:</div>
+			<div class="dialog-label" bind="zemext_extract_extracted"></div>
 			<div class="preview-container" bind="previewContainer"></div>
-			<div class="dialog-label">Entity types (select):</div>
+			<div class="dialog-label" bind="zemext_extract_ent_types"></div>
 			<div class="extracted-types" bind="extractedTypes"></div>
 		</div>
 	</div>
 	<div class="dialog-footer" bind="dialogFooter">
-		<button class="btn btn-success" bind="okButton">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-		<button class="btn" bind="cancelButton">Cancel</button>
+		<button class="btn btn-success" bind="okButton"></button>
+		<button class="btn" bind="cancelButton"></button>
 	</div>
 </div>

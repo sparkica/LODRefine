@@ -38,10 +38,7 @@ var RS = Packages.com.google.refine.RefineServlet;
 
 var logger = Packages.org.slf4j.LoggerFactory.getLogger("crowdsourcing"),
     File = Packages.java.io.File,
-    refineServlet = Packages.com.google.refine.RefineServlet,
-    ner = Packages.org.freeyourmetadata.ner,
-    services = ner.services,
-    commands = ner.commands;
+    refineServlet = Packages.com.google.refine.RefineServlet;
 
 /*
  * Function invoked to initialize the extension.
@@ -49,13 +46,14 @@ var logger = Packages.org.slf4j.LoggerFactory.getLogger("crowdsourcing"),
 function init() {
   logger.info("Initializing crowdsourcing extension...");
 
-  RS.registerCommand(module, "create-crowdflower-job", new Packages.com.google.refine.crowdsourcing.crowdflower.CreateNewJobCommand());
-  RS.registerCommand(module, "preview-crowdflower-jobs", new Packages.com.google.refine.crowdsourcing.crowdflower.PreviewExistingJobsCommand());
-  RS.registerCommand(module, "copy-crowdflower-job", new Packages.com.google.refine.crowdsourcing.crowdflower.CopyJobCommand());
-  RS.registerCommand(module, "get-crowdflower-job", new Packages.com.google.refine.crowdsourcing.crowdflower.GetJobInfoCommand());
-  RS.registerCommand(module, "evaluate-recon-job", new Packages.com.google.refine.crowdsourcing.crowdflower.EvaluateReconJobCommand());
-  RS.registerCommand(module, "image-recon-job", new Packages.com.google.refine.crowdsourcing.crowdflower.ImageReconJobCommand());
-  
+  RS.registerCommand(module, "create-crowdflower-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.CreateNewJobCommand());
+  RS.registerCommand(module, "preview-crowdflower-jobs", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.PreviewExistingJobsCommand());
+  RS.registerCommand(module, "copy-crowdflower-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.CopyJobCommand());
+  RS.registerCommand(module, "get-crowdflower-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.GetJobInfoCommand());
+  RS.registerCommand(module, "evaluate-recon-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.EvaluateReconJobCommand());
+  RS.registerCommand(module, "image-recon-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.ImageReconJobCommand());
+  RS.registerCommand(module, "load-language", new Packages.com.zemanta.crowdsourcing.commands.LoadLanguageCommand());
+
   // Script files to inject into /project page
   ClientSideResourceManager.addPaths(
     "project/scripts",
@@ -79,23 +77,6 @@ function init() {
       "styles/dialogs/crowdflower-gui.less",
     ]
   );
-}
-
-/*
- * Function invoked to handle each request in a custom way.
- */
-function process(path, request, response) {
-  // Analyze path and handle this request yourself.
-
-  if (path == "/" || path == "") {
-    var context = {};
-    // here's how to pass things into the .vt templates
-    context.someList = ["Superior","Michigan","Huron","Erie","Ontario"];
-    context.someString = "foo";
-    context.someInt = Packages.com.google.refine.sampleExtension.SampleUtil.stringArrayLength(context.someList);
-
-    send(request, response, "index.vt", context);
-  }
 }
 
 function send(request, response, template, context) {

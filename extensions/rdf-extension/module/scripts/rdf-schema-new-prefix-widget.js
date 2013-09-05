@@ -100,10 +100,6 @@ NewPrefixWidget.prototype.show = function(msg,def_prefix, onDone){
 					dismissBusy();
 		    		if (data.code === "error"){
 		    			alert('Error:' + data.message);
-						//todo: add force input option
-						console.log("Force import...");
-						console.log(force_import);
-
 		    		}else{
 		    			if(onDone){
 		    				onDone(name,uri);

@@ -6,53 +6,52 @@
 
             <div class="refine-tabs ui-tabs ui-tabs-nav" bind="jobTabs" id="jobTabs">
                 <ul>
-                    <li><a href="#tab2">Upload data for image reconciliation</a></li>
+                    <li><a href="#tab2" bind="uploadTab"></a></li>
                 </ul>
                 <div id="tab2">
             <div class="job-box">
                 <div class="field-container">
-                    <label>Select existing job:</label>
+                    <label bind="selectJobLabel"></label>
                     <div id="job-list" bind="jobList">
                     <select id="all_jobs" bind="allJobsList"></select>
                     </div>
                 </div><!-- ./field-container -->
                 <div class="field-container">
-                    <label>Image url:</label>
+                    <label bind="imgUrlLabel"></label>
                     <select name="img_url" bind="imgUrlColumn"></select>
                 </div><!-- ./field-container -->
                 <div class="field-container">
-                    <label>Image description:</label>
+                    <label bind="imgDescriptionLabel"></label>
                     <select name="img_desc" bind="imgDescColumn"></select>
                 </div><!-- ./field-container -->
                 <div class="field-container">
-                    <label>Destination url:</label>
+                    <label bind="destUrlLabel"></label>
                     <select name="dest_url" bind="destUrlColumn"></select>
                 </div><!-- ./field-container -->
 
          </div>
          <div class="job-box">
-         <h3>Options</h3>
+         <h3 bind="optionsLabel"></h3>
                 <div class="wrapper">
             <div class="column-left">
-            <h3>Gold data (correct answers)</h3>
+            <h3 bind="goldDataLabel"></h3>
                 <div class="field-container">
-                <label>Upload gold data? </label>
+                <label bind="uploadGoldLabel"></label>
                 <input type="checkbox" id="upload-gold" bind="uploadGoldBtn"><br/>
                 </div><!-- ./field-container -->
             <br/>
             <div id="gold-data-panel" bind="goldDataPanel">
                     <div class="field-container">
-                    <label>Select Gold data column:</label>
+                    <label bind="selectGoldColLabel"></label>
                     <select name="gold_data" bind="goldDataColumn"></select>
                 </div><!-- ./field-container -->
                 </div> <!-- ./gold-data-panel -->
               </div>
               <div class="column-right">
-                <h3>Additional information</h3>
-                <label>Select columns (scroll right for more):</label>
-                <p class="text-info"><small>May require template update: you have to add field for this column manually.</small></p>
+                <h3 bind="additionalInfoLabel"></h3>
+                <label bind="selColsLabel"></label>
+                <p class="text-info" bind="infoTemplateUpdate"></p>
                 <div id="info-fields" bind="infoField" class="project-columns">
-              
                 </div>
             </div><!-- ./column right -->
             </div> 
@@ -68,7 +67,7 @@
     <div id="msg-frame">
         <p id="status-message" bind="statusMessage"></p>
     </div>
-        <button class="btn btn-success" bind="okButton">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-        <button class="btn" bind="cancelButton">Cancel</button>
+        <button class="btn btn-success" bind="okButton"></button>
+        <button class="btn" bind="cancelButton"></button>
     </div>
 </div>

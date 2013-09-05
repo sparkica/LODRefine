@@ -5,78 +5,77 @@
   
     <div class="refine-tabs" bind="jobTabs" id="jobTabs">
     <ul>
-    	<li><a href="#tab2">Reconciled data</a></li>
+    	<li><a href="#tab2" bind="crowdext_eval_tab_recon"></a></li>
     </ul>
     <div class="panels-area">
    
     <div id="tab2">
-    <h2>Upload data to job from reconciliation template</h2>
+    <h2 bind="crowdext_eval_upload_header"></h2>
 	 	<div class="job-box">
-	 	<h3>Select job and reconciliation template </h3>
+	 	<h3 bind="crowdext_eval_job_header"></h3>
 	 	<div class="panel">
 			<div class="field-container">
-			<label>Select existing job:</label>
+			<label bind="label_sel_job"></label>
 				<div id="job-list" bind="jobList">
 					<select id="all-jobs" bind="allJobsList"></select>
 				</div>
 			</div><!-- ./field-container -->
 			<div class="field-container">
-			  <label>Select recon. template:</label>
+			  <label bind="label_sel_template"></label>
 	    		<select id="recon-templates" bind="reconTemplates">
-	    		<option id="blank" value="blank">--- no template ---</option>
-	    		<option id="freebase" value="freebase">Freebase reconciliation</option>
-	    		<option id="dbpedia" value="dbpedia" >DBpedia reconciliation</option>
+	    		<option id="blank" value="blank" bind="optNoTemplate"></option>
+	    		<option id="freebase" value="freebase" bind="optFreebaseTemplate"></option>
+	    		<option id="dbpedia" value="dbpedia" bind="optDBpediaTemplate"></option>
 	    		</select>
-	    		<span class="warning">Choose the service with which you reconciled data</span>	    		
+	    		<span class="warning" bind="crowdext_eval_service_warning"></span>
 			</div><!-- ./field-container -->
 		</div>
 		</div>
 		
 		<div class="job-box">
-		<h3>Map columns to fields: </h3>
+		<h3 bind="mapHeader"></h3>
 			<div class="field-container">
-				<label>Entity name (alias): </label>
+				<label bind="entNameLabel"></label>
 				<select name="anchor" bind="anchorField"></select>
 			</div><!-- ./field-container -->			
 			<div class="field-container">
-			<label>Entity URL: </label>
+			<label bind="entUrlLabel"></label>
 			<select name="link" bind="linkField"></select>
 			</div><!-- ./field-container -->
 	 	</div><!-- ./job-box -->
 
 	 	<div class="job-box">
-	 	<h3>Reconciled columns</h3>
+	 	<h3 bind="reconColHeader"></h3>
 		 	<div class="field-container">
-					<label>Select column: </label>
+					<label bind="selColLabel"></label>
 		 		<select id="project-columns-0" bind="reconColumns" ></select>
 			</div>
 		</div>
 	<div class="job-box">
-	<h2>Options</h2>
+	<h2 bind="optionsLabel"></h2>
 		<div class="wrapper">
 			<div class="column-left">
-			<h3>Gold data (correct answers)</h3>
-			<p class="text-info">You can upload correct answers (entity URLs), i.e. gold data by 
-			checking Upload gold data below and selecting column containing gold data.</p>
+			<h3 bind="goldHeader"></h3>
+			<p class="text-info" bind="goldInfo"></p>
 				<div class="field-container">
-				<label>Upload gold data </label>
+				<label bind="uploadgoldLabel"></label>
 				<input type="checkbox" id="upload-gold" bind="uploadGoldBtn"><br/>
 				</div><!-- ./field-container -->
 			<br/>
 				<div id="gold-data-panel" bind="goldDataPanel">
 				<div class="field-container">
-					<label>Select column:</label>
+					<label bind="selColGold"></label>
 					<select id="gold-column2" bind="goldColumn2"></select><br/>
 				</div>
 				</div><!-- ./panel -->
 		
 			</div><!-- ./column-left -->
 			<div class="column-right">				
-				<h3>Additional columns for upload</h3>
-				<p class="text-info">May require template update: you have to add field for this column manually.</p>
+				<h3 bind="additionalColsLabel"></h3>
+				<p class="text-info" bind="additionalColsInfo"></p>
 			<br/>
 			<div id="infoFieldPanel" class="panel">
-				<label>Select columns:</label>
+				<label bind="selAdditionalCols"></label>
 				<div id="info-fields" bind="infoField" class="project-columns tiny">
 				</div>
 	    	</div>
@@ -93,8 +92,7 @@
     <div id="msg-frame">
         <p id="status-message" bind="statusMessage"></p>
     </div>
-    
-    <button class="btn btn-success" bind="okButton">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>
-    <button class="btn" bind="cancelButton">Cancel</button>
+    <button class="btn btn-success" bind="okButton"></button>
+    <button class="btn" bind="cancelButton"></button>
   </div>
 </div>

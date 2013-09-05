@@ -8,8 +8,31 @@ function ZemantaCFEvaluateReconDialog(onDone) {
 
         this._dialog = $(DOM.loadHTML("crowdsourcing", "scripts/dialogs/crowdflower-eval-recon-dialog.html"));
         this._elmts = DOM.bind(this._dialog);
-        this._elmts.dialogHeader.text("Evaluate reconciled data");
-
+        this._elmts.dialogHeader.text($.i18n._('crowd-ext-eval')["header"]);
+        this._elmts.crowdext_eval_tab_recon.text($.i18n._('crowd-ext-eval')["tab-recon"]);
+        this._elmts.crowdext_eval_upload_header.text($.i18n._('crowd-ext-eval')["upload-header"]);
+        this._elmts.crowdext_eval_job_header.text($.i18n._('crowd-ext-eval')["job-header"]);
+        this._elmts.label_sel_job.text($.i18n._('crowd-ext-eval')["select-job"]);
+        this._elmts.label_sel_template.text($.i18n._('crowd-ext-eval')["select-template"]);
+        this._elmts.optNoTemplate.text($.i18n._('crowd-ext-eval')["no-template"]);
+        this._elmts.optFreebaseTemplate.text($.i18n._('crowd-ext-eval')["freebase-template"]);
+        this._elmts.optDBpediaTemplate.text($.i18n._('crowd-ext-eval')["dbpedia-template"]);
+        this._elmts.crowdext_eval_service_warning.text($.i18n._('crowd-ext-eval')["service-warning"]);
+        this._elmts.mapHeader.text($.i18n._('crowd-ext-eval')["map-header"]);
+        this._elmts.entNameLabel.text($.i18n._('crowd-ext-eval')["ent-name"]);
+        this._elmts.entUrlLabel.text($.i18n._('crowd-ext-eval')["ent-url"]);
+        this._elmts.reconColHeader.text($.i18n._('crowd-ext-eval')["recon-col-header"]);
+        this._elmts.selColLabel.text($.i18n._('crowd-ext-eval')["sel-col"]);
+        this._elmts.goldHeader.text($.i18n._('crowd-ext-eval')["gold-header"]);
+        this._elmts.goldInfo.text($.i18n._('crowd-ext-eval')["gold-info"]);
+        this._elmts.uploadgoldLabel.text($.i18n._('crowd-ext-eval')["gold-upload"]);
+        this._elmts.selColGold.text($.i18n._('crowd-ext-eval')["sel-col"]);
+        this._elmts.additionalColsLabel.text($.i18n._('crowd-ext-eval')["additional-cols"]);
+        this._elmts.additionalColsInfo.text($.i18n._('crowd-ext-eval')["additional-cols-info"]);
+        this._elmts.selAdditionalCols.text($.i18n._('crowd-ext-eval')["sel-cols"]);
+        this._elmts.okButton.text($.i18n._('crowd-ext-buttons')["ok"]);
+        this._elmts.cancelButton.text($.i18n._('crowd-ext-buttons')["cancel"]);
+        this._elmts.optionsLabel.text($.i18n._('crowd-ext-eval')["options"]);
         this._elmts.jobTabs.tabs();
 
         var self = this;
@@ -26,8 +49,8 @@ function ZemantaCFEvaluateReconDialog(onDone) {
 
                 self._extension.recon_service = template;
 
-                if(template === "--- no template ---") {
-                        ZemUtil.showErrorDialog('Choose recon template first', '.dialog-frame');
+                if(template === $.i18n._('crowd-ext-eval')["no-template"]) {
+                        ZemUtil.showErrorDialog($.i18n._('crowd-ext-eval')["error-no-template"], '.dialog-frame');
                         DialogSystem.dismissUntil(self._level - 1);
                 }
 
@@ -119,23 +142,23 @@ ZemantaCFEvaluateReconDialog.prototype._renderAllExistingJobs = function() {
         var selContainer = self._elmts.allJobsList;
         var elemStatus = self._elmts.statusMessage;
 
-        $('<option name="opt_none" value="none">--- select a job --- </option>').appendTo(selContainer);
+        $('<option name="opt_none" value="none">' + $.i18n._('crowd-ext-eval')["select-job-opt"] + '</option>').appendTo(selContainer);
 
         ZemantaCrowdSourcingExtension.util.loadAllExistingJobs(function(data, status, message) {
                 
-                if(status.toLowerCase() == 'error') {
+                if(status == 'ERROR') {
                         elemStatus.removeClass('text-success');
                         elemStatus.addClass('text-error');
-                        elemStatus.html("There was an error loading jobs. Details: <br/>" + message);
+                        elemStatus.html( $.i18n._('crowd-ext-eval')["error-loading"] + message);
                 } else {
                         elemStatus.removeClass('text-error');
                         elemStatus.addClass('text-success');
-                        elemStatus.html("Jobs are loaded.");
+                        elemStatus.html($.i18n._('crowd-ext-eval')["success-loading"] );
                 }
 
                 $.each(data, function(index, value) {
 
-                        var title = (value.title == null)? "Title not defined" : value.title;
+                        var title = (value.title == null)? $.i18n._('crowd-ext-eval')["title-undefined"]  : value.title;
                         var job = $('<option name="opt_' + index + '" value=' + value.id + '>' + title + ' (job id: ' + value.id + ')</option>');
                         selContainer.append(job);
                 });

@@ -17,7 +17,7 @@ function RdfUploadTriplesDialog(onDone) {
 	this._elmts.rdfext_virtuoso_def.text($.i18n._('rdf-ext-virtuoso')["default-graph"]+":");
 	this._elmts.rdfext_virtuoso_auth.text($.i18n._('rdf-ext-virtuoso')["authentication"]+":");
 	this._elmts.rdfext_virtuoso_digest.text($.i18n._('rdf-ext-virtuoso')["digest"]);
-	this._elmts.rdfext_virtuoso_cred.text($.i18n._('rdf-ext-virtuoso')["creadentials"]+":");
+	this._elmts.rdfext_virtuoso_cred.text($.i18n._('rdf-ext-virtuoso')["credentials"]+":");
 	this._elmts.rdfext_virtuoso_user.text($.i18n._('rdf-ext-virtuoso')["username"]+":");
 	this._elmts.rdfext_virtuoso_pass.text($.i18n._('rdf-ext-virtuoso')["password"]+":");
 	this._elmts.saveEndpointButton.attr('value',$.i18n._('rdf-ext-buttons')["save-endpoint"]);

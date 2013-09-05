@@ -42,8 +42,14 @@ function ZemantaExtractEntitiesPreviewDialog(column, columnIndex,cellText,rowInd
 	var self = this;
 	this._dialog = $(DOM.loadHTML("dbpedia-extension", "scripts/dialogs/extract-entities-preview-dialog.html"));
 	this._elmts = DOM.bind(this._dialog);
-	this._elmts.dialogHeader.text("Extract entities from '" + column.name + "'");
+	this._elmts.dialogHeader.text($.i18n._('zem-ext-extract')["header"] + column.name + "'");
 	this._elmts.originalText.text(cellText);
+
+	this._elmts.okButton.text($.i18n._('zem-ext-buttons')["ok"]);
+	this._elmts.cancelButton.text($.i18n._('zem-ext-buttons')["cancel"]);
+	this._elmts.zemext_extract_preview.text($.i18n._('zem-ext-extract')["preview-text"]);
+	this._elmts.zemext_extract_extracted.text($.i18n._('zem-ext-extract')["extracted-ent"]);
+	this._elmts.zemext_extract_ent_types.text($.i18n._('zem-ext-extract')["ent-types"]);
 
 	this._elmts.okButton.click(function() {
 		extension = self._extension;
@@ -77,7 +83,6 @@ function ZemantaExtractEntitiesPreviewDialog(column, columnIndex,cellText,rowInd
 
 ZemantaExtractEntitiesPreviewDialog.getAllEntities = function(cellText, onDone) {
 
-	console.log("Getting all entities");
 	$.post(
 			"/command/dbpedia-extension/preview-extract-entities", 
 			{
@@ -88,7 +93,7 @@ ZemantaExtractEntitiesPreviewDialog.getAllEntities = function(cellText, onDone) 
 			function(data) {
 				var allEntities = [];				    	
 				if(data.code == "error") {
-					alert("An error occured. Check your connection and/or API key.");
+					alert($.i18n._('zem-ext-extract')["alert-error-extract"]);
 					onDone(allEntities, "error");
 				}
 				else {			    	
@@ -127,7 +132,7 @@ ZemantaExtractEntitiesPreviewDialog.prototype._show = function(entities, status)
 	var renderEntity = function(entity, elem) {
 		var label = entity.anchor;
 		alltypes = alltypes.concat(entity.entity_type);
-		tooltip = (entity.entity_type.length > 0)?entity.entity_type:"unknown";
+		tooltip = (entity.entity_type.length > 0) ? entity.entity_type:$.i18n._('zem-ext-extract')["unknown"];
 		$('<li><a class="extracted-entity" href="#" title="' + tooltip +'">' + label + "</a></li>")
 		.appendTo(elem);	  
 	};
@@ -163,9 +168,9 @@ ZemantaExtractEntitiesPreviewDialog.prototype._show = function(entities, status)
 
 	var typefilter = $('<div id="types">').appendTo(typesContainer);
 	var input = $('<input type="checkbox" id="all-types" bind="allTypes" value="all">').appendTo(typefilter);
-	$('<label for="allTypes" class="all-types-label">All types</label>').appendTo(typefilter);
+	$('<label for="allTypes" class="all-types-label">' + $.i18n._('zem-ext-extract')["all-types"] + '</label>').appendTo(typefilter);
 	$('<br/>').appendTo(typefilter);
-	alltypes = alltypes.concat(["unknown"]);
+	alltypes = alltypes.concat([$.i18n._('zem-ext-extract')["unknown"]]);
 	alltypes = getUniqueEntityTypes(alltypes);
 	renderEntityTypesFilter(alltypes,typefilter);
 
