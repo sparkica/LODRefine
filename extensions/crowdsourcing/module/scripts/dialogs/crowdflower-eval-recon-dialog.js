@@ -63,9 +63,10 @@ function ZemantaCFEvaluateReconDialog(onDone) {
                 tmp.safe_name = 'anchor';
                 self._extension.column_names.push(tmp);
 
-                tmp.name = $('option[name=link]:selected').val();
-                tmp.safe_name = 'link';
-                self._extension.column_names.push(tmp);
+                var tmp1 = {};
+                tmp1.name = $('option[name=link]:selected').val();
+                tmp1.safe_name = 'link';
+                self._extension.column_names.push(tmp1);
 
                 if($('#upload-gold').is(':checked')) {
                         self._extension.golden_column = $('option[name=gold2]:selected').val();;

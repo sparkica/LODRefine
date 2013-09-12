@@ -226,7 +226,7 @@ public class EvaluateReconJobCommand extends Command {
                         ReconCandidate rc = null;
 
                         // generate gold data from column with links
-                        // if link == candidates(i), gold1 = suggestion_i
+                        // if link == candidates(i), gold_i = suggestion_i
 
                         if ((candidates != null) && (candidates.size() > max_candidates))
                                 max_candidates = candidates.size();
@@ -253,6 +253,7 @@ public class EvaluateReconJobCommand extends Command {
                                         candidate_matches = true;
                                 }
 
+                                int suggestions = 0;
                                 for (int i = 1; i <= candidates.size(); i++) {
                                         rc = candidates.get(i - 1);
                                         obj.put("suggestion_name_" + i, rc.name);
@@ -261,6 +262,7 @@ public class EvaluateReconJobCommand extends Command {
                                         } else {
                                                 obj.put("suggestion_url_" + i, rc.id);
                                         }
+                                        suggestions++;
 
                                         // compare cell value of golden link
                                         // with candidates to generate
@@ -273,8 +275,17 @@ public class EvaluateReconJobCommand extends Command {
                                                 obj.put("enter_link_gold", "");
                                                 candidate_matches = true;
                                         }
-
                                 }
+                                
+                                //if there are less than max candidates
+                                if (suggestions < max_candidates) {
+                                        suggestions++;
+                                        for (int i = suggestions; i <= max_candidates; i++) {
+                                                obj.put("suggestion_name_" + i, "(no suggestion)");
+                                                obj.put("suggestion_url_" + i, "#");
+                                        }
+                                }
+                                
                                 if ((golden_col != null) && (!candidate_matches)) {
                                         obj.put("best_suggestion_gold", "None of the above");
 
