@@ -537,17 +537,12 @@ mac_dist() {
     if [ -f "$REFINE_BUILD_DIR/temp_refine.dmg" ] ; then
         rm "$REFINE_BUILD_DIR/temp_refine.dmg"
     fi
-<<<<<<< HEAD
-    
-    TITLE="LODRefine $VERSION"
-=======
 
 # Sign the bundle with a self-signed cert so OS X doesn't frustrate users by making app invisible
-    codesign -s "OpenRefine Code Signing" "$REFINE_BUILD_DIR/mac/OpenRefine.app"
-    spctl --assess --type execute --verbose=4 "$REFINE_BUILD_DIR/mac/OpenRefine.app"
+    codesign -s "LODRefine Code Signing" "$REFINE_BUILD_DIR/mac/LODRefine.app"
+    spctl --assess --type execute --verbose=4 "$REFINE_BUILD_DIR/mac/LODRefine.app"
 
-    TITLE="OpenRefine $VERSION"
->>>>>>> cce480ff3860f27964cf33a10e0350aa9294e51a
+    TITLE="LODRefine $VERSION"
     echo "Building MacOSX DMG for $TITLE"
     hdiutil create -srcfolder "$REFINE_BUILD_DIR/mac" -volname "$TITLE" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW -size ${SIZE}m "$REFINE_BUILD_DIR/temp_refine.dmg" || error "can't create empty DMG"
     DEVICE=`hdiutil attach -readwrite -noverify -noautoopen "$REFINE_BUILD_DIR/temp_refine.dmg" | egrep '^/dev/' | sed -e "s/^\/dev\///g" -e 1q  | awk '{print $1}'`
@@ -582,26 +577,15 @@ mac_dist() {
     sync
     sleep 3
     hdiutil detach $DEVICE
-    
-<<<<<<< HEAD
-    if [ -f "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg" ] ; then
-        rm "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg"
+            
+    if [ -f "$REFINE_DIST_DIR/lodrefine-mac-$VERSION.dmg" ] ; then
+        rm "$REFINE_DIST_DIR/lodrefine-mac-$VERSION.dmg"
     fi
     
-    hdiutil convert "$REFINE_BUILD_DIR/temp_refine.dmg" -format UDZO -imagekey zlib-level=9 -o "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg" || error "Error compressing DMG"
-    hdiutil internet-enable -yes "$REFINE_DIST_DIR/lodrefine-$VERSION.dmg" || error "Error internet-enabling DMG"
-        
-    #rm -f "$REFINE_BUILD_DIR/temp_refine.dmg"
-=======
-    if [ -f "$REFINE_DIST_DIR/openrefine-mac-$VERSION.dmg" ] ; then
-        rm "$REFINE_DIST_DIR/openrefine-mac-$VERSION.dmg"
-    fi
-    
-    hdiutil convert "$REFINE_BUILD_DIR/temp_refine.dmg" -format UDZO -imagekey zlib-level=9 -o "$REFINE_DIST_DIR/openrefine-mac-$VERSION.dmg" || error "Error compressing DMG"
-    hdiutil internet-enable -yes "$REFINE_DIST_DIR/openrefine-mac-$VERSION.dmg" || error "Error internet-enabling DMG"
+    hdiutil convert "$REFINE_BUILD_DIR/temp_refine.dmg" -format UDZO -imagekey zlib-level=9 -o "$REFINE_DIST_DIR/lodrefine-mac-$VERSION.dmg" || error "Error compressing DMG"
+    hdiutil internet-enable -yes "$REFINE_DIST_DIR/lodrefine-mac-$VERSION.dmg" || error "Error internet-enabling DMG"
     
     rm -f "$REFINE_BUILD_DIR/temp_refine.dmg"
->>>>>>> cce480ff3860f27964cf33a10e0350aa9294e51a
 }
 
 test() {
