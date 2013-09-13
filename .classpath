@@ -17,15 +17,14 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/ant-tools-1.8.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/arithcode-1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/butterfly-trunk.jar" sourcepath="main/webapp/WEB-INF/lib-src/butterfly-trunk-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/clojure-1.4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/butterfly-1.0.1.jar" sourcepath="main/webapp/WEB-INF/lib-src/butterfly-1.0.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/clojure-1.5.1-slim.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/commons-codec-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/commons-io-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/commons-lang-2.5.jar" sourcepath="main/webapp/WEB-INF/lib-src/commons-lang-2.5-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/dom4j-1.6.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/icu4j-4.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/jackson-core-asl-1.9.12.jar" sourcepath="main/webapp/WEB-INF/lib-src/jackson-src-1.9.9.zip"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/jcl-over-slf4j-1.5.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/jrdf-0.5.6.jar" sourcepath="main/webapp/WEB-INF/lib-src/jrdf-0.5.6-sources.jar"/>
@@ -72,8 +71,9 @@
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/serializer.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/xercesImpl-2.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/httpclient-4.2.5.jar"/>
+	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/httpcore-4.2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/signpost-commonshttp4-1.2.1.2.jar" sourcepath="main/webapp/WEB-INF/lib-src/signpost-commonshttp4-1.2.1.2-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/signpost-core-1.2.1.2.jar" sourcepath="main/webapp/WEB-INF/lib-src/signpost-core-1.2.1.2-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/guava-13.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="extensions/crowdsourcing/module/MOD-INF/lib/crowdsourcing-client.jar"/>
@@ -98,13 +98,18 @@
 	<classpathentry exported="true" kind="lib" path="extensions/freebase/module/MOD-INF/lib/google-api-services-freebase-v1-rev25-1.13.2-beta.jar" sourcepath="extensions/freebase/module/MOD-INF/libsrc/google-api-services-freebase-v1-rev25-1.13.2-beta-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="extensions/freebase/module/MOD-INF/lib/google-http-client-jackson-1.13.1-beta.jar"/>
 	<classpathentry exported="true" kind="lib" path="extensions/freebase/module/MOD-INF/lib/mail.jar"/>
-	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/httpclient-4.2.5.jar"/>
-	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/httpcore-4.2.4.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/commons-codec-1.8.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-larq-1.0.1-20130218.045518-64.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-arq-2.10.0.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-core-2.10.0.jar"/>
 	<classpathentry kind="lib" path="extensions/rdf-extension/module/MOD-INF/lib/jena-iri-0.9.5.jar"/>
+	<classpathentry kind="lib" path="extensions/gdata/module/MOD-INF/lib/google-api-client-1.13.2-beta.jar" sourcepath="extensions/gdata/module/MOD-INF/lib-src/google-api-client-1.13.2-beta-sources.jar"/>
+	<classpathentry kind="lib" path="extensions/gdata/module/MOD-INF/lib/google-api-services-fusiontables-v1-rev17-1.13.2-beta.jar" sourcepath="extensions/gdata/module/MOD-INF/lib-src/google-api-services-fusiontables-v1-rev17-1.13.2-beta-sources.jar"/>
+	<classpathentry kind="lib" path="extensions/gdata/module/MOD-INF/lib/google-http-client-1.13.1-beta.jar" sourcepath="extensions/gdata/module/MOD-INF/lib-src/google-http-client-1.13.1-beta-sources.jar"/>
+	<classpathentry kind="lib" path="extensions/gdata/module/MOD-INF/lib/google-http-client-jackson-1.13.1-beta.jar"/>
+	<classpathentry kind="lib" path="extensions/gdata/module/MOD-INF/lib/google-oauth-client-1.13.1-beta.jar" sourcepath="extensions/gdata/module/MOD-INF/lib-src/google-oauth-client-1.13.1-beta-sources.jar"/>
+	<classpathentry kind="lib" path="extensions/gdata/module/MOD-INF/lib/google-oauth-client-servlet-1.13.1-beta.jar"/>
+	<classpathentry kind="lib" path="extensions/gdata/module/MOD-INF/lib/jsr305-1.3.9.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/fluent-hc-4.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="main/webapp/WEB-INF/lib/httpmime-4.2.5.jar"/>

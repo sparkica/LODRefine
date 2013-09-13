@@ -99,7 +99,6 @@ function registerCommands() {
   RS.registerCommand(module, "key-value-columnize", new Packages.com.google.refine.commands.cell.KeyValueColumnizeCommand());
 
   RS.registerCommand(module, "load-language", Packages.com.google.refine.commands.lang.LoadLanguageCommand());
-  RS.registerCommand(module, "set-language", Packages.com.google.refine.commands.lang.SetLanguageCommand());
   
   RS.registerCommand(module, "add-column", new Packages.com.google.refine.commands.column.AddColumnCommand());
   RS.registerCommand(module, "add-column-by-fetching-urls", new Packages.com.google.refine.commands.column.AddColumnByFetchingURLsCommand());
@@ -386,14 +385,14 @@ function init() {
       "externals/jquery-1.7.2.min.js",
       "externals/jquery.cookie.js",
       "externals/jquery.eventstack-0.3.js",
-
-      //"externals/suggest/suggest-4_1.custom.min.js",
-      "externals/suggest/suggest-4_2.js",
+      //"externals/suggest/suggest-4_2.js",
+      "externals/suggest/suggest-4_3.js",
       "externals/jquery-ui/jquery-ui-1.8.20.custom.min.js",
       "externals/imgareaselect/jquery.imgareaselect.js",
       "externals/date.js",
       "externals/bootstrap-lodrefine/js/bootstrap.min.js",
       "externals/jquery.i18n.js",
+      "externals/underscore-min.js",
 
       "externals/CFInstall.min.js",
       "scripts/chrome-frame.js",
@@ -455,8 +454,7 @@ function init() {
     "project/styles",
     module,
     [
-
-      "externals/suggest/css/suggest-4_2.min.css",
+      "externals/suggest/css/suggest-4_3.min.css",
       "externals/jquery-ui/css/ui-lightness/jquery-ui-1.8.20.custom.css",
       "externals/imgareaselect/css/imgareaselect-default.css",
       "externals/bootstrap-lodrefine/css/bootstrap.min.css",
@@ -497,23 +495,22 @@ function init() {
     [
       "externals/jquery-1.7.2.min.js",
       "externals/jquery.cookie.js",
-      //"externals/suggest/suggest-4_1.custom.min.js",
-      "externals/suggest/suggest-4_2.min.js",
+      "externals/suggest/suggest-4_3.js",
       "externals/jquery-ui/jquery-ui-1.8.20.custom.min.js",
       "externals/imgareaselect/jquery.imgareaselect.js",
       "externals/date.js",
       "externals/bootstrap-lodrefine/js/bootstrap.min.js",
       "scripts/preferences.js",
       "externals/jquery.i18n.js",
+      "scripts/preferences.js",
     ]
   );
   ClientSideResourceManager.addPaths(
     "preferences/styles",
     module,
     [
-      //"externals/suggest/css/suggest-4_1.min.css",
       "externals/bootstrap-lodrefine/css/bootstrap.min.css",
-      "externals/suggest/css/suggest-4_2.min.css",
+      "externals/suggest/css/suggest-4_3.min.css",
       "externals/jquery-ui/css/ui-lightness/jquery-ui-1.8.20.custom.css",
       "styles/jquery-ui-overrides.less",
       "styles/common.less",
