@@ -3,18 +3,19 @@ var ZemUtil = {};
 
 // Internationalization init
 var lang = navigator.language.split("-")[0]
-    || navigator.userLanguage.split("-")[0];
+		|| navigator.userLanguage.split("-")[0];
 var dictionary = "";
 $.ajax({
-  url : "/command/crowdsourcing/load-language?",
-  type : "POST",
-  async : false,
-  data : {
-    lng : lang
-  },
-  success : function(data) {
-    dictionary = data;
-  }
+	url : "/command/core/load-language?",
+	type : "POST",
+	async : false,
+	data : {
+	  module : "crowdsourcing",
+//		lang : lang
+	},
+	success : function(data) {
+		dictionary = data;
+	}
 });
 $.i18n.setDictionary(dictionary);
 // End internationalization

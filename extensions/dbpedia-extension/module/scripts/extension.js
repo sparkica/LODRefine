@@ -35,18 +35,19 @@ var ZemantaDBpediaExtension = {handlers: {}, util: {}};
 
 // Internationalization init
 var lang = navigator.language.split("-")[0]
-    || navigator.userLanguage.split("-")[0];
+		|| navigator.userLanguage.split("-")[0];
 var dictionary = "";
 $.ajax({
-  url : "/command/dbpedia-extension/load-language?",
-  type : "POST",
-  async : false,
-  data : {
-    lng : lang
-  },
-  success : function(data) {
-    dictionary = data;
-  }
+	url : "/command/core/load-language?",
+	type : "POST",
+	async : false,
+	data : {
+	  module : "dbpedia-extension",
+//		lang : lang
+	},
+	success : function(data) {
+		dictionary = data;
+	}
 });
 $.i18n.setDictionary(dictionary);
 // End internationalization

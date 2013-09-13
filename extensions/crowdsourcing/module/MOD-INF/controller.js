@@ -52,7 +52,6 @@ function init() {
   RS.registerCommand(module, "get-crowdflower-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.GetJobInfoCommand());
   RS.registerCommand(module, "evaluate-recon-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.EvaluateReconJobCommand());
   RS.registerCommand(module, "image-recon-job", new Packages.com.zemanta.crowdsourcing.crowdflower.commands.ImageReconJobCommand());
-  RS.registerCommand(module, "load-language", new Packages.com.zemanta.crowdsourcing.commands.LoadLanguageCommand());
 
   // Script files to inject into /project page
   ClientSideResourceManager.addPaths(
