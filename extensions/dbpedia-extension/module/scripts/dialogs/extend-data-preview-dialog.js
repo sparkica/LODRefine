@@ -42,7 +42,15 @@ function ZemantaExtendDataPreviewDialog(column, columnIndex, cellReconId, rowInd
 	var self = this;
 	this._dialog = $(DOM.loadHTML("dbpedia-extension", "scripts/dialogs/extend-data-preview-dialog.html"));
 	this._elmts = DOM.bind(this._dialog);
-	this._elmts.dialogHeader.text("Add Columns from DBpedia based on Column " + column.name);
+	this._elmts.dialogHeader.text($.i18n._('zem-ext-extend')["header"] + column.name);
+
+	this._elmts.resetButton.text($.i18n._('zem-ext-buttons')["reset"]);
+	this._elmts.okButton.text($.i18n._('zem-ext-buttons')["ok"]);
+	this._elmts.cancelButton.text($.i18n._('zem-ext-buttons')["cancel"]);
+	this._elmts.zemext_preview_header.text($.i18n._('zem-ext-preview')["header"]);
+	this._elmts.zemext_preview_preview.text($.i18n._('zem-ext-preview')["preview"]);
+
+
 	this._elmts.resetButton.click(function() {
 		self._extension.properties = [];
 		self._update();
@@ -50,7 +58,7 @@ function ZemantaExtendDataPreviewDialog(column, columnIndex, cellReconId, rowInd
 
 	this._elmts.okButton.click(function() {
 		if (self._extension.properties.length === 0) {
-			alert("Please add some (DBpedia) properties first.");
+			alert($.i18n._('zem-ext-extend')["alert-add-prop"]);
 		} else {
 			DialogSystem.dismissUntil(self._level - 1);
 			self._onDone(self._extension);
@@ -89,7 +97,6 @@ ZemantaExtendDataPreviewDialog.getAllProperties = function(type, onDone) {
 		dataType: 'jsonp',
 		jsonp: 'callback',
 		success: function(data) {
-			console.log("Data" + data);
 			if(done) return;
 			done = true;
 
@@ -116,11 +123,10 @@ ZemantaExtendDataPreviewDialog.getAllProperties = function(type, onDone) {
 
 		done = true;
 		console.log("DBpedia timed out...");
-		alert("DBpedia request timed out, please try again later.\n" +
-		"Check your connection and availability of DBpedia service");
+		alert($.i18n._('zem-ext-extend')["alert-timeout"]);
 		onDone([]);
 	}, 
-	3000); 
+	5000); 
 };
 
 ZemantaExtendDataPreviewDialog.prototype._show = function(properties) {
@@ -157,7 +163,7 @@ ZemantaExtendDataPreviewDialog.prototype._show = function(properties) {
 };
 
 ZemantaExtendDataPreviewDialog.prototype._update = function() {
-	this._elmts.previewContainer.empty().text("Querying DBpedia ...");
+	this._elmts.previewContainer.empty().text($.i18n._('zem-ext-extend')["preview-msg"] + '...');
 
 	var self = this;
 	var params = {
@@ -220,7 +226,7 @@ ZemantaExtendDataPreviewDialog.prototype._renderPreview = function(data) {
 	var self = this;
 	var container = this._elmts.previewContainer.empty();
 	if (data.code == "error") {
-		container.text("Error.");
+		container.text($.i18n._('zem-ext-extend')["error"]);
 		return;
 	}
 
@@ -235,9 +241,9 @@ ZemantaExtendDataPreviewDialog.prototype._renderPreview = function(data) {
 		$('<br>').appendTo(th);
 
 		$('<a href="javascript:{}"></a>')
-		.text("remove")
+		.text($.i18n._('zem-ext-extend')["remove"])
 		.addClass("action")
-		.attr("title", "Remove this column")
+		.attr("title", $.i18n._('zem-ext-extend')["remove-col"])
 		.click(function() {
 			self._removeProperty(column.path);
 		}).appendTo(th);

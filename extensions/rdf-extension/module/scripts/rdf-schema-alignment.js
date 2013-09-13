@@ -16,10 +16,7 @@ RdfSchemaAlignmentDialog.prototype._init = function(schema) {
 	var self = this;
 
 	self._originalSchema = schema || { rootNodes: [] };
-	console.log(self._originalSchema);
 	self._schema = cloneDeep(self._originalSchema); // this is what can be munched on
-	console.log(self._schema);
-	
 
 	if (!self._schema.rootNodes.length) {
 		self._schema.rootNodes.push(RdfSchemaAlignment.createNewRootNode());
@@ -41,7 +38,7 @@ RdfSchemaAlignmentDialog.prototype._buildBody = function() {
 	self._elmts.editBaseUriLink.text($.i18n._('rdf-ext-align')["edit"]);
 	self._elmts.rdfext_align_skeleton.text($.i18n._('rdf-ext-align')["skeleton"]);
 	self._elmts.rdfext_align_preview.text($.i18n._('rdf-ext-align')["preview"]);
-	self._elmts.rdfext_align_prefixes.text($.i18n._('rdf-ext-align')["avaiable-prefix"]+":");
+	self._elmts.rdfext_align_prefixes.text($.i18n._('rdf-ext-align')["available-prefix"]+":");
 	self._elmts.add_another_root_node.text($.i18n._('rdf-ext-align')["add-root"]);
 	self._elmts._save_skeleton.text($.i18n._('rdf-ext-align')["save"]);
 	self._elmts.rdfext_align_sampleTurtle.html($.i18n._('rdf-ext-align')["sample-turtle"]);

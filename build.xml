@@ -14,8 +14,7 @@
     <property environment="env"/>
 
     <property name="version" value="trunk"/>
-    <property name="revision" value="r0001"/>
-    <property name="full_version" value="1.0.0.0"/>
+    <property name="full_version" value="0.0.0.0"/>
     <property name="build.dir" value="build"/>
     <property name="dist.dir" value="dist"/>
 
@@ -26,8 +25,7 @@
     <property name="appengine.version" value="1"/>
     <property name="appengine.sdk.dir" value="/opt/appengine"/>
         
-    <property name="fullname" value="lodrefine-${version}" />
-    
+    <property name="fullname" value="lodrefine-${version}" />    
     <property name="main.dir" value="${basedir}/main" />
 
     <property name="webapp.dir" value="${main.dir}/webapp" />
@@ -176,7 +174,7 @@
     <taskdef resource="testngtasks" classpath="${server.tests.lib.dir}/testng-6.8.jar"/>
     <mkdir dir="${build.dir}/server_tests"/>
     <target name="server_test" depends="build_tests">
-    	<testng workingdir="${build.dir}/server_tests"
+    	<testng haltOnFailure="true" workingdir="${build.dir}/server_tests"
     		listener="org.testng.reporters.DotTestListener" excludedgroups="broken"
     		classpathref="tests.class.path">
     	  <xmlfileset file="${server.tests.dir}/conf/tests.xml"/>
@@ -209,6 +207,7 @@
                 <include name="**/*"/>
                 <exclude name="WEB-INF/classes/**"/>
                 <exclude name="WEB-INF/lib-src/**"/>
+                <exclude name="WEB-INF/lib/icu4j*.jar"/>
             </fileset>
         </copy>
         
@@ -223,12 +222,13 @@
                 <exclude name="**/tmp*/**"/>
                 <exclude name="**/web page*/**"/>
                 <exclude name="**/website*/**"/>
+                <exclude name="**/lib-src/**"/>
+                <exclude name="**/libsrc/**"/>
             </fileset>
         </copy>
         
         <replace file="${built.webapp.dir}/WEB-INF/web.xml">
             <replacefilter token="$VERSION" value="${version}"/>
-            <replacefilter token="$REVISION" value="${revision}"/>
         </replace>
 
         <replace file="${built.webapp.dir}/WEB-INF/butterfly.properties">
@@ -261,7 +261,7 @@
 	    </classpath>
 	    <option value="-Xms256M"/>
 	    <option value="-Xmx1024M"/>
-	    <option value="-Drefine.version=${revision}"/>
+	    <option value="-Drefine.version=${version}"/>
 	    <option value="-Drefine.webapp=$APP_ROOT/Contents/Resource/${built.webapp.name}"/>
         </bundleapp>
 
@@ -271,19 +271,10 @@
           </fileset>
 	</copy>
 
-<!--- Options from old jarbundler code not supported by appbundler
-                aboutmenuname="OpenRefine"
->>>>>>> 0cb0269ae8d53da6c7faf846f86068e7a1957996
-                workingdirectory="$APP_PACKAGE/Contents/Resources"
-                antialiasedgraphics="true"
-                antialiasedtext="true"
-                liveresize="true"
-                growboxintrudes="true"
-                screenmenu="true">
--->
     </target>
     
     <target name="windows" depends="jar, prepare_webapp">
+      <echo message="Full version ${full_version} and version ${version}"/>
         <mkdir dir="${windows.dir}"/>
         <taskdef 
             name="launch4j" 
@@ -301,7 +292,7 @@
                 <cp>server/lib/*.jar</cp>
             </classPath>
             <jre minVersion="1.6.0" jdkPreference="preferJre" initialHeapSize="256" maxHeapSize="1024">
-                <opt>-Djava.library.path=server/lib/native/windows -Drefine.version=${revision}</opt>
+                <opt>-Djava.library.path=server/lib/native/windows </opt>
             </jre>
             <versionInfo
                 fileVersion="${full_version}"
@@ -309,7 +300,7 @@
                 fileDescription="lodrefine"
                 copyright="Copyright (c) 2012 OpenRefine contributors, 2010, Google, Inc."
                 productVersion="${full_version}"
-                txtProductVersion="${full_version}"
+                txtProductVersion="${version}"
                 productName="LODRefine"
                 companyName="OpenRefine team"
                 internalName="lodrefine"

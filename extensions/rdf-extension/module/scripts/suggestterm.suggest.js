@@ -119,7 +119,7 @@
                      service_path: "command/rdf-extension/suggest-term",
                      flyout_service_path: "command/rdf-extension/suggest-term",
                      type_strict: "classes",
-                     suggest_new: "Add it",
+                     suggest_new: $.i18n._('rdf-ext-schema')["add-it"],
                      cache:false,
                      //             soft:true,
                      nomatch:  {

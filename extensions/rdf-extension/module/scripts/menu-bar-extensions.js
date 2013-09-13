@@ -1,6 +1,6 @@
 ExporterManager.MenuItems.push({});//add separator
 
-//Internationalization init
+// Internationalization init
 var lang = navigator.language.split("-")[0]
 		|| navigator.userLanguage.split("-")[0];
 var dictionary = "";
@@ -17,7 +17,6 @@ $.ajax({
 });
 $.i18n.setDictionary(dictionary);
 // End internationalization
-
 
 ExporterManager.MenuItems.push(
 		{
@@ -192,7 +191,7 @@ function ReconciliationStanbolServiceDialog() {
 ReconciliationStanbolServiceDialog.prototype.printAddedService = function(container, obj, registered) {
 	var cached = (obj.local ? $.i18n._('rdf-ext-menu')["cached"] : $.i18n._('rdf-ext-menu')["not-cached"]);
 	var image = (registered ? "yes" : "no");
-	var label = (registered ? $.i18n._('rdf-ext-menu')["registrered"] : $.i18n._('rdf-ext-menu')["not-added"]);
+	var label = (registered ? $.i18n._('rdf-ext-menu')["registered"] : $.i18n._('rdf-ext-menu')["not-added"]);
 	var sniper = '<dt><a href="' + obj.uri + '">' + obj.uri + '</a> <img src="extension/rdf-extension/images/' + image + '.png" width="16" height="16" alt="' + label + '" title="' + label + '" /></dt><dd><strong>' + obj.name + '</strong>, ' + cached + '</dd>';
 	if (!registered) {
 		sniper += '<dd>' + label + '</dd>';
@@ -223,7 +222,7 @@ function ReconciliationSindiceServiceDialog(){
 			'<div class="rdf-reconcile-field-details">e.g. dbpedia.org</div>' +
 			'</td>' +
 			'</tr>' +
-			'</table>'    		
+			'</table>'
 	).appendTo(body);
 
 	self._elmts = DOM.bind(html);
@@ -342,9 +341,8 @@ ReconciliationRdfServiceDialog.prototype._footer = function(footer){
 			$.post("command/rdf-extension/addService",
 					{"datasource":"file_url","name":name,"url":file_url,properties:prop_uris, "file_format":file_format},
 					function(data){
-					    console.log("Adding service.");
 						self._dismissBusy();
-						RdfReconciliationManager.registerService(data,self._level);					
+						RdfReconciliationManager.registerService(data,self._level);
 					},"json");
 			return;
 		}
@@ -355,16 +353,16 @@ ReconciliationRdfServiceDialog.prototype._footer = function(footer){
 		self._elmts.file_upload_form.ajaxSubmit({
 			dataType:  'json',
 			success: function(data, message) {
-		             self._dismissBusy();
-		             RdfReconciliationManager.registerService(data,self._level);
+					 self._dismissBusy();
+					 RdfReconciliationManager.registerService(data,self._level);
 			},
 			error: function(data, message) {
-			        alert($.i18n._('rdf-ext-menu')["alert-rdf-error"]+": " + message);
-			        self._dismissBusy();
+					alert($.i18n._('rdf-ext-menu')["alert-rdf-error"]+": " + message);
+					self._dismissBusy();
 			}
 		});
 		
-	      return false;
+		  return false;
 
 
 	}).appendTo(footer);
@@ -457,7 +455,7 @@ ReconciliationSparqlServiceDialog.prototype._footer = function(footer){
 							{"datasource":"sparql","name":name,"url":endpoint,"type":type,"graph":graph_uri,properties:prop_uris},
 							function(data){
 								self._dismissBusy();
-								RdfReconciliationManager.registerService(data,self._level);					
+								RdfReconciliationManager.registerService(data,self._level);
 							},"json");
 				}
 		);
@@ -490,7 +488,6 @@ var RdfUploadTriplesExtension = {handlers:{}};
 RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso = function() {
 
 	new RdfUploadTriplesDialog(function(params) {
-		console.log("Posting upload request...");
 		$.post(
 				"command/rdf-extension/upload-triples",
 				{ "project" : theProject.id, 
@@ -508,19 +505,18 @@ RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso = function() {
 								  '<strong>'+$.i18n._('rdf-ext-menu')["err-message"]+': </strong></p> <p>' +
 								  o.message +
 								  '</p></div>').dialog({
-								      resizable: false,
-								      height:140,
-								      modal: true,
-								      buttons: {
-								        "OK": function() {
-								          $( this ).dialog( "close" );
-								        }
-								      }
+									  resizable: false,
+									  height:140,
+									  modal: true,
+									  buttons: {
+										"OK": function() {
+										  $( this ).dialog( "close" );
+										}
+									  }
 								  });
 					}
 					else {
 						alert($.i18n._('rdf-ext-menu')["upload-completed"]);
-						console.log(o);
 					}
 				},
 				"json"
@@ -539,65 +535,65 @@ $(function(){
 				"id":"reconcile",
 				"label": "RDF",
 				"submenu" : [
-				             {
-				            	 "id": "rdf/edit-rdf-schema",
-				            	 label: $.i18n._('rdf-ext-menu')["edit-skeleton"]+"...",
-				            	 click: function() { RdfExporterMenuBar.editRdfSchema(false); }
-				             },
-				             {
-				            	 "id": "rdf/reset-rdf-schema",
-				            	 label: $.i18n._('rdf-ext-menu')["reset-skeleton"]+"...",
-				            	 click: function() { RdfExporterMenuBar.editRdfSchema(true); }
-				             },
-				             {},
-				             {
-				            	 "id": "rdf/reconcile",
-				            	 label: $.i18n._('rdf-ext-menu')["add-recon-service"],
-				            	 submenu:[
-				            	          {
-				            	        	  "id" :"rdf/reconcile/sparql",
-				            	        	  label: $.i18n._('rdf-ext-menu')["based-sparql"]+"...",
-				            	        	  click: function() { RdfReconciliationManager.newSparqlService(); }
-				            	          },
-				            	          {
-				            	        	  "id":"rdf/reconcile/dump",
-				            	        	  label: $.i18n._('rdf-ext-menu')["based-rdf"]+"...",
-				            	        	  click: function() { RdfReconciliationManager.newRdfService(); }        	 
-				            	          },
-				            	          {
-				            	        	  "id" : "rdf/reconcile/sindice",
-				            	        	  label: $.i18n._('rdf-ext-menu')["based-sindice"]+"...",
-				            	        	  click: function() { RdfReconciliationManager.newSindiceService(); }        	 
-				            	          },
-				            	          {
-				            	        	  "id" : "rdf/reconcile/stanbol",
-				            	        	  label: $.i18n._('rdf-ext-menu')["based-entityhub"]+"...",
-				            	        	  click: function() { RdfReconciliationManager.newStanbolService(); }        	 
-				            	          }
-				            	          ]
+							 {
+								 "id": "rdf/edit-rdf-schema",
+								 label: $.i18n._('rdf-ext-menu')["edit-skeleton"]+"...",
+								 click: function() { RdfExporterMenuBar.editRdfSchema(false); }
+							 },
+							 {
+								 "id": "rdf/reset-rdf-schema",
+								 label: $.i18n._('rdf-ext-menu')["reset-skeleton"]+"...",
+								 click: function() { RdfExporterMenuBar.editRdfSchema(true); }
+							 },
+							 {},
+							 {
+								 "id": "rdf/reconcile",
+								 label: $.i18n._('rdf-ext-menu')["add-recon-service"],
+								 submenu:[
+									  {
+										  "id" :"rdf/reconcile/sparql",
+										  label: $.i18n._('rdf-ext-menu')["based-sparql"]+"...",
+										  click: function() { RdfReconciliationManager.newSparqlService(); }
+									  },
+									  {
+										  "id":"rdf/reconcile/dump",
+										  label: $.i18n._('rdf-ext-menu')["based-rdf"]+"...",
+										  click: function() { RdfReconciliationManager.newRdfService(); }        	 
+									  },
+									  {
+										  "id" : "rdf/reconcile/sindice",
+										  label: $.i18n._('rdf-ext-menu')["based-sindice"]+"...",
+										  click: function() { RdfReconciliationManager.newSindiceService(); }        	 
+									  },
+									  {
+										  "id" : "rdf/reconcile/stanbol",
+										  label: $.i18n._('rdf-ext-menu')["based-entityhub"]+"...",
+										  click: function() { RdfReconciliationManager.newStanbolService(); }        	 
+									  }
+									  ]
 
-				             },
-				             {},
-				             {
-				            	 "id": "rdf/upload-triples",
-				            	 "label": $.i18n._('rdf-ext-menu')["upload-virtuoso"],
-				            	 click: RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso
-				             }
-				             ]
+							 },
+							 {},
+							 {
+								 "id": "rdf/upload-triples",
+								 "label": $.i18n._('rdf-ext-menu')["upload-virtuoso"],
+								 click: RdfUploadTriplesExtension.handlers.uploadDataToVirtuoso
+							 }
+							 ]
 			}
 	);
 	DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
 		MenuSystem.appendTo(menu, [ "core/reconcile" ], [
-		                                                 {},
-		                                                 {
-		                                                	 id: "core/sindice-find-dataset",
-		                                                	 label: $.i18n._('rdf-ext-menu')["discover-dataset"]+"..." ,
-		                                                	 click: function() {
-		                                                		 var dialog = new SindiceDialog();
-		                                                		 dialog.show(column);
-		                                                	 }
-		                                                 },
-		                                                 ]);
+									 {},
+									 {
+										 id: "core/sindice-find-dataset",
+										 label: $.i18n._('rdf-ext-menu')["discover-dataset"]+"..." ,
+										 click: function() {
+											 var dialog = new SindiceDialog();
+											 dialog.show(column);
+										 }
+									 },
+									 ]);
 	});
 
 	RdfReconciliationManager.synchronizeServices();

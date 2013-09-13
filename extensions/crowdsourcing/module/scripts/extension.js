@@ -1,6 +1,23 @@
 var ZemantaCrowdSourcingExtension = {handlers: {}, util: {}};
 var ZemUtil = {};
 
+// Internationalization init
+var lang = navigator.language.split("-")[0]
+    || navigator.userLanguage.split("-")[0];
+var dictionary = "";
+$.ajax({
+  url : "/command/crowdsourcing/load-language?",
+  type : "POST",
+  async : false,
+  data : {
+    lng : lang
+  },
+  success : function(data) {
+    dictionary = data;
+  }
+});
+$.i18n.setDictionary(dictionary);
+// End internationalization
 
 ZemantaCrowdSourcingExtension.handlers.storeCrowdFlowerSettings = function() {
 
@@ -56,14 +73,14 @@ ZemantaCrowdSourcingExtension.handlers.openJobSettingsDialog = function()  {
                                                 var msg = "";
                                                 
                                                 if(extension.new_job === true) {
-                                                        msg = "New job was created successfully.\nYou can see it on your CrowdFlower account."; 
+                                                        msg = $.i18n._('crowd-ext-create')["new-job"]; 
                                                 } else {  
-                                                        msg = "Data was uploaded successfully.\nYou can see it on your CrowdFlower account.";
+                                                        msg = $.i18n._('crowd-ext-create')["data-upload"];
                                                 }
                                                 
-                                                ZemUtil.showConfirmation("Creating job/Uploading data", msg, 'body');
+                                                ZemUtil.showConfirmation($.i18n._('crowd-ext-create')["conf-header"]     , msg, 'body');
                                         } else {
-                                                ZemUtil.showErrorDialog("An error occured that prevented creating the job. \n" + o.message, 'body');
+                                                ZemUtil.showErrorDialog($.i18n._('crowd-ext-create')["create-error"] + o.message, 'body');
                                         }
                                 },
                                 "json"
@@ -85,10 +102,10 @@ ZemantaCrowdSourcingExtension.handlers.evaluateReconDialog = function()  {
                                 function(o)
                                 {
                                         if(o && o.status != "error") {
-                                                var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
-                                                ZemUtil.showConfirmation("Uploading recon eval data", msg, 'body');
+                                                var msg = $.i18n._('crowd-ext-create')["success-upload"] ;
+                                                ZemUtil.showConfirmation($.i18n._('crowd-ext-create')["upload-header"], msg, 'body');
                                         } else {
-                                                ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.status, 'body');                                                
+                                                ZemUtil.showErrorDialog($.i18n._('crowd-ext-create')["upload-error"]+ o.status, 'body');                                                
                                         }
                                 },
                                 "json"
@@ -112,11 +129,11 @@ ZemantaCrowdSourcingExtension.handlers.imageReconDialog = function()  {
                                 {
                                         //status can be 200
                                         if (o && o.status != "error") {
-                                                var msg = "Data was successfully uploaded. Check your CrowdFlower account.";
-                                                ZemUtil.showConfirmation("Uploading recon eval data", msg, 'body');
+                                                var msg = $.i18n._('crowd-ext-create')["success-upload"] ;
+                                                ZemUtil.showConfirmation($.i18n._('crowd-ext-create')["upload-header"], msg, 'body');
 
                                         } else {
-                                                ZemUtil.showErrorDialog("Something went wrong while uploading. \n" + o.message, 'body');                                                
+                                                ZemUtil.showErrorDialog($.i18n._('crowd-ext-create')["upload-error"] + o.message, 'body');                                                
                                         }
                                 },
                                 "json"
@@ -136,26 +153,26 @@ ZemantaCrowdSourcingExtension.handlers.getApiKey =  function() {
 
 ExtensionBar.addExtensionMenu({
         "id": "crowdsourcing-ext",
-        "label": "Crowdsourcing",
+        "label": $.i18n._('crowd-ext-menu')["crowdsourcing"],
         "submenu": [
                     {
                             "id": "crowdsourcing-ext/create-crowdflower-job",
-                            label: "Create new job / upload data",
+                            label: $.i18n._('crowd-ext-menu')["create-job"],
                             click: ZemantaCrowdSourcingExtension.handlers.openJobSettingsDialog
                     },
                     {},
                     {
                             "id":"crowdsourcing-ext/templates",
-                            "label": "Templates",
+                            "label": $.i18n._('crowd-ext-menu')["templates"],
                             "submenu": [
                                         {
                                                 "id": "crowdsourcing-ext/templates/eval-recon-data",
-                                                "label": "Evaluate reconciled data",
+                                                "label": $.i18n._('crowd-ext-menu')["eval-recon"],
                                                 click: ZemantaCrowdSourcingExtension.handlers.evaluateReconDialog	 
                                         },
                                         {
                                                 "id":"crowdsourcing-ext/templates/recon-img",
-                                                "label": "Reconcile images",
+                                                "label": $.i18n._('crowd-ext-menu')["recon-img"],
                                                 click: ZemantaCrowdSourcingExtension.handlers.imageReconDialog
                                         }
                                         ]
@@ -163,7 +180,7 @@ ExtensionBar.addExtensionMenu({
                     {},
                     {
                             "id": "crowdsourcing-ext/settings",
-                            "label": "CrowdFlower settings",
+                            "label": $.i18n._('crowd-ext-menu')["cf-settings"],
                             click: ZemantaCrowdSourcingExtension.handlers.storeCrowdFlowerSettings
                     }
                     ]

@@ -8,7 +8,7 @@ ZemantaCrowdSourcingExtension.util.loadCrowdFlowerApiKeyFromSettings = function(
                                         getApiKey(data["crowdflower.apikey"]);
                                 }
                                 else {
-                                        ZemUtil.showErrorDialog("CrowdFlower API key was not found in the settings. Please add it first.");
+                                        ZemUtil.showErrorDialog($.i18n._('crowd-ext-api')["error"]);
                                         getApiKey("");
                                 }
                         },
@@ -45,7 +45,7 @@ ZemantaCrowdSourcingExtension.util.loadAllExistingJobs = function(getJobs) {
                         function(data)
                         {
                                 if(data) {  	  			  
-                                        if(data.status != "error") {
+                                        if(data.status != "ERROR") {
                                                 getJobs(data['jobs'],data.status, "");
                                         } else{
                                                 getJobs([], data.status, data.message);
@@ -68,7 +68,7 @@ ZemantaCrowdSourcingExtension.util.copyJob = function(extension, updateJobs) {
                                         updateJobs(data);
                                 } 
                                 else {
-                                        ZemUtil.showErrorDialog("Could not refresh the job list.\n" + data.message);
+                                        ZemUtil.showErrorDialog($.i18n._('crowd-ext-util')["error-copy"]+ data.message);
                                 }
                         },
                         "json"
@@ -86,7 +86,7 @@ ZemantaCrowdSourcingExtension.util.getJobInfo = function(extension, updateJobInf
                                 if(data != null && data.status.toLowerCase() != "error") {
                                         updateJobInfo(data);
                                 } else {
-                                        ZemUtil.showErrorDialog("Error occured while updating job information.\n" + data.message);
+                                        ZemUtil.showErrorDialog($.i18n._('crowd-ext-util')["error-get-info"] + data.message);
                                 }
                         },
                         "json"
@@ -115,7 +115,7 @@ ZemUtil.showErrorDialog = function (message, parent) {
         dlg._elmts = DOM.bind(dlg);
 
         dlg._elmts.dlgTitle.addClass('text-error');
-        dlg._elmts.dlgTitle.text("An error occured.");
+        dlg._elmts.dlgTitle.text($.i18n._('crowd-ext-util')["dlg-title"]);
         dlg._elmts.dlgMessage.addClass('text-error');
         dlg._elmts.dlgMessage.text(message);
 

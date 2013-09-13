@@ -40,11 +40,7 @@ var RC = Packages.com.google.refine.model.recon.ReconConfig;
 
 var logger = Packages.org.slf4j.LoggerFactory.getLogger("dbpedia-extension"),
     File = Packages.java.io.File,
-    refineServlet = Packages.com.google.refine.RefineServlet,
-    ner = Packages.org.freeyourmetadata.ner,
-    services = ner.services,
-    commands = ner.commands;
-
+    refineServlet = Packages.com.google.refine.RefineServlet;
 
 /*
  * Function invoked to initialize the extension.
@@ -55,33 +51,32 @@ function init() {
 
   RS.registerClassMapping(
   "com.google.refine.model.changes.DataExtensionChange",
-  "com.google.refine.com.zemanta.model.changes.DBpediaDataExtensionChange");
+  "com.zemanta.dbpedia.model.changes.DBpediaDataExtensionChange");
   
   RS.registerClassMapping(
 		  "com.google.refine.model.changes.DataExtensionChange",
-		  "com.google.refine.com.zemanta.model.changes.ExtractEntitiesFromTextChange");
+		  "com.zemanta.dbpedia.model.changes.ExtractEntitiesFromTextChange");
   
   //temp hack needed for the core module
   //to resolve this modul's classes
-  RS.cacheClass(Packages.com.google.refine.com.zemanta.model.changes.DBpediaDataExtensionChange);
-  RS.cacheClass(Packages.com.google.refine.com.zemanta.model.changes.ExtractEntitiesFromTextChange);
+  RS.cacheClass(Packages.com.zemanta.dbpedia.model.changes.DBpediaDataExtensionChange);
+  RS.cacheClass(Packages.com.zemanta.dbpedia.model.changes.ExtractEntitiesFromTextChange);
 
 
-  RS.registerCommand(module, "extend-data", new Packages.com.google.refine.com.zemanta.commands.DBpediaExtendDataCommand());
-  RS.registerCommand(module, "preview-extend-data",   new Packages.com.google.refine.com.zemanta.commands.DBpediaPreviewExtendDataCommand());
+  RS.registerCommand(module, "extend-data", new Packages.com.zemanta.dbpedia.commands.DBpediaExtendDataCommand());
+  RS.registerCommand(module, "preview-extend-data",   new Packages.com.zemanta.dbpedia.commands.DBpediaPreviewExtendDataCommand());
 
-  RS.registerCommand(module, "extract-entities", new Packages.com.google.refine.com.zemanta.commands.ExtractEntitiesFromTextCommand());
-  RS.registerCommand(module, "preview-extract-entities", new Packages.com.google.refine.com.zemanta.commands.ExtractEntitiesPreviewCommand());
+  RS.registerCommand(module, "extract-entities", new Packages.com.zemanta.dbpedia.commands.ExtractEntitiesFromTextCommand());
+  RS.registerCommand(module, "preview-extract-entities", new Packages.com.zemanta.dbpedia.commands.ExtractEntitiesPreviewCommand());
+  RS.registerCommand(module, "load-language", new Packages.com.zemanta.dbpedia.commands.LoadLanguageCommand()); 
+
   
-  OR.registerOperation(module, "extend-data",Packages.com.google.refine.com.zemanta.operations.DBpediaExtendDataOperation);
-  OR.registerOperation(module, "extract-entities",Packages.com.google.refine.com.zemanta.operations.ExtractEntitiesFromTextOperation);
+  OR.registerOperation(module, "extend-data",Packages.com.zemanta.dbpedia.operations.DBpediaExtendDataOperation);
+  OR.registerOperation(module, "extract-entities",Packages.com.zemanta.dbpedia.operations.ExtractEntitiesFromTextOperation);
   
-  RC.registerReconConfig(module, "strict", Packages.com.google.refine.com.zemanta.model.recon.DBpediaStrictReconConfig);
-  RC.registerReconConfig(module, "extend", Packages.com.google.refine.com.zemanta.model.recon.DBpediaDataExtensionReconConfig);
-
-  RS.registerCommand(module, "load-language", new LoadLanguageCommand());
- 
-  // Script files to inject into /project page
+  RC.registerReconConfig(module, "strict", Packages.com.zemanta.dbpedia.model.recon.DBpediaStrictReconConfig);
+  RC.registerReconConfig(module, "extend", Packages.com.zemanta.dbpedia.model.recon.DBpediaDataExtensionReconConfig);
+    // Script files to inject into /project page
   ClientSideResourceManager.addPaths(
     "project/scripts",
     module,

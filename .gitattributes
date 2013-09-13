@@ -1,6 +1,11 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Text files that should always have LF
+*.java text
+*.js text
+*.json text
+
 # Custom for Visual Studio
 *.cs     diff=csharp
 *.sln    merge=union
