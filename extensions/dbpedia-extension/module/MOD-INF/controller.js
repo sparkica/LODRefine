@@ -68,8 +68,6 @@ function init() {
 
   RS.registerCommand(module, "extract-entities", new Packages.com.zemanta.dbpedia.commands.ExtractEntitiesFromTextCommand());
   RS.registerCommand(module, "preview-extract-entities", new Packages.com.zemanta.dbpedia.commands.ExtractEntitiesPreviewCommand());
-  RS.registerCommand(module, "load-language", new Packages.com.zemanta.dbpedia.commands.LoadLanguageCommand()); 
-
   
   OR.registerOperation(module, "extend-data",Packages.com.zemanta.dbpedia.operations.DBpediaExtendDataOperation);
   OR.registerOperation(module, "extract-entities",Packages.com.zemanta.dbpedia.operations.ExtractEntitiesFromTextOperation);

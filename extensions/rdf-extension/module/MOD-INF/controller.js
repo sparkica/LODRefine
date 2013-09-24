@@ -156,7 +156,6 @@ function init() {
     RS.registerCommand(module, "addSindiceService", new AddSindiceService());
     RS.registerCommand(module, "addStanbolService", new AddStanbolServiceCommand());
     RS.registerCommand(module, "initializeServices", new InitializeServicesCommand());
-    RS.registerCommand(module, "load-language", new LoadLanguageCommand());
     
     //Upload triples command
     RS.registerCommand(module, "upload-triples", new UploadRdfCommand(endpointManager));
