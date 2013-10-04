@@ -1,36 +1,36 @@
 ﻿{
-    "zem-ext-menu": {
-        "api-set": "Configurazione API Zemanta",
-        "alert-recon": "Aggiungere una colonna da DBpedia richiede valori riconciliati con la stessa nella colonna selezionata.\n Riconcilia questa colonna con DBpedia prima di procedere.",
-        "add-col": "Aggiungi colonne da DBpedia",
-        "extract-ent": "Estrai entità  dal testo (API Zemanta)"
-    },
-    "zem-ext-extend": {
-        "header": "Aggiungi colonne da DBpedia partendo dalla colonna ",
-        "alert-add-prop": "Prima aggiungi alcune proprietà (di DBpedia).",
-        "alert-timeout": "Richiesta a DBpedia in timeout, riprova più tardi.\nControlla la tua connessione e la disponibilità del servizio DBpedia.",
-        "preview-msg": "Interrogando DBpedia",
-        "error": "Si è verificato un errore.",
-        "remove": "rimuovi",
-        "remove-col": "Rimuovi questa colonna"
-    },
-    "zem-ext-buttons": {
-        "reset": "Reset",
-        "ok": "OK",
-        "cancel": "Cancella"
-    },
-    "zem-ext-preview": {
-        "header": "Proprietà suggerite",
-        "preview": "Anteprima"
-    },
-    "zem-ext-extract":
-    {
-        "header": "Estrai entità da '",
-        "alert-error-extract": "Si è verificato un errore. Controlla la tua connessione e/o l'API key.",
-        "preview-text": "Anteprima testo: ",
-        "extracted-ent": "Entità estratte: ",
-        "ent-types": "Seleziona il tipo di entità: ",
-        "all-types": "Tutti i tipi",
-        "unknown": "sconosciuto"
-    }
+	"zem-ext-menu": {
+		"api-set": "Configurazione API Zemanta",
+		"alert-recon": "Aggiungere una colonna da DBpedia richiede valori riconciliati con la stessa nella colonna selezionata.\n Riconcilia questa colonna con DBpedia prima di procedere.",
+		"add-col": "Aggiungi colonne da DBpedia",
+		"extract-ent": "Estrai entità  dal testo (API Zemanta)"
+	},
+	"zem-ext-extend": {
+		"header": "Aggiungi colonne da DBpedia partendo dalla colonna ",
+		"alert-add-prop": "Prima aggiungi alcune proprietà (di DBpedia).",
+		"alert-timeout": "Richiesta a DBpedia in timeout, riprova più tardi.\nControlla la tua connessione e la disponibilità del servizio DBpedia.",
+		"preview-msg": "Interrogando DBpedia",
+		"error": "Si è verificato un errore.",
+		"remove": "rimuovi",
+		"remove-col": "Rimuovi questa colonna"
+	},
+	"zem-ext-buttons": {
+		"reset": "Reset",
+		"ok": "OK",
+		"cancel": "Cancella"
+	},
+	"zem-ext-preview": {
+		"header": "Proprietà suggerite",
+		"preview": "Anteprima"
+	},
+	"zem-ext-extract":
+	{
+		"header": "Estrai entità da '",
+		"alert-error-extract": "Si è verificato un errore. Controlla la tua connessione e/o l'API key.",
+		"preview-text": "Anteprima testo: ",
+		"extracted-ent": "Entità estratte: ",
+		"ent-types": "Seleziona il tipo di entità: ",
+		"all-types": "Tutti i tipi",
+		"unknown": "sconosciuto"
+	}
 }

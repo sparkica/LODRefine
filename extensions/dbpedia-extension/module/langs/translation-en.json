@@ -1,36 +1,36 @@
 ﻿{
-    "zem-ext-menu": {
-        "api-set": "Zemanta API settings",
-        "alert-recon": "Adding columns from DBpedia requires DBpedia-reconciled values in selected column.\n Reconcile this column with DBpedia first.",
-        "add-col": "Add columns from DBpedia",
-        "extract-ent": "Extract entities from text (Zemanta API)"
-    },
-    "zem-ext-extend": {
-        "header": "Add Columns from DBpedia based on Column ",
-        "alert-add-prop": "Add some (DBpedia) properties first.",
-        "alert-timeout": "DBpedia request timed out, please try again later.\nCheck your connection and availability of DBpedia service.",
-        "preview-msg": "Querying DBpedia",
-        "error": "An error occured.",
-        "remove": "remove",
-        "remove-col": "Remove this column"
-    },
-    "zem-ext-buttons": {
-        "reset": "Reset",
-        "ok": "OK",
-        "cancel": "Cancel"
-    },
-    "zem-ext-preview": {
-        "header": "Suggested Properties",
-        "preview": "Preview"
-    },
-    "zem-ext-extract":
-    {
-        "header": "Extract entities from '",
-        "alert-error-extract": "An error occured. Check your connection and/or API key.",
-        "preview-text": "Preview text: ",
-        "extracted-ent": "Extracted entities: ",
-        "ent-types": "Entity types (select): ",
-        "all-types": "All types",
-        "unknown":"unknown"
-    }
+	"zem-ext-menu": {
+		"api-set": "Zemanta API settings",
+		"alert-recon": "Adding columns from DBpedia requires DBpedia-reconciled values in selected column.\n Reconcile this column with DBpedia first.",
+		"add-col": "Add columns from DBpedia",
+		"extract-ent": "Extract entities from text (Zemanta API)"
+	},
+	"zem-ext-extend": {
+		"header": "Add Columns from DBpedia based on Column ",
+		"alert-add-prop": "Add some (DBpedia) properties first.",
+		"alert-timeout": "DBpedia request timed out, please try again later.\nCheck your connection and availability of DBpedia service.",
+		"preview-msg": "Querying DBpedia",
+		"error": "An error occured.",
+		"remove": "remove",
+		"remove-col": "Remove this column"
+	},
+	"zem-ext-buttons": {
+		"reset": "Reset",
+		"ok": "OK",
+		"cancel": "Cancel"
+	},
+	"zem-ext-preview": {
+		"header": "Suggested Properties",
+		"preview": "Preview"
+	},
+	"zem-ext-extract":
+	{
+		"header": "Extract entities from '",
+		"alert-error-extract": "An error occured. Check your connection and/or API key.",
+		"preview-text": "Preview text: ",
+		"extracted-ent": "Extracted entities: ",
+		"ent-types": "Entity types (select): ",
+		"all-types": "All types",
+		"unknown":"unknown"
+	}
 }
