@@ -1,4 +1,4 @@
-﻿{
+{
 	"zem-ext-menu": {
 		"api-set": "Zemanta API settings",
 		"alert-recon": "Adding columns from DBpedia requires DBpedia-reconciled values in selected column.\n Reconcile this column with DBpedia first.",

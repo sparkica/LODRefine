@@ -1,5 +1,5 @@
 {
-"rdf-ext-menu": {
+	"rdf-ext-menu": {
 		"rdf-xml" : "RDF as RDF/XML",
 		"rdf-turtle" : "RDF as Turtle",
 		"alert-no-align" : "You haven't done any RDF schema alignment yet!",
