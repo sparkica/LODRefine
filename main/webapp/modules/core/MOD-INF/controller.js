@@ -619,11 +619,10 @@ function process(path, request, response) {
           var encodings = [];
           
           var sortedCharsetMap = Packages.java.nio.charset.Charset.availableCharsets();
-          var keySets = sortedCharsetMap.keySet().toArray();
-          for (var code in keySets) {
-            var charset = sortedCharsetMap.get(keySets[code]);
+          for each (var code in sortedCharsetMap.keySet().toArray()) {
+            var charset = sortedCharsetMap.get(code);
             var aliases = [];
-            for (var alias in charset.aliases().toArray()) {
+            for each (var alias in charset.aliases().toArray()) {
               aliases.push(alias);
             }
             
