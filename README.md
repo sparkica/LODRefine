@@ -1,7 +1,15 @@
-#LODRefine
+# Update
+This app has not been actively maintained for years now due to many reasons (I switched job, company was sold etc). Unfortunately, I don’t have time nor interest to continue with the development, but some cool and smart people are still working on Open Refine: https://github.com/OpenRefine/OpenRefine
+ 
 
-[![Build Status](https://travis-ci.org/sparkica/LODRefine.png?branch=master)](https://travis-ci.org/sparkica/LODRefine)
+Please note that all the extensions are available as separate repositories, but they are outdated, too due to similar reasons as stated above.
 
+Please visit OpenRefine project to check on the latest development of this amazing tool and the extensions they already integrated into it.
+
+
+
+
+# LODRefine
 
 LODRefine is LOD-enabled version of OpenRefine. 
 
